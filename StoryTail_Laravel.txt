@@ -1,0 +1,2189 @@
+<?php
+
+// criar projecto
+composer create-project laravel/laravel storytail
+
+// criar migrations
+php artisan make:migration create_user_types_table
+php artisan make:migration create_users_table
+php artisan make:migration create_age_groups_table
+php artisan make:migration create_plans_table
+php artisan make:migration create_subscriptions_table
+php artisan make:migration create_books_table
+php artisan make:migration create_authors_table
+php artisan make:migration create_author_book_table
+php artisan make:migration create_activities_table
+php artisan make:migration create_activity_book_table
+php artisan make:migration create_book_user_read_table
+php artisan make:migration create_book_user_favourite_table
+php artisan make:migration create_videos_table
+php artisan make:migration create_pages_table
+php artisan make:migration create_comments_table
+php artisan make:migration create_comment_moderation_table
+php artisan make:migration create_activity_images_table
+php artisan make:migration create_activity_book_user_table
+php artisan make:migration create_tags_table
+php artisan make:migration create_tagging_tagged_table
+php artisan make:migration create_book_clicks_table
+php artisan make:migration create_reports_table
+
+
+// criar base de dados .env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=storytail
+DB_USERNAME=root
+DB_PASSWORD=
+
+// migration user_types
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('user_types', function (Blueprint $table) {
+            $table->id();
+            $table->string('user_type'); // Tipo de utilizador (ex: 'admin', 'premium', 'free')
+            $table->timestamps(); // Campos created_at e updated_at
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('user_types');
+    }
+};
+
+
+// migration age_groups
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('age_groups', function (Blueprint $table) {
+            $table->id();
+            $table->string('age_group'); // Descrição da faixa etária (ex: '3-5', '6-8', '9-12')
+            $table->timestamps(); // Campos created_at e updated_at
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('age_groups');
+    }
+};
+
+
+// migration users
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('users', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_type_id')->constrained('user_types'); // Relacionamento com a tabela user_types
+            $table->string('first_name'); // Primeiro nome
+            $table->string('last_name'); // Sobrenome
+            $table->string('user_name')->unique(); // Nome de utilizador único
+            $table->string('email')->unique(); // E-mail único
+            $table->string('password'); // Senha encriptada
+            $table->string('user_photo_url')->nullable(); // URL da foto de perfil (opcional)
+            $table->timestamps(); // Campos created_at e updated_at
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('users');
+    }
+};
+
+// migration plans
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('plans', function (Blueprint $table) {
+            $table->id();
+            $table->string('name'); // Nome do plano (ex: 'Free', 'Premium')
+            $table->integer('access_level'); // Nível de acesso associado ao plano
+            $table->timestamps(); // Campos created_at e updated_at
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('plans');
+    }
+};
+
+
+// migration subscriptions
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('subscriptions', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Referência ao utilizador
+            $table->foreignId('plan_id')->constrained('plans')->onDelete('cascade'); // Referência ao plano
+            $table->timestamp('start_date'); // Data de início da subscrição
+            $table->timestamps(); // Campos created_at e updated_at
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('subscriptions');
+    }
+};
+
+
+// migration authors
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('authors', function (Blueprint $table) {
+            $table->id();
+            $table->string('first_name'); // Primeiro nome do autor
+            $table->string('last_name'); // Sobrenome do autor
+            $table->text('description')->nullable(); // Descrição/biografia do autor
+            $table->string('author_photo_url')->nullable(); // URL da foto do autor (opcional)
+            $table->string('nationality')->nullable(); // Nacionalidade do autor
+            $table->timestamps(); // Campos created_at e updated_at
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('authors');
+    }
+};
+
+
+// migration books
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('books', function (Blueprint $table) {
+            $table->id();
+            $table->string('title'); // Título do livro
+            $table->text('description')->nullable(); // Descrição do livro
+            $table->string('cover_url')->nullable(); // URL da capa do livro
+            $table->integer('read_time')->nullable(); // Tempo estimado de leitura (em minutos)
+            $table->foreignId('age_group_id')->constrained('age_groups'); // Referência à tabela age_groups
+            $table->boolean('is_active')->default(true); // Status do livro (ativo ou inativo)
+            $table->integer('access_level'); // Nível de acesso (ex: Premium, Free)
+            $table->timestamps(); // Campos created_at e updated_at
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('books');
+    }
+};
+
+
+// migration activities
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('activities', function (Blueprint $table) {
+            $table->id();
+            $table->string('title'); // Título da atividade
+            $table->text('description')->nullable(); // Descrição da atividade
+            $table->timestamps(); // Campos created_at e updated_at
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('activities');
+    }
+};
+
+
+// migration author_book
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('author_book', function (Blueprint $table) {
+            // Definir a chave primária composta
+            $table->primary(['author_id', 'book_id']); 
+
+            // Definir ambas as colunas como foreign keys
+            $table->foreignId('author_id')->constrained('authors')->onDelete('cascade'); // Referência ao autor
+            $table->foreignId('book_id')->constrained('books')->onDelete('cascade'); // Referência ao livro
+            
+            // Campos de timestamp
+            $table->timestamps(); // Campos created_at e updated_at
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('author_book');
+    }
+};
+
+
+// migration activity_book
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('activity_book', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('activity_id')->constrained('activities')->onDelete('cascade'); // Referência à atividade
+            $table->foreignId('book_id')->constrained('books')->onDelete('cascade'); // Referência ao livro
+            $table->timestamps(); // Campos created_at e updated_at
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('activity_book');
+    }
+};
+
+
+// migration book_user_read
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('book_user_read', function (Blueprint $table) {
+            // Definir a chave primária composta
+            $table->primary(['book_id', 'user_id']); 
+
+            // Definir ambas as colunas como foreign keys
+            $table->foreignId('book_id')->constrained('books')->onDelete('cascade'); // Referência ao livro
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Referência ao utilizador
+
+            // Campos adicionais
+            $table->integer('progress'); // Percentagem de progresso (0-100%)
+            $table->integer('rating')->nullable(); // Avaliação do livro (opcional)
+            $table->timestamp('read_date')->nullable(); // Data de leitura do livro
+            
+            // Campos de timestamp
+            $table->timestamps(); // Campos created_at e updated_at
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('book_user_read');
+    }
+};
+
+
+
+//  migration book_user_favourite
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('book_user_favourite', function (Blueprint $table) {
+            // Definir a chave primária composta
+            $table->primary(['book_id', 'user_id']); 
+
+            // Definir ambas as colunas como foreign keys
+            $table->foreignId('book_id')->constrained('books')->onDelete('cascade'); // Referência ao livro
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Referência ao utilizador
+            
+            // Campos de timestamp
+            $table->timestamps(); // Campos created_at e updated_at
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('book_user_favourite');
+    }
+};
+
+
+
+// migration videos
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('videos', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('book_id')->constrained('books')->onDelete('cascade'); // Referência ao livro
+            $table->string('title'); // Título do vídeo
+            $table->string('video_url'); // URL do vídeo
+            $table->timestamps(); // Campos created_at e updated_at
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('videos');
+    }
+};
+
+
+// migration comments
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('comments', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('book_id')->constrained('books')->onDelete('cascade'); // Referência ao livro
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Referência ao utilizador
+            $table->text('comment_text'); // Texto do comentário
+            $table->string('status')->default('pending'); // Estado da moderação (ex: 'pending', 'approved', 'rejected')
+            $table->timestamps(); // Campos created_at e updated_at
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('comments');
+    }
+};
+
+
+// migration pages
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('pages', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('book_id')->constrained('books')->onDelete('cascade'); // Referência ao livro
+            $table->string('page_image_url'); // URL da imagem da página
+            $table->string('audio_url')->nullable(); // URL do áudio da página (se aplicável)
+            $table->integer('page_index'); // Índice da página (para ordenar as páginas do livro)
+            $table->timestamps(); // Campos created_at e updated_at
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('pages');
+    }
+};
+
+
+// migration comment_moderation
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('comment_moderation', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('comment_id')->constrained('comments')->onDelete('cascade'); // Referência ao comentário
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Referência ao moderador (administrador)
+            $table->string('status'); // Estado da moderação (ex: 'approved', 'rejected')
+            $table->timestamp('moderation_date'); // Data da moderação
+            $table->timestamps(); // Campos created_at e updated_at
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('comment_moderation');
+    }
+};
+
+
+// migration activity_book_user
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('activity_book_user', function (Blueprint $table) {
+            // Definir a chave primária composta
+            $table->primary(['activity_book_id', 'user_id']); 
+
+            // Definir ambas as colunas como foreign keys
+            $table->foreignId('activity_book_id')->constrained('activity_book')->onDelete('cascade'); // Referência à atividade associada ao livro
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Referência ao utilizador
+
+            // Campo de progresso da atividade
+            $table->integer('progress'); // Progresso da atividade (0-100%)
+            
+            // Campos de timestamp
+            $table->timestamps(); // Campos created_at e updated_at
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('activity_book_user');
+    }
+};
+
+
+// migration activity_images
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('activity_images', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('activity_id')->constrained('activities')->onDelete('cascade'); // Referência à atividade
+            $table->string('title'); // Título da imagem
+            $table->string('image_url'); // URL da imagem associada à atividade
+            $table->timestamps(); // Campos created_at e updated_at
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('activity_images');
+    }
+};
+
+
+// migration tags
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('tags', function (Blueprint $table) {
+            $table->id();
+            $table->string('name'); // Nome da tag
+            $table->timestamps(); // Campos created_at e updated_at
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('tags');
+    }
+};
+
+
+// migration tagging_tagged 
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('tagging_tagged', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('book_id')->constrained('books')->onDelete('cascade'); // Referência ao livro
+            $table->foreignId('tag_id')->constrained('tags')->onDelete('cascade'); // Referência à tag
+            $table->timestamps(); // Campos created_at e updated_at
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('tagging_tagged');
+    }
+};
+
+
+// migration book_clicks
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('book_clicks', function (Blueprint $table) {
+            $table->id(); // Chave primária simples
+            $table->foreignId('book_id')->constrained('books')->onDelete('cascade'); // Referência ao livro
+            $table->timestamp('clicked_at')->useCurrent(); // Data e hora do clique
+            $table->timestamps(); // Campos created_at e updated_at
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('book_clicks');
+    }
+};
+
+
+// migration reports
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('reports', function (Blueprint $table) {
+            $table->id();
+            $table->string('report_type'); // Tipo de relatório (ex: 'book_clicks', 'book_ratings', 'reading_progress')
+            $table->json('report_data'); // Dados do relatório em formato JSON
+            $table->timestamps(); // Campos created_at e updated_at
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('reports');
+    }
+};
+
+// executar as migrations
+php artisan migrate
+
+
+// criar os models
+php artisan make:model UserType
+php artisan make:model User
+php artisan make:model Plan
+php artisan make:model Subscription
+php artisan make:model Author
+php artisan make:model Book
+php artisan make:model Activity
+php artisan make:model AuthorBook
+php artisan make:model ActivityBook
+php artisan make:model BookUserRead
+php artisan make:model BookUserFavourite
+php artisan make:model Video
+php artisan make:model Comment
+php artisan make:model Page
+php artisan make:model CommentModeration
+php artisan make:model ActivityBookUser
+php artisan make:model ActivityImage
+php artisan make:model Tag
+php artisan make:model BookClick
+php artisan make:model TaggingTagged
+php artisan make:model Report
+php artisan make:model AgeGroup
+
+
+// Activity model
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Activity extends Model
+{
+    use HasFactory;
+
+    protected $table = 'activities'; // Define o nome da tabela
+
+    // Campos que podem ser preenchidos em massa
+    protected $fillable = ['name', 'description'];
+
+    // Relacionamento: Uma atividade pode estar relacionada a muitos livros
+    public function books()
+    {
+        return $this->belongsToMany(Book::class, 'activity_book', 'activity_id', 'book_id');
+    }
+}
+
+// ActivityBook Model
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class ActivityBook extends Model
+{
+    use HasFactory;
+
+    protected $table = 'activity_book'; // Define o nome da tabela
+
+    // Campos que podem ser preenchidos em massa
+    protected $fillable = ['activity_id', 'book_id'];
+}
+
+
+// ActivityBookUser Model
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class ActivityBookUser extends Model
+{
+    use HasFactory;
+
+    protected $table = 'activity_book_user'; // Define o nome da tabela
+
+    protected $fillable = ['activity_book_id', 'user_id', 'progress'];
+
+    // Relacionamento: Uma instância de progresso pertence a uma atividade associada a um livro
+    public function activityBook()
+    {
+        return $this->belongsTo(ActivityBook::class, 'activity_book_id');
+    }
+
+    // Relacionamento: Um progresso pertence a um usuário
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+}
+
+
+// ActivityImage Model
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class ActivityImage extends Model
+{
+    use HasFactory;
+
+    protected $table = 'activity_images'; // Nome da tabela
+
+    protected $fillable = ['activity_id', 'title', 'image_url'];
+
+    // Relacionamento: Uma imagem pertence a uma atividade
+    public function activity()
+    {
+        return $this->belongsTo(Activity::class, 'activity_id');
+    }
+}
+
+// AgeGroup Model
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class AgeGroup extends Model
+{
+    use HasFactory;
+
+    protected $table = 'age_groups'; // Define o nome da tabela
+
+    // Campos que podem ser preenchidos em massa
+    protected $fillable = ['age_group'];
+}
+
+//Author Model
+<?php
+
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Author extends Model
+{
+    use HasFactory;
+
+    protected $fillable = ['first_name', 'last_name', 'description', 'nationality', 'author_photo_url'];
+
+    // Relacionamento: Um autor tem muitos livros
+    public function books()
+    {
+        return $this->belongsToMany(Book::class, 'author_book');
+    }
+}
+
+
+// AuthorBook Model
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class AuthorBook extends Model
+{
+    use HasFactory;
+
+    protected $table = 'author_book'; // Define o nome da tabela
+
+    // Campos que podem ser preenchidos em massa
+    protected $fillable = ['author_id', 'book_id'];
+
+    // Relacionamento: Um registro de AuthorBook pertence a um Autor
+    public function author()
+    {
+        return $this->belongsTo(Author::class);
+    }
+
+    // Relacionamento: Um registro de AuthorBook pertence a um Livro
+    public function book()
+    {
+        return $this->belongsTo(Book::class);
+    }
+}
+
+
+// Book Model
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Book extends Model
+{
+    use HasFactory;
+
+    protected $fillable = ['title', 'description', 'age_group_id', 'access_level', 'is_active'];
+
+    // Relacionamento: Um livro pode ter muitos autores
+    public function authors()
+    {
+        // Um livro pode ter vários autores, então estamos usando a relação belongsToMany com a tabela de ligação 'author_book'
+        return $this->belongsToMany(Author::class, 'author_book', 'book_id', 'author_id');
+    }
+
+    // Relacionamento: Um livro pertence a uma faixa etária
+    public function ageGroup()
+    {
+        // Um livro pertence a uma faixa etária, usando a foreign key 'age_group_id'
+        return $this->belongsTo(AgeGroup::class, 'age_group_id');
+    }
+
+    // Relacionamento: Um livro pode ter muitas atividades
+    public function activities()
+    {
+        // Um livro pode estar associado a várias atividades, então estamos usando a relação belongsToMany com a tabela de ligação 'activity_book'
+        return $this->belongsToMany(Activity::class, 'activity_book', 'book_id', 'activity_id');
+    }
+
+    // Relacionamento: Um livro pode ter muitas tags
+    public function tags()
+    {
+        // Um livro pode estar associado a várias tags, então usamos a relação belongsToMany com a tabela 'tagging_tagged'
+        return $this->belongsToMany(Tag::class, 'tagging_tagged', 'book_id', 'tag_id');
+    }
+}
+
+
+
+
+
+// BookClick Model
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class BookClick extends Model
+{
+    use HasFactory;
+
+    protected $table = 'book_clicks'; // Define o nome da tabela
+
+    // Campos que podem ser preenchidos em massa
+    protected $fillable = ['book_id', 'clicked_at'];
+
+    // Relacionamento: Um clique pertence a um livro
+    public function book()
+    {
+        return $this->belongsTo(Book::class);
+    }
+}
+
+
+// BookUserFavourite Model
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class BookUserFavourite extends Model
+{
+    use HasFactory;
+
+    protected $table = 'book_user_favourite'; // Define o nome da tabela
+
+    // Campos que podem ser preenchidos em massa
+    protected $fillable = ['user_id', 'book_id'];
+
+    // Relacionamento: Um favorito pertence a um utilizador
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    // Relacionamento: Um favorito pertence a um livro
+    public function book()
+    {
+        return $this->belongsTo(Book::class);
+    }
+}
+
+
+// BookUserRead Model
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class BookUserRead extends Model
+{
+    use HasFactory;
+
+    protected $table = 'book_user_read'; // Define o nome da tabela
+
+    // Campos que podem ser preenchidos em massa
+    protected $fillable = ['user_id', 'book_id', 'progress', 'rating', 'read_date'];
+
+    // Relacionamento: Um livro lido pertence a um utilizador
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    // Relacionamento: Um livro lido pertence a um livro
+    public function book()
+    {
+        return $this->belongsTo(Book::class);
+    }
+}
+
+
+// Comment Model
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Comment extends Model
+{
+    use HasFactory;
+
+    protected $table = 'comments'; // Define o nome da tabela
+
+    // Campos que podem ser preenchidos em massa
+    protected $fillable = ['user_id', 'book_id', 'comment_text', 'status'];
+
+    // Relacionamento: Um comentário pertence a um utilizador
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    // Relacionamento: Um comentário pertence a um livro
+    public function book()
+    {
+        return $this->belongsTo(Book::class);
+    }
+}
+
+// CommentModeration Model
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class CommentModeration extends Model
+{
+    use HasFactory;
+
+    protected $table = 'comment_moderation'; // Define o nome da tabela
+
+    // Campos que podem ser preenchidos em massa
+    protected $fillable = ['comment_id', 'user_id', 'status', 'moderation_date'];
+
+    // Relacionamento: Moderação pertence a um comentário
+    public function comment()
+    {
+        return $this->belongsTo(Comment::class);
+    }
+
+    // Relacionamento: Moderação pertence a um utilizador
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+}
+
+
+// Page Model
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Page extends Model
+{
+    use HasFactory;
+
+    protected $table = 'pages'; // Define o nome da tabela
+
+    // Campos que podem ser preenchidos em massa
+    protected $fillable = ['book_id', 'page_image_url', 'audio_url', 'page_index'];
+
+    // Relacionamento: Uma página pertence a um livro
+    public function book()
+    {
+        return $this->belongsTo(Book::class);
+    }
+}
+
+// Plan Model
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Plan extends Model
+{
+    use HasFactory;
+
+    protected $table = 'plans'; // Define o nome da tabela
+
+    // Campos que podem ser preenchidos em massa
+    protected $fillable = ['name', 'access_level'];
+}
+
+
+// Report Model
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Report extends Model
+{
+    use HasFactory;
+
+    protected $table = 'reports'; // Define o nome da tabela
+
+    // Campos que podem ser preenchidos em massa
+    protected $fillable = ['report_type', 'report_data'];
+}
+
+
+//Subscription Model
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Subscription extends Model
+{
+    use HasFactory;
+
+    protected $table = 'subscriptions'; // Define o nome da tabela
+
+    // Campos que podem ser preenchidos em massa
+    protected $fillable = ['user_id', 'plan_id', 'start_date', 'end_date'];
+
+    // Relacionamento: Uma subscrição pertence a um utilizador
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    // Relacionamento: Uma subscrição pertence a um plano
+    public function plan()
+    {
+        return $this->belongsTo(Plan::class);
+    }
+}
+
+
+// Tag Model
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Tag extends Model
+{
+    use HasFactory;
+
+    protected $table = 'tags'; // Define o nome da tabela
+
+    // Campos que podem ser preenchidos em massa
+    protected $fillable = ['name'];
+}
+
+//Tagged Model
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class TaggingTagged extends Model // Renomeie aqui
+{
+    use HasFactory;
+
+    protected $table = 'tagging_tagged'; // Define o nome da tabela
+
+    // Campos que podem ser preenchidos em massa
+    protected $fillable = ['book_id', 'tag_id'];
+
+    // Relacionamento: Um registo de TaggingTagged pertence a um livro
+    public function book()
+    {
+        return $this->belongsTo(Book::class);
+    }
+
+    // Relacionamento: Um registo de TaggingTagged pertence a uma tag
+    public function tag()
+    {
+        return $this->belongsTo(Tag::class);
+    }
+}
+
+
+
+// User Model
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+
+class User extends Authenticatable
+{
+    use HasFactory, Notifiable;
+
+    /**
+     * Os atributos que podem ser preenchidos em massa.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'user_type_id', // Inclui o tipo de utilizador
+    ];
+
+    /**
+     * Os atributos que devem ser ocultos na serialização.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    /**
+     * Os atributos que devem ser convertidos.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ];
+
+    // Relacionamento: Um utilizador pertence a um tipo de utilizador
+    public function userType()
+    {
+        return $this->belongsTo(UserType::class);
+    }
+
+    // Relacionamento: Um utilizador tem muitos livros lidos
+    public function booksRead()
+    {
+        return $this->belongsToMany(Book::class, 'book_user_read')
+                    ->withPivot('progress', 'rating', 'read_date')
+                    ->withTimestamps();
+    }
+
+    // Relacionamento: Um utilizador tem muitos livros favoritos
+    public function favoriteBooks()
+    {
+        return $this->belongsToMany(Book::class, 'book_user_favourite')
+                    ->withTimestamps();
+    }
+}
+
+
+// UserType Model
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class UserType extends Model
+{
+    use HasFactory;
+
+    protected $table = 'user_types'; // Define o nome da tabela
+
+    // Campos que podem ser preenchidos em massa
+    protected $fillable = ['user_type'];
+
+    // Relacionamento: Um tipo de utilizador pode ter muitos utilizadores
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
+}
+
+// Video Model
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Video extends Model
+{
+    use HasFactory;
+
+    protected $table = 'videos'; // Define o nome da tabela
+
+    // Campos que podem ser preenchidos em massa
+    protected $fillable = ['title', 'book_id', 'video_url'];
+
+    // Relacionamento: Um vídeo pertence a um livro
+    public function book()
+    {
+        return $this->belongsTo(Book::class);
+    }
+}
+
+
+
+
+
+// Popular base de dados no DatabaseSeeder
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use App\Models\UserType;
+use App\Models\Plan;
+use App\Models\AgeGroup;
+use App\Models\Author;
+use App\Models\Book;
+use App\Models\AuthorBook;
+use App\Models\User;
+use App\Models\Subscription;
+use App\Models\Activity;
+use App\Models\Comment;
+use App\Models\Tag;
+use App\Models\Video;
+use App\Models\ActivityImage;
+use App\Models\BookUserRead;
+use App\Models\BookUserFavourite;
+use App\Models\BookClick;
+use App\Models\Report;
+use App\Models\Page;
+use App\Models\CommentModeration;
+use App\Models\ActivityBookUser;
+use App\Models\TaggingTagged;
+use App\Models\ActivityBook;
+
+class DatabaseSeeder extends Seeder
+{
+    /**
+     * Seed the application's database.
+     */
+    public function run(): void
+    {
+        // 1. User Types
+        UserType::firstOrCreate(['user_type' => 'admin'], ['created_at' => now(), 'updated_at' => now()]);
+        UserType::firstOrCreate(['user_type' => 'premium'], ['created_at' => now(), 'updated_at' => now()]);
+        UserType::firstOrCreate(['user_type' => 'free'], ['created_at' => now(), 'updated_at' => now()]);
+
+        // 2. Plans
+        Plan::firstOrCreate(['name' => 'Basic Plan', 'access_level' => 1], ['created_at' => now(), 'updated_at' => now()]);
+        Plan::firstOrCreate(['name' => 'Premium Plan', 'access_level' => 2], ['created_at' => now(), 'updated_at' => now()]);
+
+        // 3. Age Groups
+        AgeGroup::firstOrCreate(['age_group' => '3-4'], ['created_at' => now(), 'updated_at' => now()]);
+        AgeGroup::firstOrCreate(['age_group' => '5-6'], ['created_at' => now(), 'updated_at' => now()]);
+        AgeGroup::firstOrCreate(['age_group' => '7-9'], ['created_at' => now(), 'updated_at' => now()]);
+
+        // 4. Authors
+        $giles = Author::firstOrCreate(['first_name' => 'Giles', 'last_name' => 'Andreae'], [
+            'description' => 'Giles Andreae is a British poet and writer, best known for his children’s books.',
+            'nationality' => 'British',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+        $julia = Author::firstOrCreate(['first_name' => 'Julia', 'last_name' => 'Donaldson'], [
+            'description' => 'Julia Donaldson is a British author of children’s books, famous for her work "The Gruffalo."',
+            'nationality' => 'British',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+        $eric = Author::firstOrCreate(['first_name' => 'Eric', 'last_name' => 'Carle'], [
+            'description' => 'Eric Carle was an American writer and illustrator, known for "Brown Bear, Brown Bear, What Do You See?".',
+            'nationality' => 'American',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+        $rachel = Author::firstOrCreate(['first_name' => 'Rachel', 'last_name' => 'Bright'], [
+            'description' => 'Rachel Bright is a British author and illustrator, creator of popular children’s books.',
+            'nationality' => 'British',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+
+        // 5. Books
+		$giraffes = Book::firstOrCreate([
+			'title' => 'Giraffes Can\'t Dance', 
+			'description' => 'A story about a giraffe that can’t dance, but learns to find his own rhythm.', 
+			'read_time' => 15, 
+			'access_level' => 1, 
+			'is_active' => true, 
+			'age_group_id' => 1
+		], ['cover_url' => null, 'created_at' => now(), 'updated_at' => now()]);
+
+		$monkey = Book::firstOrCreate([
+			'title' => 'Monkey Puzzle', 
+			'description' => 'A story about a monkey searching for his mother.', 
+			'read_time' => 10, 
+			'access_level' => 2, 
+			'is_active' => true, 
+			'age_group_id' => 2
+		], ['cover_url' => null, 'created_at' => now(), 'updated_at' => now()]);
+
+		$brownBear = Book::firstOrCreate([
+			'title' => 'Brown Bear, Brown Bear, What Do You See?', 
+			'description' => 'A classic story that teaches children about colors and animals.', 
+			'read_time' => 20, 
+			'access_level' => 1, 
+			'is_active' => true, 
+			'age_group_id' => 1
+		], ['cover_url' => null, 'created_at' => now(), 'updated_at' => now()]);
+
+		$koala = Book::firstOrCreate([
+			'title' => 'The Koala Who Could', 
+			'description' => 'A story about a koala who learns to be brave.', 
+			'read_time' => 15, 
+			'access_level' => 2, 
+			'is_active' => true, 
+			'age_group_id' => 3
+		], ['cover_url' => null, 'created_at' => now(), 'updated_at' => now()]);
+
+		$pancakes = Book::firstOrCreate([
+			'title' => 'Pancakes, Pancakes!', 
+			'description' => 'A delightful story about a boy trying to make pancakes.', 
+			'read_time' => 12, 
+			'access_level' => 1, 
+			'is_active' => true, 
+			'age_group_id' => 1
+		], ['cover_url' => null, 'created_at' => now(), 'updated_at' => now()]);
+
+        // 6. Associate Authors with Books
+        AuthorBook::firstOrCreate(['author_id' => $giles->id, 'book_id' => $giraffes->id], ['created_at' => now(), 'updated_at' => now()]);
+        AuthorBook::firstOrCreate(['author_id' => $julia->id, 'book_id' => $monkey->id], ['created_at' => now(), 'updated_at' => now()]);
+        AuthorBook::firstOrCreate(['author_id' => $eric->id, 'book_id' => $brownBear->id], ['created_at' => now(), 'updated_at' => now()]);
+        AuthorBook::firstOrCreate(['author_id' => $rachel->id, 'book_id' => $koala->id], ['created_at' => now(), 'updated_at' => now()]);
+        AuthorBook::firstOrCreate(['author_id' => $eric->id, 'book_id' => $pancakes->id], ['created_at' => now(), 'updated_at' => now()]);
+
+        // 7. Insert Users
+        $adminUser = User::firstOrCreate(
+            ['first_name' => 'Admin', 'last_name' => 'User', 'user_type_id' => 1, 'user_name' => 'adminuser', 'email' => 'admin@example.com', 'password' => bcrypt('adminpassword')],
+            ['created_at' => now(), 'updated_at' => now()]
+        ); // Admin user
+
+        $premiumUser = User::firstOrCreate(
+            ['first_name' => 'Pedro', 'last_name' => 'Silva', 'user_type_id' => 2, 'user_name' => 'pedrosilva', 'email' => 'pedro.silva@example.com', 'password' => bcrypt('password123')],
+            ['created_at' => now(), 'updated_at' => now()]
+        ); // Premium user
+
+        User::firstOrCreate(
+            ['first_name' => 'Ana', 'last_name' => 'Santos', 'user_type_id' => 2, 'user_name' => 'anasantos', 'email' => 'ana.santos@example.com', 'password' => bcrypt('password123')],
+            ['created_at' => now(), 'updated_at' => now()]
+        ); // Another premium user
+
+        User::firstOrCreate(
+            ['first_name' => 'Luís', 'last_name' => 'Oliveira', 'user_type_id' => 3, 'user_name' => 'luisoliveira', 'email' => 'luis.oliveira@example.com', 'password' => bcrypt('password123')],
+            ['created_at' => now(), 'updated_at' => now()]
+        ); // Free user
+
+        // 8. Insert Subscriptions
+        Subscription::firstOrCreate(
+            ['user_id' => $premiumUser->id, 'plan_id' => 2, 'start_date' => now()], // Premium subscription for Pedro
+            ['created_at' => now(), 'updated_at' => now()]
+        );
+
+        // 9. Insert Activities
+		$activity1 = Activity::firstOrCreate(
+			['title' => 'Dance Like a Giraffe', 'description' => 'An activity where kids are encouraged to dance like the characters in the book "Giraffes Can\'t Dance".'],
+			['created_at' => now(), 'updated_at' => now()]
+		);
+
+        $activity2 = Activity::firstOrCreate(
+            ['title' => 'Giraffe Puzzle', 'description' => 'Solve a puzzle based on the book "Giraffes Can\'t Dance."'],
+            ['created_at' => now(), 'updated_at' => now()]
+        );
+
+        $activity3 = Activity::firstOrCreate(
+            ['title' => 'Coloring Page', 'description' => 'Color a page from "Giraffes Can\'t Dance."'],
+            ['created_at' => now(), 'updated_at' => now()]
+        );
+
+        // 10. Insert Videos
+        Video::firstOrCreate(
+            ['title' => 'Giraffes Can\'t Dance - Animated', 'book_id' => $giraffes->id, 'video_url' => 'https://example.com/giraffes_video'],
+            ['created_at' => now(), 'updated_at' => now()]
+        );
+
+        // 11. Insert Tags
+        $childrenTag = Tag::firstOrCreate(['name' => 'Children'], ['created_at' => now(), 'updated_at' => now()]);
+        $adventureTag = Tag::firstOrCreate(['name' => 'Adventure'], ['created_at' => now(), 'updated_at' => now()]);
+
+        // 12. Insert Comments
+        Comment::firstOrCreate(
+            ['book_id' => $giraffes->id, 'user_id' => $premiumUser->id, 'comment_text' => 'A wonderful book!', 'status' => 'approved'],
+            ['created_at' => now(), 'updated_at' => now()]
+        );
+
+        Comment::firstOrCreate(
+            ['book_id' => $giraffes->id, 'user_id' => $adminUser->id, 'comment_text' => 'Great illustrations and story!', 'status' => 'approved'],
+            ['created_at' => now(), 'updated_at' => now()]
+        );
+
+        Comment::firstOrCreate(
+            ['book_id' => $monkey->id, 'user_id' => $premiumUser->id, 'comment_text' => 'A touching story about love and family.', 'status' => 'approved'],
+            ['created_at' => now(), 'updated_at' => now()]
+        );
+
+        // 13. Insert Activity Images
+        ActivityImage::firstOrCreate(
+            ['activity_id' => $activity2->id, 'title' => 'Image of Giraffe Puzzle', 'image_url' => 'https://example.com/image_of_giraffe_puzzle'],
+            ['created_at' => now()]
+        );
+
+        ActivityImage::firstOrCreate(
+            ['activity_id' => $activity3->id, 'title' => 'Image of Coloring Page', 'image_url' => 'https://example.com/image_of_coloring_page'],
+            ['created_at' => now()]
+        );
+
+        // 14. Insert Book User Read
+		BookUserRead::firstOrCreate(
+			['book_id' => $giraffes->id, 'user_id' => $premiumUser->id, 'progress' => 50], 
+			['rating' => 5, 'read_date' => now(), 'created_at' => now(), 'updated_at' => now()]
+		);
+
+		BookUserRead::firstOrCreate(
+			['book_id' => $brownBear->id, 'user_id' => $premiumUser->id, 'progress' => 80],
+			['rating' => 4, 'read_date' => now(), 'created_at' => now(), 'updated_at' => now()]
+		);
+
+		BookUserRead::firstOrCreate(
+			['book_id' => $koala->id, 'user_id' => $premiumUser->id, 'progress' => 100],
+			['rating' => 5, 'read_date' => now(), 'created_at' => now(), 'updated_at' => now()]
+		);
+
+		// Livros lidos para Ana
+		BookUserRead::firstOrCreate(
+			['book_id' => $giraffes->id, 'user_id' => $anaUser->id, 'progress' => 100],
+			['rating' => 4, 'read_date' => now(), 'created_at' => now(), 'updated_at' => now()]
+		);
+
+		BookUserRead::firstOrCreate(
+			['book_id' => $monkey->id, 'user_id' => $anaUser->id, 'progress' => 90],
+			['rating' => 5, 'read_date' => now(), 'created_at' => now(), 'updated_at' => now()]
+		);
+
+		// Livros lidos para Luís
+		BookUserRead::firstOrCreate(
+			['book_id' => $brownBear->id, 'user_id' => $luisUser->id, 'progress' => 75],
+			['rating' => 4, 'read_date' => now(), 'created_at' => now(), 'updated_at' => now()]
+		);
+
+		// 15. Insert Book User Favourite
+		BookUserFavourite::firstOrCreate(
+			['book_id' => $giraffes->id, 'user_id' => $premiumUser->id],
+			['created_at' => now(), 'updated_at' => now()]
+		);
+
+		BookUserFavourite::firstOrCreate(
+			['book_id' => $monkey->id, 'user_id' => $premiumUser->id],
+			['created_at' => now(), 'updated_at' => now()]
+		);
+
+		// Livros favoritos para Ana
+		BookUserFavourite::firstOrCreate(
+			['book_id' => $koala->id, 'user_id' => $anaUser->id],
+			['created_at' => now(), 'updated_at' => now()]
+		);
+
+		// Livros favoritos para Luís
+		BookUserFavourite::firstOrCreate(
+			['book_id' => $brownBear->id, 'user_id' => $luisUser->id],
+			['created_at' => now(), 'updated_at' => now()]
+		);
+		
+		// 16. Insert Book Clicks
+		BookClick::firstOrCreate(
+			['book_id' => $giraffes->id],
+			['clicked_at' => now(), 'created_at' => now(), 'updated_at' => now()]
+		);
+
+		BookClick::firstOrCreate(
+			['book_id' => $brownBear->id],
+			['clicked_at' => now(), 'created_at' => now(), 'updated_at' => now()]
+		);
+
+		BookClick::firstOrCreate(
+			['book_id' => $koala->id],
+			['clicked_at' => now(), 'created_at' => now(), 'updated_at' => now()]
+		);
+
+		// 17. Insert Reports
+		Report::firstOrCreate(
+			['report_type' => 'book_clicks', 'report_data' => json_encode(['book_id' => $giraffes->id, 'clicks' => 100])],
+			['created_at' => now()]
+		);
+
+		Report::firstOrCreate(
+			['report_type' => 'book_clicks', 'report_data' => json_encode(['book_id' => $monkey->id, 'clicks' => 75])],
+			['created_at' => now()]
+		);
+
+		Report::firstOrCreate(
+			['report_type' => 'book_clicks', 'report_data' => json_encode(['book_id' => $koala->id, 'clicks' => 90])],
+			['created_at' => now()]
+		);
+
+		// 18. Insert Pages
+		Page::firstOrCreate(
+			['book_id' => $giraffes->id, 'page_image_url' => 'https://example.com/giraffes_page1', 'audio_url' => null, 'page_index' => 1],
+			['created_at' => now()]
+		);
+
+		Page::firstOrCreate(
+			['book_id' => $monkey->id, 'page_image_url' => 'https://example.com/monkey_page1', 'audio_url' => null, 'page_index' => 1],
+			['created_at' => now()]
+		);
+
+		Page::firstOrCreate(
+			['book_id' => $brownBear->id, 'page_image_url' => 'https://example.com/brown_bear_page1', 'audio_url' => null, 'page_index' => 1],
+			['created_at' => now()]
+		);
+
+		// 19. Insert Comment Moderation
+		CommentModeration::firstOrCreate(
+			['comment_id' => 1, 'user_id' => $adminUser->id, 'status' => 'approved', 'moderation_date' => now()],
+			['created_at' => now()]
+		);
+
+		CommentModeration::firstOrCreate(
+			['comment_id' => 2, 'user_id' => $premiumUser->id, 'status' => 'approved', 'moderation_date' => now()],
+			['created_at' => now()]
+		);
+
+		CommentModeration::firstOrCreate(
+			['comment_id' => 3, 'user_id' => $adminUser->id, 'status' => 'rejected', 'moderation_date' => now()],
+			['created_at' => now()]
+		);
+
+		// 20. Insert Activity Book
+		$activityBook1 = ActivityBook::firstOrCreate(
+			['activity_id' => $activity1->id, 'book_id' => $giraffes->id],
+			['created_at' => now()]
+		);
+
+		$activityBook2 = ActivityBook::firstOrCreate(
+			['activity_id' => $activity2->id, 'book_id' => $monkey->id],
+			['created_at' => now()]
+		);
+
+		$activityBook3 = ActivityBook::firstOrCreate(
+			['activity_id' => $activity3->id, 'book_id' => $koala->id],
+			['created_at' => now()]
+		);
+
+		// 21. Insert Activity Book User
+		ActivityBookUser::firstOrCreate(
+			['activity_book_id' => $activityBook1->id, 'user_id' => $premiumUser->id, 'progress' => 75],
+			['created_at' => now(), 'updated_at' => now()]
+		);
+
+		ActivityBookUser::firstOrCreate(
+			['activity_book_id' => $activityBook2->id, 'user_id' => $premiumUser->id, 'progress' => 50],
+			['created_at' => now(), 'updated_at' => now()]
+		);
+
+		ActivityBookUser::firstOrCreate(
+			['activity_book_id' => $activityBook3->id, 'user_id' => $adminUser->id, 'progress' => 100],
+			['created_at' => now(), 'updated_at' => now()]
+		);
+
+		// 22. Insert Tagging Tagged
+		TaggingTagged::firstOrCreate(
+			['book_id' => $giraffes->id, 'tag_id' => $childrenTag->id],
+			['created_at' => now()]
+		);
+
+		TaggingTagged::firstOrCreate(
+			['book_id' => $brownBear->id, 'tag_id' => $adventureTag->id],
+			['created_at' => now()]
+		);
+
+		TaggingTagged::firstOrCreate(
+			['book_id' => $koala->id, 'tag_id' => $childrenTag->id],
+			['created_at' => now()]
+		);
+    }
+}
+
+
+
+
+
+//rodar o Seeder
+php artisan db:seed
+
+// ou 
+php artisan migrate:fresh --seed //apaga e preenche a base de dados
+
+//bookcontroller
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Book;
+use Illuminate\Http\Request;
+
+class BookController extends Controller
+{
+    public function listBooks(Request $request)
+    {
+        // Recebe os parâmetros opcionais
+        $authorId = $request->input('author_id');
+        $ageGroupId = $request->input('age_group_id');
+        $accessLevel = $request->input('access_level');
+        $isActive = $request->input('is_active');
+        $activityId = $request->input('activity_id'); // Novo filtro para atividades
+
+        // Cria a query base com os relacionamentos corretos
+        $query = Book::with(['authors', 'ageGroup', 'activities']) // Carrega autores, faixas etárias e atividades
+        ->select('books.id', 'books.title', 'books.description', 'books.access_level', 'books.is_active', 'books.age_group_id');
+
+        // Aplica filtros dinamicamente
+        if (!is_null($authorId)) {
+            $query->whereHas('authors', function ($q) use ($authorId) {
+                $q->where('authors.id', $authorId); // Filtra os autores
+            });
+        }
+
+        if (!is_null($ageGroupId)) {
+            $query->where('books.age_group_id', $ageGroupId); // Filtra as faixas etárias
+        }
+
+        if (!is_null($accessLevel)) {
+            $query->where('books.access_level', $accessLevel); // Filtra o nível de acesso
+        }
+
+        if (!is_null($isActive)) {
+            $query->where('books.is_active', $isActive); // Filtra se o livro está ativo
+        }
+
+        // Filtro por atividade relacionada ao livro
+        if (!is_null($activityId)) {
+            $query->whereHas('activities', function ($q) use ($activityId) {
+                $q->where('activities.id', $activityId); // Filtra as atividades
+            });
+        }
+
+        // Retorna os resultados
+        return $query->get();
+    }
+}
+
+
+// rota para livros
+use App\Http\Controllers\BookController;
+
+Route::get('/books', [BookController::class, 'listBooks']);
+
+
+
+// Resumo dos Filtros Aplicáveis:
+author_id: Filtra por autor.
+age_group_id: Filtra por faixa etária.
+access_level: Filtra por nível de acesso.
+is_active: Filtra livros ativos ou inativos.
+activity_id: Filtra livros com base nas atividades associadas.
+
+
+URLs para Filtros de Livros e Atividades:
+Listar todos os livros:
+URL: http://localhost:8000/books
+
+Filtrar livros por autor específico (ex: author_id=1):
+URL: http://localhost:8000/books?author_id=1
+
+Filtrar livros por faixa etária (ex: age_group_id=1):
+URL: http://localhost:8000/books?age_group_id=1
+
+Filtrar livros pelo nível de acesso (ex: access_level=1 para livros gratuitos):
+URL: http://localhost:8000/books?access_level=1
+
+Filtrar livros pelo status ativo (ex: is_active=1 para livros ativos):
+URL: http://localhost:8000/books?is_active=1
+
+Combinar autor e status ativo (ex: livros de author_id=1 que estão ativos):
+URL: http://localhost:8000/books?author_id=1&is_active=1
+
+Combinar faixa etária e nível de acesso (ex: age_group_id=2 e access_level=2 para livros premium da faixa etária 5-6):
+URL: http://localhost:8000/books?age_group_id=2&access_level=2
+
+Combinar autor, faixa etária e status ativo (ex: author_id=1, age_group_id=1 e is_active=1):
+URL: http://localhost:8000/books?author_id=1&age_group_id=1&is_active=1
+
+Combinar todos os filtros (ex: author_id=2, age_group_id=2, access_level=1, is_active=1):
+URL: http://localhost:8000/books?author_id=2&age_group_id=2&access_level=1&is_active=1
+
+Filtrar livros pela faixa etária e autor:
+URL: http://localhost:8000/books?age_group_id=1&author_id=3
+
+
+URLs com Filtros de Atividades:
+Filtrar livros por atividade específica (ex: activity_id=1):
+URL: http://localhost:8000/books?activity_id=1
+
+Combinar autor e atividade (ex: livros de author_id=2 com activity_id=1):
+URL: http://localhost:8000/books?author_id=2&activity_id=1
+
+Combinar faixa etária e atividade (ex: livros da age_group_id=2 com activity_id=2):
+URL: http://localhost:8000/books?age_group_id=2&activity_id=2
+
+Combinar nível de acesso e atividade (ex: livros de access_level=1 com activity_id=3):
+URL: http://localhost:8000/books?access_level=1&activity_id=3
+
+Combinar autor, atividade e status ativo (ex: livros de author_id=1 com activity_id=1 que estão ativos):
+URL: http://localhost:8000/books?author_id=1&activity_id=1&is_active=1
+
+Combinar faixa etária, atividade e status ativo (ex: livros da age_group_id=2 com activity_id=2 que estão ativos):
+URL: http://localhost:8000/books?age_group_id=2&activity_id=2&is_active=1
+
+Combinar todos os filtros, incluindo atividade (ex: author_id=2, age_group_id=2, access_level=1, is_active=1, activity_id=3):
+URL: http://localhost:8000/books?author_id=2&age_group_id=2&access_level=1&is_active=1&activity_id=3
+
+
+//ActivityController
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Book;
+use Illuminate\Http\Request;
+
+class ActivityController extends Controller
+{
+    public function listActivitiesByBook($bookId)
+    {
+        // Carrega as atividades relacionadas ao livro
+        $activities = Book::findOrFail($bookId)->activities;
+
+        // Retorna as atividades do livro em formato JSON
+        return response()->json($activities);
+    }
+}
+
+//Rora para actividades
+use App\Http\Controllers\ActivityController;
+
+Route::get('/books/{bookId}/activities', [ActivityController::class, 'listActivitiesByBook']);
+
+// Exemplo
+http://localhost:8000/books/{bookId}/activities
+http://localhost:8000/books/1/activities
+
+
+//UserBookController
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\User;
+use Illuminate\Http\Request;
+
+class UserBooksController extends Controller
+{
+    // Função para listar livros favoritos e lidos de um dado utilizador
+    public function listUserBooks($userId)
+    {
+        // Encontra o utilizador ou falha
+        $user = User::findOrFail($userId);
+
+        // Obtém os livros lidos com o respectivo progresso
+        $booksRead = $user->booksRead()->get();
+
+        // Obtém os livros favoritos
+        $favoriteBooks = $user->favoriteBooks()->get();
+
+        // Retorna os dados em formato JSON
+        return response()->json([
+            'books_read' => $booksRead,
+            'favorite_books' => $favoriteBooks
+        ]);
+    }
+}
+
+
+// Adicionar Rota UserBookController
+use App\Http\Controllers\UserBooksController;
+
+Route::get('/users/{userId}/books', [UserBooksController::class, 'listUserBooks']);
+
+
+// exemplo para progresso e livro favorito
+http://localhost:8000/users/2/books
+
+
+
+// adicionar UserController
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Book;
+use App\Models\User;
+use Illuminate\Http\Request;
+
+class UserController extends Controller
+{
+    public function suggestedBooks($userId)
+    {
+        // Obter o utilizador com os livros lidos e favoritos, incluindo as tags associadas aos livros
+        $user = User::with(['booksRead.tags', 'favoriteBooks.tags'])->findOrFail($userId);
+
+        // Recolher todas as tags associadas aos livros que o utilizador já leu ou favoritou
+        $tags = $user->booksRead->pluck('tags.*.id')->flatten()->unique()->merge(
+            $user->favoriteBooks->pluck('tags.*.id')->flatten()->unique()
+        );
+
+        // Obter livros que têm pelo menos uma dessas tags, excluindo os livros que o utilizador já leu ou favoritou
+        $suggestedBooks = Book::with('tags')
+            ->whereHas('tags', function ($query) use ($tags) {
+                $query->whereIn('tags.id', $tags);
+            })
+            ->whereNotIn('id', $user->booksRead->pluck('id'))
+            ->whereNotIn('id', $user->favoriteBooks->pluck('id'))
+            ->get();
+
+        // Retorna os livros sugeridos como JSON
+        return response()->json($suggestedBooks);
+    }
+}
+
+// rora para sugerir livros
+use App\Http\Controllers\UserController;
+
+Route::get('/users/{userId}/suggested-books', [UserController::class, 'suggestedBooks']);
+
+
+// testar o endpoint
+http://localhost:8000/users/3/suggested-books
+
+
+
+// criar admincontroller
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\BookClick;
+
+class AdminController extends Controller
+{
+    public function popularBooks()
+    {
+        $threeMonthsAgo = now()->subMonths(3);
+        $popularBooks = BookClick::selectRaw('book_id, COUNT(*) as clicks_count')
+            ->where('clicked_at', '>=', $threeMonthsAgo)
+            ->groupBy('book_id')
+            ->orderByDesc('clicks_count')
+            ->with('book') // Carregar informações do livro
+            ->get();
+
+        return response()->json($popularBooks);
+    }
+
+    public function peakUsageTimes()
+    {
+        $peakTimes = BookClick::selectRaw('HOUR(clicked_at) as hour, COUNT(*) as clicks_count')
+            ->groupBy('hour')
+            ->orderByDesc('clicks_count')
+            ->get();
+
+        return response()->json($peakTimes);
+    }
+}
+
+
+
+
+// Rotas para as estatísticas de administração
+use App\Http\Controllers\AdminController;
+Route::get('/admin/popular-books', [AdminController::class, 'popularBooks']);
+Route::get('/admin/peak-usage-times', [AdminController::class, 'peakUsageTimes']);
+
+//Exemplos
+http://localhost:8000/admin/popular-books
+http://localhost:8000/admin/peak-usage-times
+
+
+
+
+
+
+
+
+<?php
+
+// 1. Livros (Books)
+// Listar todos os livros:
+GET http://localhost:8000/books
+
+// Filtrar livros por autor (ex: author_id=1):
+GET http://localhost:8000/books?author_id=1
+
+// Filtrar livros por faixa etária (ex: age_group_id=1):
+GET http://localhost:8000/books?age_group_id=1
+
+// Filtrar livros pelo nível de acesso (ex: access_level=1):
+GET http://localhost:8000/books?access_level=1
+
+// Filtrar livros pelo status ativo (ex: is_active=1):
+GET http://localhost:8000/books?is_active=1
+
+// Combinar autor e status ativo (ex: author_id=1 e is_active=1):
+GET http://localhost:8000/books?author_id=1&is_active=1
+
+// Combinar todos os filtros (ex: author_id=2, age_group_id=2, access_level=1, is_active=1):
+GET http://localhost:8000/books?author_id=2&age_group_id=2&access_level=1&is_active=1
+
+// 2. Atividades (Activities)
+// Listar atividades de um livro específico (ex: bookId=1):
+GET http://localhost:8000/books/1/activities
+
+// 3. Livros Lidos e Favoritos de um Utilizador (User's Books)
+// Listar livros lidos e favoritos de um utilizador (ex: userId=2):
+GET http://localhost:8000/users/2/books
+
+// 4. Livros Sugeridos para um Utilizador (Suggested Books)
+// Sugerir livros para um utilizador baseado em tags dos livros lidos ou favoritos (ex: userId=3):
+GET http://localhost:8000/users/3/suggested-books
+
+// 5. Estatísticas de Administração (Admin Statistics)
+// Listar os livros mais populares dos últimos 3 meses:
+GET http://localhost:8000/admin/popular-books
+
+// Listar os horários de pico de uso da plataforma:
+GET http://localhost:8000/admin/peak-usage-times
+
+// 6. Rodar Migrations e Seeders
+// Rodar Migrations:
+php artisan migrate
+
+// Rodar Seeders:
+php artisan db:seed
+
+// Apagar e preenche a base de dados com migrate:fresh:
+php artisan migrate:fresh --seed
+
+
+// Swagger API
+php artisan l5-swagger:generate   
+http://localhost:8000/api/documentation
+
+
+?>

@@ -1,0 +1,1588 @@
+
+/*#######################################################################################################################################################*/
+
+/* Importação de Fontes Externas */
+/* Love Ya Like a Sister*/
+@import url('https://fonts.googleapis.com/css2?family=Love+Ya+Like+A+Sister&family=Ojuju:wght@200..800&display=swap');
+
+/*Nunito*/
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+
+/* Variáveis Globais */
+:root{
+    /* Cores Base */
+    --dark-orange: #E95A0C;
+    --light-orange: #FF9900;
+    --orange: #F97700;
+
+    --white: #FFFFFF;
+    --black: #000000;
+    --grey: #808080;
+    --dark-grey: #333333;
+    --light-grey: #d8d8d8;
+    --lighter-grey: #f0f0f0;
+
+    --pink-red: #ff0040;
+    --green: #2aab06;
+
+    /* Cores do Sistema */
+    --success-border: #28a745;
+    --error-border: #dc3545;
+    --warning-border: #ffc107;
+    --info-border: #17a2b8;
+    --progress-color: #ff5722;
+    --toast-bg: rgba(255, 255, 255, 0.80);
+
+    /* Fontes */
+    --love: 'Love Ya Like A Sister', cursive;
+    --nunito: 'Nunito', sans-serif;
+}
+
+
+/*########################################################## Estilos Gerais ##########################################################*/
+
+/* Estrutura Base */
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    font-family: var(--nunito), sans-serif;
+}
+
+footer {
+    position: relative;
+    z-index: 2;
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding-top: 15.8rem;
+}
+
+/* Classes Utilitárias */
+.hidden {
+    display: none;
+}
+
+.st-title{
+    font-family: var(--love), cursive;
+}
+
+/* Botões Principais */
+.btn {
+    background-color: var(--orange);
+    border-color: var(--orange);
+    font-weight: bold;
+    width: 10rem;
+    border-radius: 1rem;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+    color: white;
+}
+
+.btn:hover {
+    background-color: var(--dark-orange);
+    border-color: var(--dark-orange);
+    color: var(--white);
+    transform: translateY(-0.2rem);
+    box-shadow: 0 0.5rem 0.7rem rgba(0, 0, 0, 0.3);
+}
+
+/* Botões Secundários */
+.btnSecundary {
+    color: var(--orange);
+    background-color: var(--white);
+    font-weight: bold;
+    width: 10rem;
+    border-radius: 1rem;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+    text-decoration: none;
+}
+
+.btnSecundary:hover {
+    background-color: var(--dark-orange);
+    color: var(--white);
+    transform: translateY(-0.2rem);
+    box-shadow: 0 0.5rem 0.7rem rgba(0, 0, 0, 0.3);
+}
+
+/* Botões Administrativos */
+.btnAdmin {
+    background-color: var(--orange);
+    border: 1px solid var(--orange);
+    color: white;
+    font-weight: bold;
+    width: 10rem;
+    height: 2.5rem;
+    border-radius: 0.2rem;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+    box-shadow: none;
+}
+
+.btnAdmin:hover {
+    background-color: var(--dark-orange);
+    border-color: var(--dark-orange);
+    transform: translateY(-0.2rem);
+    box-shadow: 0 0.5rem 0.7rem rgba(0, 0, 0, 0.3);
+}
+
+.btnAdminSecundary {
+    background-color: var(--white);
+    border: 1px solid var(--orange);
+    color: var(--orange);
+    font-weight: bold;
+    width: 10rem;
+    height: 2.5rem;
+    border-radius: 0.2rem;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.btnAdminSecundary:hover {
+    background-color: var(--dark-orange);
+    color: var(--white);
+    border-color: var(--dark-orange);
+    transform: translateY(-0.2rem);
+    box-shadow: 0 0.5rem 0.7rem rgba(0, 0, 0, 0.3);
+}
+
+/* Botões Secundários Alternativos */
+.btn-secondary2 {
+    color: var(--white);
+    background-color: var(--orange);
+    border: 1px solid var(--white);
+    width: 8rem;
+    height: 2rem;
+    border-radius: 0.2rem;
+    font-weight: bold;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+}
+
+.btn-secondary2:hover {
+    color: var(--dark-orange);
+    border-color: var(--dark-orange);
+    background-color: var(--white);
+    transform: translateY(-0.2rem);
+    box-shadow: 0 0.5rem 0.7rem rgba(0, 0, 0, 0.3);
+}
+
+.btn-secondary2:active {
+    color: var(--white);
+    background-color: var(--dark-orange);
+    border-color: var(--dark-orange);
+    transform: translateY(0);
+    box-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.2);
+}
+
+/* Botões OK e CANCEL para confirmar o delete */
+/* Base style for both buttons */
+.swal-button {
+    width: 150px!important;
+    height: 40px!important;
+}
+
+/* Handle focus state to prevent size change */
+.swal-button--cancel:focus {
+    box-shadow: none!important;
+    outline: none!important;
+    transform: none!important;
+}
+
+/* Additional styling for visual consistency */
+.swal-button-container {
+    height: 40px!important;
+}
+
+
+
+/********************************************** Sidebar **********************************************/
+
+/* Cabeçalho da Barra Lateral */
+.sidebar-header {
+    position: relative;
+    width: 100%;
+    height: 10rem;
+    background-image: url("../images/banner.jpg");
+    background-size: cover;
+    background-position: center;
+    border-bottom: 2px solid var(--orange);
+    z-index: 2;
+}
+
+/* Overlay do Cabeçalho */
+.sidebar-header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+/* Estrutura Principal da Barra Lateral */
+.sidebar {
+    position: fixed;
+    top: 3.1rem;
+    left: 0;
+    width: 23rem;
+    /* Ajuste para considerar a altura do cabeçalho (3.1rem) e do rodapé (3rem) */
+    height: calc(100vh - 3.1rem); /* 100vh - cabeçalho - rodapé */
+    background-color: var(--white);
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+}
+
+/* Configuração do Menu de Navegação */
+.sidebar .nav {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Estilos Base dos Links */
+.sidebar .nav-link {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem 1.2rem;
+    font-weight: bold;
+    color: var(--dark-grey);
+    text-decoration: none;
+    border-left: 4px solid transparent;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+/* Estado Hover dos Links */
+.sidebar .nav-link:hover {
+    background-color: rgba(255, 153, 0, 0.1);
+    color: var(--orange);
+    border-left: 4px solid var(--orange);
+}
+
+/* Estado Ativo dos Links */
+.sidebar .nav-link.active {
+    background-color: var(--orange);
+    color: var(--white);
+    border-left: 4px solid var(--dark-orange);
+}
+
+/* Configuração dos Ícones */
+.sidebar .nav-link i {
+    width: 24px;
+    margin-right: 1.5rem; /* Aumentar espaço entre ícone e texto */
+}
+
+/* Alinhamento do Toggle Dropdown */
+.sidebar .nav-link.dropdown-toggle {
+    justify-content: flex-start; /* Alinhar à esquerda */
+}
+
+/* Posicionamento da Seta do Dropdown */
+.sidebar .nav-link.dropdown-toggle::after {
+    margin-left: auto; /* Empurra seta para direita */
+}
+
+/* Estrutura do Componente Dropdown */
+.sidebar .nav-item.dropdown {
+    position: relative;
+    width: 100%;
+}
+
+/* Configuração do Botão Dropdown */
+.sidebar .nav-link.dropdown-toggle {
+    justify-content: space-between;
+}
+
+/* Ícone da Seta do Dropdown */
+.sidebar .nav-link.dropdown-toggle::after {
+    content: "\F282";
+    font-family: bootstrap-icons, sans-serif;
+    border: none;
+    transition: transform 0.3s;
+}
+
+/* Rotação da Seta quando Ativo */
+.sidebar .nav-link.dropdown-toggle[aria-expanded="true"]::after {
+    transform: rotate(180deg);
+}
+
+/* Menu Dropdown Expandido */
+.sidebar .dropdown-menu {
+    position: static !important;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background-color: var(--white);
+    transform: none !important;
+    border-left: 4px solid var(--orange);
+    box-shadow: inset 0 3px 5px rgba(0,0,0,0.05);
+}
+
+/* Itens do Menu Dropdown */
+.sidebar .dropdown-item {
+    padding: 0.8rem 4rem;
+    color: var(--grey);
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+/* Estado Hover dos Itens Dropdown */
+.sidebar .dropdown-item:hover {
+    background-color: rgba(249, 119, 0, 0.1);
+    color: var(--orange);
+}
+
+/* Link de Regresso ao Site */
+.sidebar .nav-link:last-child {
+    margin-top: auto;
+}
+
+/* Links ativos no sidebar */
+.sidebar .dropdown-item.active {
+    background-color: rgba(249, 119, 0, 0.1);
+    color: var(--orange);
+}
+
+
+
+
+/********************************************** Botão Toggle da Barra Lateral **********************************************/
+
+/* Configuração Base do Botão Toggle */
+.sidebar-toggle {
+    display: none;
+    position: fixed;
+    top: 0.3rem;
+    left: 1rem;
+    z-index: 1001;
+    width: 36px;
+    height: 36px;
+    background: var(--orange);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    align-items: center;      /* Centralização vertical */
+    justify-content: center;  /* Centralização horizontal */
+    padding: 0;              /* Remove padding que pode afetar o posicionamento */
+}
+
+/* Configuração dos Ícones do Toggle */
+.sidebar-toggle i,
+.sidebar-toggle .bi {
+    display: flex;           /* Garante que o próprio ícone seja flex */
+    align-items: center;     /* Centraliza o conteúdo do ícone verticalmente */
+    justify-content: center; /* Centraliza o conteúdo do ícone horizontalmente */
+    font-size: 1.1rem;
+    line-height: 1;
+    margin: 0;              /* Remove margens que podem afetar o posicionamento */
+    padding: 0;             /* Remove padding que pode afetar o posicionamento */
+    height: 100%;           /* Garante que o ícone ocupe toda a altura */
+    width: 100%;            /* Garante que o ícone ocupe toda a largura */
+}
+
+/* Estado Hover do Botão Toggle */
+.sidebar-toggle:hover {
+    transform: scale(1.1); /* Aumenta ligeiramente o botão */
+    box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.3), -4px -4px 6px rgba(255, 255, 255, 0.2); /* Intensifica sombra */
+}
+
+/* Estado Ativo do Botão Toggle */
+.sidebar-toggle:active {
+    transform: scale(0.95); /* Reduz ligeiramente ao clicar */
+    box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.2), inset -2px -2px 4px rgba(255, 255, 255, 0.1); /* Efeito pressionado */
+}
+
+
+
+
+
+
+/********************************************** Layout da Dashboard **********************************************/
+
+
+.dashboard-layout {
+    flex-direction: column;
+    width: 80vw;
+    margin: 4.3rem auto 1rem;
+    transition: margin-left 0.3s ease;
+    display: flex;
+    justify-content: center;
+    min-width: 1200px;
+    padding: 0 1rem;
+}
+
+.dashboard-content {
+    flex-grow: 1;
+    padding: 2rem;
+    border: none !important;
+    background-color: var(--lighter-grey) !important;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 1600px;
+
+    margin-left: 20px;
+}
+
+
+/********************************************** Dashboard Administrativo **********************************************/
+
+/* Estrutura Base do Dashboard */
+.admin-dashboard {
+    padding: 1.5rem;
+}
+
+/* Configuração do Cabeçalho */
+.dashboard-header {
+    margin-bottom: 1.5rem;
+}
+
+.dashboard-header h1 {
+    color: var(--dark-orange);
+    font-size: 1.8rem;
+    margin-bottom: 0.3rem;
+}
+
+.dashboard-header p {
+    color: var(--grey);
+    font-size: 1rem;
+}
+
+/* Grelha de Estatísticas */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--light-grey);
+}
+
+/* Cartões de Estatísticas */
+.stat-card {
+    background: white;
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    background: rgba(255, 255, 255, 0.9);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Ícones das Estatísticas */
+.stat-card i {
+    font-size: 1.8rem;
+    padding: 0.8rem;
+    border-radius: 8px;
+}
+
+.stat-card.primary i { color: var(--orange); background: rgba(249, 119, 0, 0.1); }
+.stat-card.successs i { color: #28a745; background: rgba(40, 167, 69, 0.1); }
+.stat-card.infoo i { color: #17a2b8; background: rgba(23, 162, 184, 0.1); }
+.stat-card.warningg i { color: #ffc107; background: rgba(255, 193, 7, 0.1); }
+
+/* Conteúdo das Estatísticas */
+.stat-content h3 {
+    font-size: 0.9rem;
+    color: var(--grey);
+    margin: 0;
+}
+
+.stat-number {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--dark-grey);
+    margin: 0;
+}
+
+/* Estatísticas Detalhadas */
+.detailed-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    border: none;
+}
+
+/* Cartões de Detalhes */
+.detail-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    min-height: 250px;
+    border: 1px solid var(--light-grey);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.detail-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* Cabeçalho dos Cartões */
+.card-header {
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid var(--light-grey);
+}
+
+.card-header h2 {
+    font-size: 1rem;
+    color: var(--dark-grey);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.card-body {
+    padding: 0.8rem 1rem;
+}
+
+/* Estilos das Listas */
+.user-list, .book-list, .author-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.user-list li, .book-list li, .author-list li {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--light-grey);
+}
+
+.user-list li:last-child,
+.book-list li:last-child,
+.author-list li:last-child {
+    border-bottom: none;
+}
+
+/* Avatar do Utilizador */
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    background: var(--orange);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.8rem;
+    font-size: 0.9rem;
+}
+
+/* Informação do Utilizador */
+.user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.user-name {
+    font-weight: 600;
+    color: var(--dark-grey);
+    font-size: 0.9rem;
+}
+
+.user-date {
+    font-size: 0.85rem;
+    color: var(--grey);
+}
+
+/* Informações do Livro */
+.book-title-admin {
+    flex: 1;
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--dark-grey);
+}
+
+.book-stats {
+    color: var(--orange);
+    font-size: 0.9rem;
+}
+
+/* Lista de Autores */
+.author-name {
+    font-size: 0.9rem;
+    color: var(--dark-grey);
+    font-weight: 500;
+    flex: 1;
+}
+
+.book-count {
+    font-size: 0.85rem;
+    color: var(--orange);
+}
+
+/* Nuvem de Tags */
+.tag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tag {
+    background: rgba(249, 119, 0, 0.1);
+    color: var(--orange);
+    padding: 0.3rem 0.6rem;
+    border-radius: 15px;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.tag:hover {
+    background: var(--orange);
+    color: white;
+}
+
+.tag small {
+    background: var(--orange);
+    color: white;
+    padding: 0.1rem 0.4rem;
+    border-radius: 10px;
+    margin-left: 0.3rem;
+}
+
+/* Estatísticas de Subscrição */
+.subscription-stats {
+    grid-column: 1 / -1;
+    min-height: auto !important;
+    margin-top: 0.5rem;
+}
+
+.subscription-info {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    padding: 1rem 2rem;
+}
+
+.subscription-info > div {
+    flex: 1;
+    padding: 0.5rem;
+    transition: background-color 0.2s ease;
+}
+
+.subscription-info > div:hover {
+    background: rgba(249, 119, 0, 0.05);
+    border-radius: 8px;
+}
+
+.pending-comments, .pending-subscriptions {
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.pending-comments:hover, .pending-subscriptions:hover {
+    transform: scale(1.05);
+}
+
+/* Elementos de Interface */
+.number {
+    display: block;
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--orange);
+    margin-bottom: 0.3rem;
+}
+
+.label {
+    font-size: 0.85rem;
+    color: var(--grey);
+}
+
+/* Elementos da Tabela */
+table th,
+table tr,
+table td {
+    vertical-align: middle;
+    text-align: center;
+}
+
+table td div {
+    display: flex; /* Usa flexbox para alinhar os elementos internos */
+    align-items: center; /* Alinha verticalmente os elementos */
+    justify-content: center; /* Alinha horizontalmente os elementos */
+}
+
+table td span.access-badge {
+    margin: 0 0.5rem; /* Espaço entre os badges */
+    text-align: center; /* Centraliza o texto dentro do badge */
+}
+
+table td .mx-2 {
+    margin: 0 0.5rem; /* Margem entre "Free" e "->" */
+}
+
+
+/* Botões e Badges */
+.info-btn {
+    font-size: 0.7rem;
+    padding: 1px 4px !important;
+    line-height: 1;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.info-btn:hover {
+    color: var(--dark-orange)!important;
+    background-color: rgba(0, 0, 0, 0.1);
+    transform: scale(1.1);
+}
+
+/* Elementos do Formulário */
+.form-label {
+    margin-bottom: 0.5rem;
+    color: var(--dark-grey);
+}
+
+.form-label2 {
+    color: var(--orange);
+    font-family: var(--love), cursive;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Utilitários e Estados */
+.badge {
+    padding: 8px 12px;
+    font-weight: 500;
+}
+
+.bg-white {
+    background-color: #ffffff !important;
+}
+
+.list-group-item:last-child {
+    margin-bottom: 0 !important;
+}
+
+.status-badge, .access-badge {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+}
+
+.small-btn {
+    padding: 2px 5px;
+    font-size: 0.75rem;
+    line-height: 1;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+}
+
+.small-btn i {
+    font-size: 0.8rem;
+}
+
+.small-btn:hover {
+    background-color: var(--light-orange);
+    border-color: var(--dark-orange);
+    transform: scale(1.1);
+}
+
+
+/*########################################################## Responsividade ##########################################################*/
+
+/* Ecrãs Grandes e Médios (1024px - 2000px) */
+@media (max-width: 2000px) {
+    /* Estrutura da Barra Lateral */
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+
+    .sidebar.show {
+        transform: translateX(0);
+    }
+
+    .sidebar-toggle {
+        display: block;
+    }
+
+    /* Ajustes do Layout Principal */
+    .dashboard-layout {
+        margin-left: 0;
+        transition: margin-left 0.3s ease;
+    }
+
+    .dashboard-layout.shifted {
+        margin-left: 23rem;
+        transition: margin-left 0.3s ease;
+    }
+
+    /* Configurações das Tabelas de Dados */
+    .dataTables_wrapper {
+        padding: 1rem;
+    }
+
+    .dataTables_length,
+    .dataTables_filter {
+        margin-bottom: 1rem;
+    }
+
+    table.dataTable {
+        width: 100% !important;
+        margin: 1rem 0 !important;
+    }
+
+
+
+    /* Configurações dos Filtros e Seleções */
+    .choices {
+        min-width: 150px;
+        max-width: 250px;
+        width: 100%;
+    }
+
+    .choices__list--dropdown {
+        max-width: 250px;
+        overflow-wrap: break-word;
+        text-align: left;
+    }
+
+    .choices__list--dropdown .choices__item {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .filter-section select {
+        border: 1px solid var(--light-grey);
+        border-radius: 4px;
+        padding: 0.375rem 0.75rem;
+        font-size: 14px;
+    }
+}
+
+/* Tablets e Telemóveis (< 1024px) */
+@media (max-width: 1024px) {
+    /* Ajustes da Barra Lateral */
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar.show {
+        transform: translateX(0);
+        width: 100%;
+        max-width: 100%;
+    }
+
+    /* Ajustes do Layout */
+    .dashboard-layout {
+        margin-left: 0;
+    }
+
+    /* Configurações das Tabelas */
+    .dataTables_wrapper {
+        padding: 0.5rem;
+    }
+
+    .dataTables_length,
+    .dataTables_filter,
+    .dataTables_info,
+    .dataTables_paginate {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 0.5rem;
+    }
+
+    .dataTables_filter input {
+        width: 100%;
+        margin-left: 0 !important;
+        margin-top: 0.5rem;
+    }
+
+    table.dataTable {
+        font-size: 0.9rem;
+    }
+
+    /* Ajustes de Rolagem */
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Estrutura dos Filtros */
+    .choices {
+        width: 100% !important;
+        max-width: 100%;
+    }
+
+    .filter-section {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .filter-section > * {
+        width: 100%;
+    }
+
+    /* Configurações dos Botões */
+    .dt-buttons {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 0.5rem;
+    }
+
+    .dt-button {
+        width: 100%;
+        margin: 0.2rem 0;
+    }
+
+    /* Ajustes da Paginação */
+    .dataTables_paginate .paginate_button {
+        padding: 0.3rem 0.6rem !important;
+    }
+}
+
+/* Telemóveis Pequenos (< 480px) */
+@media (max-width: 480px) {
+    /* Ajustes de Fonte */
+    table.dataTable {
+        font-size: 0.8rem;
+    }
+
+    /* Configurações da Paginação */
+    .dataTables_paginate .paginate_button {
+        padding: 0.2rem 0.4rem !important;
+        font-size: 0.8rem;
+    }
+
+    /* Ajustes dos Controlos */
+    .dataTables_length select,
+    .dataTables_filter input {
+        font-size: 0.9rem;
+        padding: 0.3rem;
+    }
+
+    /* Elementos Ocultos em Telemóvel */
+    .mobile-hide {
+        display: none;
+    }
+}
+
+
+/*########################################################## DataTables ##########################################################*/
+
+/* Configuração da Paginação */
+.dataTables_wrapper .page-item.active .page-link {
+    background-color: var(--orange);
+    border-color: var(--orange);
+    color: white;
+}
+
+.dataTables_wrapper .page-link {
+    color: var(--dark-grey);
+}
+
+.dataTables_wrapper .page-link:hover {
+    background-color: rgba(249, 119, 0, 0.1);
+    border-color: var(--orange);
+    color: var(--orange);
+}
+
+/* Configuração dos Selects e Filtros */
+.dataTables_length select {
+    width: 70px !important;
+    height: 38px !important;
+    padding: 5px 10px !important;
+}
+
+/* Estilos Base de Campos de Formulário */
+input[type="text"],
+input[type="number"],
+input[type="search"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+input[type="datetime-local"],
+input[type="tel"],
+input[type="url"],
+input[type="file"],
+input[type="time"],
+input[type="month"],
+input[type="week"],
+input[type="color"],
+select,
+textarea,
+.dataTables_wrapper .dataTables_filter input,
+.form-select {
+    border: 1px solid var(--light-grey);
+    border-radius: 4px;
+    padding: 0.375rem 0.75rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    font-weight: 500;
+}
+
+/* Estados de Foco */
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="search"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="date"]:focus,
+input[type="datetime-local"]:focus,
+input[type="tel"]:focus,
+input[type="url"]:focus,
+input[type="file"]:focus,
+input[type="time"]:focus,
+input[type="month"]:focus,
+input[type="week"]:focus,
+input[type="color"]:focus,
+select:focus,
+textarea:focus,
+.dataTables_wrapper .dataTables_filter input:focus,
+.form-select:focus {
+    border-color: var(--orange);
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(249, 119, 0, 0.25);
+}
+
+/* Configuração de Filtros Especiais */
+.filter-select {
+    width: 200px !important;
+    min-width: 200px !important;
+    max-width: 200px !important;
+    flex: 0 0 200px !important;
+}
+
+/* Elementos com Cor Laranja */
+.border-orange {
+    border-color: var(--orange) !important;
+}
+
+.form-check-input.border-orange:checked {
+    background-color: var(--orange) !important;
+    border-color: var(--orange) !important;
+}
+
+/* Links Personalizados */
+.orange-link {
+    color: var(--orange);
+    text-decoration: none;
+    transition: text-decoration 0.2s;
+}
+
+.orange-link:hover {
+    color: var(--orange);
+    text-decoration: underline;
+}
+
+.black-link {
+    color: #212529;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.black-link:hover {
+    color: var(--orange);
+    text-decoration: underline;
+}
+
+.orange-title {
+    color: var(--orange);
+    transition: color 0.2s;
+}
+
+/* Configuração de Badges */
+.badge-type {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 6rem;
+    height: 2rem;
+    border-radius: 0.2rem;
+    font-size: 0.875rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.badge-type.admin {
+    color: #e87402;
+    background-color: rgb(250, 227, 210);
+}
+
+.badge-type.user {
+    color: #c456e1;
+    background-color: rgb(242, 220, 250);
+}
+
+/* Badges de Estado */
+.status-badge, .access-badge {
+    font-size: 0.875rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 8rem;
+    height: 2rem;
+    text-align: center;
+}
+
+.status-badge.pending2 {
+    color: #b58900;
+    background-color: rgba(181, 137, 0, 0.1);
+    width: auto; /* Ajusta ao conteúdo */
+    height: 2.2rem;
+}
+
+
+.status-badge.active { color: #2b7a39; background-color: rgba(43, 122, 57, 0.1); }
+.status-badge.inactive { color: #9a2f2f; background-color: rgba(154, 47, 47, 0.1); }
+.status-badge.suspended { color: #b58900; background-color: rgba(181, 137, 0, 0.1); }
+.status-badge.approved { color: #2b7a39; background-color: rgba(43, 122, 57, 0.1); }
+.status-badge.pending { color: #b58900; background-color: rgba(181, 137, 0, 0.1); }
+.status-badge.rejected { color: #9a2f2f; background-color: rgba(154, 47, 47, 0.1); }
+.status-badge.no_pending { color: #2b7a39; background-color: rgba(43, 122, 57, 0.1); }
+.status-badge.resolved {color: #1f6f8b; background-color: rgba(31, 111, 139, 0.1); }
+
+
+/* Badges de Acesso */
+.access-badge.free {
+    color: #2399f3;
+    background-color: rgb(207, 234, 255);
+}
+
+.access-badge.premium {
+    color: #eda328;
+    background-color: rgb(251, 238, 207);
+}
+
+/* Badges de Plano */
+.plan-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.plan-badge.premium {
+    color: var(--orange);
+    font-weight: 600;
+}
+
+/* Badges Laranja */
+.orange-badge {
+    color: #f39c12;
+    background-color: rgba(243, 156, 18, 0.1);
+    border: 1px solid #f39c12;
+    font-weight: bold;
+}
+
+.bg-orange {
+    background-color: #f39c12 !important;
+    color: white !important;
+}
+
+/* Elementos do CRUD */
+.custom-title {
+    font-family: 'Love', cursive;
+    color: #f97700;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+}
+
+.custom-title-h3 {
+    font-family: 'Love', cursive;
+    color: #f97700;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    font-size: 1.75rem; /* Tamanho típico de H3 */
+    line-height: 1.2; /* Ajusta o espaçamento vertical */
+}
+
+
+
+
+/* Visualização de Imagens */
+#imagePreview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#imageTitles .mb-2 {
+    margin-bottom: 1rem;
+}
+
+/*########################################################## Formulários ##########################################################*/
+
+/* Estilos Base dos Campos */
+.form-control,
+.form-select {
+    height: 38px !important;
+    font-size: 16px !important;
+    border-radius: 4px !important;
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Configuração de Áreas de Texto */
+textarea.form-control {
+    height: auto !important;
+    min-height: 38px !important;
+    border-radius: 4px !important;
+}
+
+textarea.form-control:focus {
+    border-color: var(--orange) !important;
+    outline: 0 !important;
+    box-shadow: 0 0 0 0.2rem rgba(249, 119, 0, 0.25) !important;
+}
+
+textarea#description {
+    margin-bottom: 24px !important;
+}
+
+/* Configuração de Seletores */
+select.form-select {
+    height: 38px !important;
+    font-size: 16px !important;
+    border-radius: 4px !important;
+}
+
+/* Configuração de Switches */
+.form-check.form-switch {
+    margin-bottom: 38px !important;
+}
+
+/* Estilos do Choices.js */
+.choices {
+    margin-bottom: 0;
+    border: none !important;
+    min-height: 45px !important;
+}
+
+.choices__inner {
+    background-color: var(--white);
+    border: 1px solid var(--light-grey);
+    border-radius: 4px;
+    padding: 0.375rem 0.75rem;
+    min-height: 45px;
+}
+
+/* Configuração de Seleção Múltipla */
+.choices[data-type*="select-multiple"] .choices__inner {
+    min-height: 45px !important;
+    height: auto !important; /* Permitir que a altura cresça automaticamente */
+    display: flex;
+    flex-wrap: wrap; /* Permitir que os itens quebrem para a próxima linha */
+    align-items: flex-start; /* Alinhar os itens ao topo */
+    padding: 5px; /* Ajustar o espaçamento interno */
+    gap: 5px; /* Espaçamento entre os itens */
+}
+
+.choices[data-type*="select-multiple"] .choices__input {
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: auto;
+    max-width: 190px;
+    min-width: 120px;
+    display: inline-block;
+}
+
+
+/* Configuração do Input de Pesquisa */
+.choices__input--cloned {
+    border: none !important;
+    min-height: 32px !important;
+}
+
+/* Estilos do Dropdown */
+.choices__list--dropdown {
+    background-color: var(--white);
+    border-color: var(--light-grey);
+}
+
+.choices__list--dropdown .choices__item--selectable {
+    padding: 8px 12px;
+}
+
+.choices__list--dropdown .choices__item--selectable:hover,
+.choices__list--dropdown .choices__item--selectable.is-highlighted {
+    background-color: rgba(249, 119, 0, 0.1);
+    color: var(--orange) !important;
+}
+
+/* Estilos de Seleção Múltipla */
+.choices__list--multiple .choices__item {
+    background-color: var(--orange);
+    border: 1px solid var(--dark-orange);
+    border-radius: 3px;
+    margin: 2px;
+}
+
+.choices[data-type*="select-multiple"] .choices__button {
+    border-left: 1px solid var(--dark-orange);
+    padding-left: 16px;
+}
+
+/* Estados dos Campos */
+.choices.is-focused .choices__inner {
+    border-color: var(--orange);
+    box-shadow: 0 0 0 0.2rem rgba(249, 119, 0, 0.25);
+}
+
+.choices__list--single .choices__item--selectable {
+    color: var(--dark-grey);
+}
+
+.choices__input {
+    background-color: transparent;
+}
+
+.choices__placeholder {
+    opacity: 0.7;
+}
+
+/* Configuração de Remoção de Imagem */
+.delete-image {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 20px;
+    height: 20px;
+    background-color: #ff4444;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    transition: all 0.2s ease;
+}
+
+.delete-image:hover {
+    background-color: #cc0000;
+    transform: scale(1.1);
+}
+
+/* Visualização de Vídeo */
+.video-preview {
+    position: relative;
+    width: 300px;
+    height: 169px;
+}
+
+iframe {
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+
+/*########################################################## Notificações Toast ##########################################################*/
+
+/* Estrutura Base da Notificação */
+.notification {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 380px;
+    min-height: 80px;
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    background: var(--toast-bg);
+    backdrop-filter: blur(4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.10);
+    opacity: 0;
+    animation: show 5s ease;
+}
+
+/* Elementos da Notificação */
+.notification .icon {
+    flex-shrink: 0;
+    font-size: 24px;
+    margin-right: 15px;
+    color: var(--success-border);
+}
+
+.notification .title {
+    flex-grow: 1;
+}
+
+.notification .title h1 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+    color: #ff5722;
+}
+
+.notification .title h6 {
+    font-size: 16px;
+    margin: 5px 0 0;
+    color: #333;
+    line-height: 1.4;
+}
+
+/* Botão de Fechar */
+.notification .close {
+    flex-shrink: 0;
+    font-size: 18px;
+    margin-left: 15px;
+    color: #666;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.notification .close:hover {
+    color: #333;
+}
+
+/* Tipos de Notificação */
+.success {
+    border: 2px solid var(--success-border);
+}
+
+.success .icon,
+.success .title h1 {
+    color: var(--success-border);
+}
+
+.error {
+    border: 2px solid var(--error-border);
+}
+
+.error .icon,
+.error .title h1 {
+    color: var(--error-border);
+}
+
+.warning {
+    border: 2px solid var(--warning-border);
+}
+
+.warning .icon,
+.warning .title h1 {
+    color: var(--warning-border);
+}
+
+.info {
+    border: 2px solid var(--info-border);
+}
+
+.info .icon,
+.info .title h1 {
+    color: var(--info-border);
+}
+
+/* Notificações de Autenticação */
+.notification.auth-success {
+    border: 2px solid var(--success-border);
+    background: rgba(255, 255, 255, 0.80);
+}
+
+.notification.auth-success .icon,
+.notification.auth-success .title h1 {
+    color: var(--success-border);
+}
+
+.notification.auth-info {
+    border: 2px solid var(--info-border);
+    background: rgba(255, 255, 255, 0.80);
+}
+
+.notification.auth-info .icon,
+.notification.auth-info .title h1 {
+    color: var(--info-border);
+}
+
+/* Container das Notificações */
+.notification-box {
+    position: fixed;
+    top: 60px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+/* Barra de Progresso */
+.notification::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: #ff5722;
+    animation: progress 5s linear;
+}
+
+/* Animações */
+@keyframes show {
+    0% {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    5% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    95% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
+
+@keyframes progress {
+    0% {
+        width: 100%;
+    }
+    100% {
+        width: 0;
+    }
+}

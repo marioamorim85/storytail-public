@@ -1,0 +1,2401 @@
+
+
+/* Fonts */
+/* Love Ya Like a Sister*/
+@import url('https://fonts.googleapis.com/css2?family=Love+Ya+Like+A+Sister&family=Ojuju:wght@200..800&display=swap');
+/*Nunito*/
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+
+
+/* Root */
+:root{
+    /*Cores*/
+    --dark-orange: #E95A0C;
+    --light-orange: #FF9900;
+    --orange: #F97700;
+
+    --white: #FFFFFF;
+    --black: #000000;
+    --grey: #808080;
+    --dark-grey: #333333;
+    --light-grey: #dddddd;
+    --medium-grey: #e2e2e2;
+    --lighter-grey: #f0f0f0;
+
+    --pink-red: #ff0040;
+    --green: #2aab06;
+
+    --shadow-grey: rgba(0, 0, 0, 0.1);
+    --hover-light-grey: #f8f9fa;
+    --hover-logout-bg: #ffe6e6;
+    --orange-opacity: rgba(233, 90, 12, 0.1);
+
+    /*Fontes*/
+    --love: 'Love Ya Like A Sister', cursive;
+    --nunito: 'Nunito', sans-serif;
+}
+
+
+/*########################################################## Estilos Gerais ##########################################################*/
+
+/* Configuração básica para preenchimento do ecrã */
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    font-family: var(--nunito), sans-serif;
+}
+
+/* Configuração do Footer para permanecer no final da página e por cima do conteúdo*/
+footer {
+    position: relative;
+    z-index: 2;
+}
+
+/*Definição de um container para o conteúdo substituíel deixando espaço para o conteúdo fixo*/
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding-top: 15.8rem;
+}
+
+/* Esconder elementos*/
+.hidden {
+    display: none !important;
+}
+
+/* Conteúdo de secções definido como visivel */
+.content-section {
+    display: block;
+}
+
+/*Font Titulos*/
+.st-title{
+    font-family: var(--love), cursive;
+}
+
+/* Botão principal */
+.btn {
+    background-color: var(--orange);
+    border-color: var(--orange);
+    font-weight: bold;
+    width: 10rem;
+    border-radius: 1rem;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+    color: white;
+}
+
+.btn:hover {
+    background-color: var(--dark-orange);
+    border-color: var(--dark-orange);
+    color: var(--white);
+    transform: translateY(-0.2rem);
+    box-shadow: 0 0.5rem 0.7rem rgba(0, 0, 0, 0.3);
+}
+
+/* Botão secundário */
+.btnSecundary {
+    color: var(--orange);
+    background-color: var(--white);
+    border: 1px solid var(--orange);
+    font-weight: bold;
+    width: 10rem;
+    border-radius: 1rem;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+    text-decoration: none;
+}
+
+.btnSecundary:hover {
+    color: var(--dark-orange);
+    border-color: var(--dark-orange);
+    transform: translateY(-0.2rem);
+    box-shadow: 0 0.5rem 0.7rem rgba(0, 0, 0, 0.3);
+}
+
+.btn-premium {
+    background-color: var(--orange);
+    color: var(--white);
+    font-size: 0.875rem; /* Tamanho de fonte reduzido */
+    font-weight: 500; /* Peso do texto */
+    padding: 0.4rem 0.8rem; /* Ajuste do espaçamento interno */
+    border-radius: 6px; /* Bordas mais suaves */
+    text-align: center;
+    border: none; /* Remove bordas extras */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    cursor: pointer;
+}
+
+.btn-premium:hover {
+    background-color: var(--dark-orange); /* Cor mais escura no hover */
+    transform: scale(1.05); /* Leve aumento no hover */
+}
+
+.btn-premium:active {
+    transform: scale(0.95); /* Leve redução ao clicar */
+}
+
+
+/* Toast Styles */
+.toast-container {
+    z-index: 9999;
+    position: fixed;
+    bottom: 7rem !important;
+    right: 1rem !important;
+    border-radius: 1rem;
+}
+
+.toast {
+    background-color: var(--orange-opacity);
+    color: var(--dark-orange);
+    border: 1px solid var(--orange);
+    min-width: 400px;
+    text-align: center;
+}
+
+/* Toast Close Button */
+.toast .btn-close {
+    filter: invert(48%) sepia(90%) saturate(4367%) hue-rotate(359deg) brightness(101%) contrast(93%);
+}
+
+.toast .btn-close:hover {
+    color: var(--orange) !important;
+    opacity: 0.8;
+}
+
+
+/*Alertas*/
+.alert-info {
+    background-color: var(--orange-opacity);
+    color: var(--dark-orange);
+    border: 1px solid var(--orange);
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+/*########################################################## Auth ##########################################################*/
+/********************************************** Auth-forms **********************************************/
+.auth-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("../images/background.jpg");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 0;
+}
+
+/* Container do login */
+.auth-container {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 2.58rem 3rem;
+    border-radius: 2rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 35rem;
+    text-align: center;
+    z-index: 1;
+
+    /* Título de login */
+    .st-title{
+        text-align: center;
+        color: var(--orange);
+        font-size: 2.5rem;
+        margin-bottom: 1.5rem;
+    }
+}
+
+.dropdown-menu {
+    border-radius: 8px; /* Define os cantos arredondados para todo o menu */
+    overflow: hidden;   /* Garante que o conteúdo não "escapa" dos cantos arredondados */
+}
+
+/* Form textbox */
+.form-control {
+    border-radius: 0.5rem;
+    box-shadow: none;
+}
+
+/* Link forget password */
+.forgot-password {
+    font-size: 0.9rem;
+    color: var(--orange);
+    text-decoration: none;
+}
+
+.forgot-password:hover {
+    color: var(--dark-orange);
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+input[type="date"] {
+    /* Remove o ícone padrão em alguns navegadores */
+    &::-webkit-calendar-picker-indicator {
+        cursor: pointer;
+        opacity: 0.6;
+    }
+    &::-webkit-calendar-picker-indicator:hover {
+        opacity: 1;
+    }
+}
+
+
+/*########################################################## Home Page ##########################################################*/
+
+/* Container do menu */
+.home-main-content{
+    position: fixed;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+    margin-top: 18.2rem;
+}
+
+/* Menu de Navegação */
+.home-menu {
+    background-color: rgba(255, 255, 255, 0.5);
+    width: 100vw; /* Ocupa a largura do ecrã */
+    position: relative; /* Assegura que ocupa toda a largura */
+    left: 50%; /* centraliza o texto */
+    transform: translateX(-50%); /* reforço para centralizar o texto */
+}
+
+.home-menu .nav-tabs .nav-item .nav-link {
+    font-family: var(--nunito);
+    font-weight: bold;
+    color: var(--dark-grey);
+    padding: 0.8rem 1.5rem;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+.home-menu .nav-tabs .nav-link.active {
+    color: var(--orange);
+    border-bottom: 3px solid var(--orange);
+}
+
+.home-menu .nav-tabs .nav-link:hover {
+    color: var(--dark-orange);
+}
+
+.premium-overlay{
+    margin-top: 2rem;
+    border: 1px solid var(--light-grey);
+    background-color: var(--white);
+    box-shadow: 0 4px 9px rgba(0, 0, 0, 0.1);
+    border-radius: 1rem !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 1rem;
+    width: 100%;
+}
+
+.premium-overlay .container{
+    flex: 1;
+    min-width: 0;
+    margin-left: 1rem;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+.premium-overlay .btn{
+    margin-top: 3rem;
+}
+
+
+/*########################################################## Utility-pages ##########################################################*/
+
+/* Utility banner */
+.st-utility-banner {
+    position: relative; /* Define o contexto para posicionamento absoluto do título */
+    width: 100%;
+    top: -5rem;
+    height: 10.5rem;
+    background-image: url("../images/banner.jpg");
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+}
+
+.st-utility-banner .st-title {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    width: 100%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.5);
+    color: var(--dark-orange);
+    font-size: 2.5rem;
+    text-align: center;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+
+/********************************************** Contact **********************************************/
+
+/* Contianer de Contact Us */
+.contact-us-container {
+    background-color: var(--white);
+    border-radius: 1rem;
+    border: 1px solid var(--light-grey);
+    box-shadow: 0 4px 9px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    margin: auto;
+    margin-top: 9rem;
+    max-width: 80rem;
+}
+
+.contact-title {
+    font-family: var(--love);
+    color: var(--orange);
+    margin-bottom: 1rem;
+}
+
+.contact-image {
+    max-width: 100%;
+    max-height: 30rem;
+    margin-bottom: 1.5rem;
+}
+
+.form-contact{
+    padding-left: 2rem;
+}
+.form-control {
+    border-radius: 0.5rem;
+    border: 1px solid var(--light-grey);
+    box-shadow: none;
+}
+
+.contact-buttons{
+    display: flex;
+    justify-content: end;
+    gap: 2rem;
+    margin-top: 1rem;
+    margin-bottom: -1.5rem;
+}
+
+.btn-primary {
+    background-color: var(--orange);
+    border-color: var(--orange);
+    font-weight: bold;
+    width: 10rem;
+    border-radius: 1rem;
+    color: var(--white);
+}
+
+.btn-primary:hover {
+    background-color: var(--dark-orange);
+    border-color: var(--dark-orange);
+}
+
+.btn-secondary {
+    color: var(--orange);
+    background-color: var(--white);
+    border: 1px solid var(--orange);
+    font-weight: bold;
+    width: 10rem;
+    border-radius: 1rem;
+}
+
+.btn-secondary:hover {
+    color: var(--white);
+    background-color: var(--dark-orange);
+    border-color: var(--dark-orange);
+}
+
+/********************************************** About **********************************************/
+
+/* Container Principal */
+.about-us-container {
+    background-color: var(--white);
+    border-radius: 1rem;
+    border: 1px solid var(--light-grey);
+    box-shadow: 0 4px 9px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    margin: auto;
+    margin-top: 9rem;
+    max-width: 80rem;
+}
+
+/* Imagem */
+.about-image {
+    max-width: 100%;
+    max-height: 25rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Título */
+.st-title {
+    font-family: var(--love);
+    color: var(--orange);
+    margin-bottom: 1rem;
+}
+
+/* Texto */
+.about-text {
+    font-size: 1rem;
+    color: var(--dark-grey);
+    line-height: 1.6;
+}
+
+/*########################################################## Components ##########################################################*/
+
+/********************************************** Layout Page **********************************************/
+
+/*-------- Navbar --------*/
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: var(--dark-orange);
+    padding: 0.2rem 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+
+/*Logo*/
+.navbar .navbar-brand img.logo {
+    width: 2.5rem;
+    height: auto;
+}
+
+/* Formatação para os botões em ecrãs normais*/
+.navbar .nav-link {
+    color: white;
+    margin-left: 2rem;
+}
+
+.navbar .btn {
+    background-color: var(--light-orange);
+    color: white !important;
+    width: 6rem !important;
+    font-size: 0.8rem;
+    padding: 0.4rem;
+    border-radius: 1rem;
+    box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+    text-decoration: none;
+}
+
+.navbar .btn:hover {
+    background-color: var(--orange);
+    transform: translateY(-0.2rem);
+    box-shadow: 0 0.5rem 0.7rem rgba(0, 0, 0, 0.3);
+}
+
+/* Botão de navegação para ecrãs pequenos */
+.navbar-toggler {
+    border-color: var(--white);
+}
+
+/* Alteração do icon padrão do hamburguer menu para branco */
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='white' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+/*-------- Account Menu --------*/
+
+/* Dropdown Menu Login */
+/* Define a cor branca no dropdown após o clique */
+.nav-link.text-white,
+.nav-link.text-white:focus,
+.nav-link.text-white:active,
+.nav-link.text-white.show {
+    color: var(--white) !important;
+}
+
+/* Estilo geral do dropdown */
+.custom-dropdown-menu {
+    border: none;
+    box-shadow: 0px 4px 8px var(--shadow-grey);
+    padding: 0;
+    min-width: 200px;
+    background-color: var(--lighter-grey);
+}
+
+/* Links dentro do dropdown */
+.custom-dropdown-menu .dropdown-item {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    color: var(--dark-grey);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid var(--light-orange);
+}
+
+.custom-dropdown-menu .dropdown-item:hover {
+    background-color: var(--hover-light-grey);
+    color: var(--dark-grey);
+}
+
+/* Ícones para dar mais destaque */
+.custom-dropdown-menu .dropdown-item i {
+    color: var(--dark-orange);
+    font-size: 1rem;
+}
+
+/* Estilo do botão de logout */
+.custom-dropdown-menu .logout-item {
+    color: var(--pink-red);
+}
+
+.custom-dropdown-menu .logout-item:hover {
+    background-color: var(--hover-logout-bg);
+    color: var(--pink-red);
+}
+
+/* Espaçamento inferior para remover excesso */
+.custom-dropdown-menu .dropdown-divider {
+    margin: 0;
+}
+
+
+/* Estilo para evitar o efeito de foco indesejado */
+.user-dropdown {
+    text-decoration: none;
+    color: inherit;
+    font-weight: 500;
+}
+
+/* Regra geral para campos de password */
+input[type="password"].form-control.is-invalid,
+input[type="password"].form-control.is-valid,
+input[type="text"].form-control.is-invalid,
+input[type="text"].form-control.is-valid {
+    background-size: 1rem !important;
+    background-position: calc(100% - 2rem) center !important;
+    padding-right: 4rem !important;
+}
+
+/* Estilo do toggle de password */
+.password-toggle {
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+    top: 9px;
+    z-index: 3;
+}
+
+/* Customizações do Flatpickr */
+.flatpickr-calendar {
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para os dias */
+.flatpickr-day.selected,
+.flatpickr-day.selected:hover {
+    background: var(--orange) !important;
+    border-color: var(--orange) !important;
+    color: white !important; /* Texto branco */
+}
+
+.flatpickr-day.today {
+    border-color: var(--orange) !important;
+}
+
+.flatpickr-day.today:hover {
+    background: var(--orange) !important;
+    color: white !important;
+}
+
+.flatpickr-day:hover {
+    background: rgba(255, 165, 0, 0.2) !important; /* Cor hover para os dias */
+    color: var(--orange) !important; /* Consistência do texto */
+}
+
+/* Estilo para o cabeçalho (mês e ano) */
+.flatpickr-months {
+    background: var(--orange) !important; /* Fundo laranja */
+}
+
+.flatpickr-months .flatpickr-month {
+    background: var(--orange) !important;
+}
+
+.flatpickr-months .flatpickr-prev-month,
+.flatpickr-months .flatpickr-next-month {
+    color: white !important;
+    fill: white !important;
+}
+
+.flatpickr-months .flatpickr-prev-month:hover,
+.flatpickr-months .flatpickr-next-month:hover {
+    opacity: 0.8;
+}
+
+.flatpickr-current-month {
+    background: var(--orange) !important; /* Fundo laranja sólido */
+    color: white !important; /* Cor do texto */
+}
+
+.flatpickr-current-month .flatpickr-monthDropdown-months,
+.flatpickr-current-month input.cur-year {
+    background: var(--orange) !important;
+    color: white !important;
+    border: none !important; /* Remove borda */
+    font-weight: 500; /* Texto em destaque */
+}
+
+.flatpickr-current-month .flatpickr-monthDropdown-months:hover {
+    background: transparent !important; /* Remove fundo hover */
+}
+
+/* Estilo para os dias da semana */
+.flatpickr-weekdays {
+    background: var(--orange) !important; /* Fundo laranja sólido */
+    border: none !important; /* Remove quaisquer bordas */
+}
+
+.flatpickr-weekday {
+    background: var(--orange) !important; /* Fundo laranja para cada dia */
+    color: white !important; /* Cor branca para o texto */
+    font-weight: 500; /* Texto em destaque */
+    border: none !important; /* Remove bordas */
+}
+
+.flatpickr-weekday:hover {
+    background: rgba(255, 255, 255, 0.1) !important; /* Hover subtil */
+    color: white !important;
+}
+
+/* Remove os estilos padrão do dropdown */
+.flatpickr-monthDropdown-months {
+    -webkit-appearance: none; /* Remove estilo nativo no Chrome/Safari */
+    -moz-appearance: none; /* Remove estilo no Firefox */
+    appearance: none; /* Remove estilo genérico */
+    background: var(--orange) !important; /* Fundo laranja */
+    color: white !important; /* Texto branco */
+    border: none !important; /* Sem borda */
+    padding: 8px 12px; /* Ajusta o espaçamento */
+    border-radius: 4px; /* Bordas arredondadas */
+    font-size: 14px; /* Tamanho do texto */
+    font-weight: 500; /* Texto em negrito */
+    cursor: pointer; /* Cursor de mão para dropdown */
+    outline: none; /* Remove o contorno azul */
+}
+
+/* Itens do dropdown */
+.flatpickr-monthDropdown-months option {
+    background: var(--orange) !important; /* Fundo laranja */
+    color: white !important; /* Texto branco */
+    padding: 8px; /* Espaçamento interno */
+    border: none !important; /* Sem borda */
+    font-size: 14px; /* Tamanho do texto */
+    font-weight: 500; /* Texto em negrito */
+}
+
+/* Hover nos itens */
+.flatpickr-monthDropdown-months option:hover {
+    background: rgba(255, 165, 0, 0.8) !important; /* Fundo laranja claro */
+    color: white !important; /* Texto branco */
+}
+
+/* Item selecionado */
+.flatpickr-monthDropdown-months option:checked {
+    background: white !important; /* Fundo branco para item selecionado */
+    color: var(--orange) !important; /* Texto laranja */
+    font-weight: bold; /* Texto destacado */
+}
+
+/* Remover contornos indesejados no Chrome */
+select:focus {
+    outline: none !important;
+}
+
+/* Ajustes extras para navegadores */
+select::-moz-focus-inner {
+    border: 0 !important;
+    padding: 0 !important;
+}
+
+.flatpickr-months .flatpickr-prev-month,
+.flatpickr-months .flatpickr-next-month {
+    background: var(--orange) !important; /* Fundo laranja */
+    color: white !important; /* Texto branco */
+    border-radius: 4px; /* Bordas arredondadas */
+    padding: 5px 10px; /* Espaçamento */
+    cursor: pointer; /* Cursor de mão */
+}
+
+.flatpickr-months .flatpickr-prev-month:hover,
+.flatpickr-months .flatpickr-next-month:hover {
+    background: rgba(255, 165, 0, 0.8) !important; /* Fundo mais claro no hover */
+}
+
+/* Estilo para o cabeçalho (mês e ano) */
+.flatpickr-current-month {
+    font-size: 18px; /* Tamanho consistente */
+    font-weight: 700; /* Negrito para destaque */
+    display: flex;
+    justify-content: center; /* Centraliza o mês e o ano */
+    align-items: center;
+}
+
+/* Estilo específico para o mês */
+.flatpickr-current-month .flatpickr-monthDropdown-months {
+    font-size: 18px; /* Tamanho igual ao ano */
+    font-weight: 700; /* Negrito para consistência */
+    color: white !important; /* Cor branca */
+    background: var(--orange) !important; /* Fundo laranja (se necessário) */
+    border: none; /* Remove bordas */
+}
+
+/* Estilo específico para o ano */
+.flatpickr-current-month input.cur-year {
+    font-size: 18px; /* Tamanho igual ao mês */
+    font-weight: 700; /* Negrito */
+    color: white !important; /* Cor branca */
+    border: none; /* Remove bordas */
+    background: transparent; /* Sem fundo */
+    text-align: center; /* Centraliza o texto */
+}
+
+/* Estilo para o container do mês e ano */
+.flatpickr-current-month {
+    display: flex;
+    justify-content: center; /* Centraliza o conteúdo */
+    align-items: center;
+    gap: 10px; /* Espaçamento entre o mês e o ano */
+}
+
+/* Estilo para o select do ano */
+.flatpickr-current-month input.cur-year {
+    position: relative;
+    font-size: 18px; /* Ajusta o tamanho da fonte */
+    font-weight: 700; /* Negrito para consistência */
+    background: var(--orange); /* Fundo laranja */
+    color: white; /* Texto branco */
+    border: none; /* Remove bordas */
+    text-align: center; /* Centraliza o texto */
+    padding: 5px 10px; /* Ajusta o espaçamento interno */
+    border-radius: 4px; /* Bordas arredondadas */
+    appearance: none; /* Remove o estilo padrão do navegador */
+}
+
+/* Dropdown sempre visível */
+.flatpickr-current-month .flatpickr-monthDropdown-months,
+.flatpickr-current-month input.cur-year {
+    display: block !important; /* Garante que o dropdown esteja visível */
+    cursor: pointer; /* Cursor em forma de mão */
+}
+
+/* Reposiciona os selects */
+.flatpickr-current-month .flatpickr-monthDropdown-months {
+    position: relative;
+    margin-left: 20px; /* Espaçamento entre o mês e o dropdown do ano */
+}
+
+
+/*-------- Footer --------*/
+
+/* Barra superior do footer */
+.footer-top {
+    background-color: var(--dark-orange);
+    padding: 0.5rem 0;
+    position: relative;
+    z-index: 1;
+}
+
+/* Logo */
+.footer-logo img {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%; /* Arredonda a imagem */
+    border: 0.2rem solid var(--white);
+    position: absolute;
+    transform: translateY(-60%);
+}
+
+/* Links do footer */
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+}
+
+.container .footer-links {
+    text-align: center;
+}
+
+.footer-link {
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+.footer-link:hover {
+    text-decoration: underline;
+}
+
+/* Barra inferior do footer */
+.footer-bottom {
+    padding: 0.7rem 0;
+    background-color: var(--black);
+    z-index: 1;
+    position: relative;
+}
+
+.footer-bottom .container {
+    position: relative;
+    text-align: center;
+}
+
+/* Links Redes sociais */
+.social-links {
+    position: absolute;
+}
+
+.social-links a {
+    font-size: 1.2rem;
+    color: white;
+}
+
+.social-links a:hover {
+    color: var(--dark-orange) !important;
+}
+
+
+/* Ajuste na navbar para ecrãs pequenos */
+@media (max-width: 992px) {
+    .navbar-nav {
+        align-items: flex-start;
+    }
+
+    .navbar-collapse {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        padding-right: 2rem;
+    }
+
+    .navbar-nav .nav-item {
+        width: 100%;
+        text-align: center;
+        margin: 0.2rem 0;
+    }
+}
+
+/********************************************** Home - Banner **********************************************/
+/* Home Banner */
+.st-home-banner {
+    position: fixed;
+    top: -2rem;
+    left: 0;
+    width: 100%;
+    height: 25rem;
+    background-image: url("../images/banner.jpg");
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+}
+/* Conteúdo fixo */
+.fixed-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+    margin-top: 5.3rem;
+}
+
+/* Barra de Pesquisa */
+.fixed-header  .search-bar {
+    margin-top: 2rem;
+}
+
+.fixed-header  .search-bar h2 {
+    font-family: var(--love);
+    color: var(--dark-orange);
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    background-color: rgba(255, 255, 255, 0.5);
+    width: 100vw; /* Ocupa a largura do ecrã */
+    position: relative; /* Assegura que ocupa toda a largura */
+    left: 50%; /* centraliza o texto */
+    transform: translateX(-50%); /* reforço para centralizar o texto */
+}
+
+.search-bar input.form-control {
+    padding-left: 2rem;
+    border: 1px solid var(--light-grey);
+    border-radius: 1.5rem 0 0 1.5rem;
+    box-shadow: none;
+    width: 50%;
+}
+
+.search-bar .btn {
+    border-radius: 0 1.5rem 1.5rem 0;
+    background-color: var(--orange);
+    width: 4rem;
+}
+
+.search-bar .btn:hover {
+    background-color: var(--dark-orange);
+}
+
+.bold-icon {
+    text-shadow: 0 0 1px white, 0 0 1px white;
+    font-size: 1.2rem;
+}
+
+/********************************************** Banner **********************************************/
+
+/* Banner */
+.st-banner {
+    position: fixed;
+    top: -8rem;
+    left: 0;
+    width: 100%;
+    height: 22rem;
+    background-image: url("../images/banner.jpg");
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+}
+
+/********************************************** Book-Component **********************************************/
+
+/* Filtro de Ordenação */
+.filter {
+    font-family: var(--nunito);
+    font-weight: bold;
+    font-size: 1rem;
+    color: var(--dark-orange);
+    margin-bottom: 1.5rem;
+    margin-top: 25rem ;
+}
+
+.filter span {
+    margin-right: 0.5rem;
+}
+
+.filter select.form-select {
+    border-radius: 0.5rem;
+    padding: 0.2rem 2rem;
+    border: 1px solid var(--light-orange);
+    box-shadow: none;
+    color: var(--dark-orange);
+}
+
+/* lista de Livros */
+#books-list {
+    padding: 1.5rem;
+}
+
+/* Card de Livro */
+#books-list .book-card {
+    border: 1px solid var(--light-grey);
+    border-radius: 0.8rem;
+    box-shadow: 0 0.3rem 0.8rem rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+    max-width: 100%;
+    width: auto;
+}
+
+#books-list .book-card:hover {
+    transform: translateY(-0.2rem);
+    box-shadow: 0 1rem 1.5rem rgba(0, 0, 0, 0.2);
+}
+
+#books-list .book-card img {
+    height: 12rem;
+    object-fit: contain;
+    border-radius: 1rem;
+    background-color: var(--white);
+    width: 100%; /* Para garantir que a imagem se ajuste ao tamanho do card */
+}
+
+#books-list .book-card .btn {
+    background-color: var(--orange);
+    border-radius: 1rem;
+    margin-top: 1rem;
+    width: 100%; /* Torna o botão responsivo */
+}
+
+#books-list .book-card .btn:hover {
+    background-color: var(--dark-orange);
+}
+
+
+/********************************************** Filter-Component **********************************************/
+
+/* Botão de ativação */
+#toggle-filter-btn {
+    position: fixed;
+    top: 25rem;
+    left: -1rem;
+    width: 3rem; /* Define a largura do botão */
+    height: auto;
+    padding: 0.5rem;
+    background-color: var(--orange);
+    color: var(--white);
+    border: none;
+    border-radius: 0 0.5rem 0.5rem 0;
+    cursor: pointer;
+    font-weight: bold;
+    z-index: 2;
+    writing-mode: vertical-lr;
+    text-orientation: mixed;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    transition: left 0.3s ease;
+}
+
+#toggle-filter-btn:hover {
+    left: 0;
+}
+
+/* Barra lateral recolhida inicialmente */
+.filter-container {
+    position: fixed;
+    top: 23rem;
+    left: 0;
+    width: 0; /* Inicialmente recolhida */
+    height: calc(100vh - 23rem);
+    overflow: hidden;
+    background-color: var(--white);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    transition: width 0.5s ease;
+}
+
+/* Barra expandida */
+.filter-container.expanded {
+    width: 15rem;
+}
+
+/* Ocultar o botão quando o painel está expandido */
+.filter-container.expanded + #toggle-filter-btn {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Cabeçalho fixo dos filtros */
+.filter-header {
+    background-color: var(--orange);
+    padding: 0.5rem 0;
+    text-align: center;
+}
+
+/* Título do filtro */
+.filter-title {
+    color: var(--white);
+    font-family: var(--nunito), sans-serif;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+/* Conteúdo dos filtros com scroll interna */
+.filter-list {
+    list-style: none;
+    padding: 0 1rem;
+    margin: 0;
+    background-color: var(--white);
+    overflow-y: auto;
+    flex: 1; /* Expande para ocupar o restante do espaço disponível */
+    scroll-behavior: smooth;
+    max-height: calc(100vh - 34rem); /* Limita a altura do filtro para o viewport */
+}
+
+/* Personalização da barra de scroll */
+.filter-list::-webkit-scrollbar {
+    width: 0.4rem; /* Define uma largura mais fina */
+}
+
+.filter-list::-webkit-scrollbar-track {
+    background: var(--light-grey); /* Cor do track da barra de scroll */
+}
+
+.filter-list::-webkit-scrollbar-thumb {
+    background-color: var(--orange); /* Cor do "polegar" da barra de scroll */
+    border-radius: 0.5rem; /* Deixa a barra de scroll com bordas arredondadas */
+}
+
+.filter-list::-webkit-scrollbar-thumb:hover {
+    background-color: var(--light-orange); /* Cor ao passar o mouse por cima */
+}
+
+/* Cada item de filtro */
+.filter-item {
+    border-bottom: 1px solid var(--light-grey);
+    padding: 0.5rem 0;
+}
+
+/* Botão de alternância de filtro */
+.filter-toggle {
+    background: none;
+    border: none;
+    color: var(--dark-grey);
+    font-family: var(--nunito), sans-serif;
+    font-weight: bold;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    text-align: left;
+    padding: 0.3rem 0;
+}
+
+/* Icone do filtro */
+.filter-toggle .bi-chevron-down {
+    transition: transform 0.2s ease-in-out;
+    color: var(--dark-orange);
+    text-shadow: 0 0 1px var(--dark-orange), 0 0 1px var(--dark-orange);
+}
+
+/* Ícone de seta para cima (ativo) */
+.filter-toggle.active .bi-chevron-down {
+    transform: rotate(180deg); /* Rotaciona o ícone para cima */
+}
+
+/* Opções do filtro (inicialmente ocultas) */
+.filter-options {
+    padding-left: 1rem;
+    margin-top: 0.3rem;
+    display: none;
+    font-family: var(--nunito), sans-serif;
+    font-size: 0.9rem;
+    color: var(--dark-grey);
+}
+
+/* Exibir opções quando o filtro está ativo */
+.filter-options.active {
+    display: block;
+}
+
+/* Estilo para checkboxes */
+.filter-options input[type="checkbox"] {
+    accent-color: var(--orange);
+}
+
+/* Resto dos estilos do filtro (barra de scroll, etc.) */
+.filter-list {
+    list-style: none;
+    padding: 0 1rem;
+    margin: 0;
+    background-color: var(--white);
+    overflow-y: auto;
+    flex: 1;
+    scroll-behavior: smooth;
+    max-height: calc(100vh - 34rem);
+}
+
+.filter-list::-webkit-scrollbar {
+    width: 0.4rem;
+}
+
+.filter-list::-webkit-scrollbar-track {
+    background: var(--light-grey);
+}
+
+.filter-list::-webkit-scrollbar-thumb {
+    background-color: var(--orange);
+    border-radius: 0.5rem;
+}
+
+.filter-list::-webkit-scrollbar-thumb:hover {
+    background-color: var(--light-orange);
+}
+
+/* Exibe o filtro acima do conteúdo em dispositivos menores */
+@media (max-width: 992px) {
+    #toggle-filter-btn {
+        display: none;
+        visibility: hidden;
+    }
+
+    .filter-container {
+        width: 100%; /* Largura total em dispositivos móveis */
+        position: relative; /* Ajusta para que fique no fluxo acima do conteúdo */
+        top: auto;
+        border-radius: 0;
+        margin-bottom: 1rem;
+        height: auto; /* Permite que expanda conforme o conteúdo */
+        z-index: 0;
+    }
+}
+
+
+/*########################################################## Manage-acount ##########################################################*/
+
+/********************************************** Profile **********************************************/
+
+.user-profile-container {
+    background-color: var(--white);
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    border: 1px solid var(--light-grey);
+    box-shadow: 0 4px 9px rgba(0, 0, 0, 0.1);
+    max-width: 55rem;
+    margin: auto;
+}
+
+.profile-avatar-section {
+    display: flex;
+    align-items: center;
+    padding-left: 0.5rem;
+}
+
+.profile-avatar {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+    border: 4px solid var(--light-orange);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.profile-avatar-section:hover .profile-avatar {
+    transform: scale(1.1);
+    border-color: var(--orange);
+}
+
+.user-ranking {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--orange);
+    margin-left: 0.5rem;
+    margin-top: -1rem;
+}
+
+.form-photo{
+    margin-top: 2rem;
+}
+
+.upload-photo-label {
+    font-weight: bold;
+    color: var(--dark-grey);
+    display: block;
+    margin-bottom: 0.3rem;
+}
+
+.upload-photo-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--light-grey);
+    border-radius: 0.5rem;
+    padding-right: 2rem;
+    height: calc(2.5rem + 2px);
+}
+
+.upload-photo-input {
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.upload-photo-placeholder {
+    padding: 0.5rem;
+    color: var(--grey);
+    font-size: 0.9rem;
+}
+
+.upload-photo-icon {
+    position: absolute;
+    right: 0.5rem;
+    font-size: 1.2rem;
+    color: var(--orange);
+}
+
+.upload-photo-input-wrapper:hover .upload-photo-icon {
+    color: var(--dark-orange);
+}
+
+.profile-form label {
+    font-weight: bold;
+    color: var(--dark-grey);
+}
+
+.profile-form .form-control {
+    border-radius: 0.5rem;
+    border: 1px solid var(--light-grey);
+    color: var(--orange);
+}
+
+.profile-form .btn-primary {
+    background-color: var(--orange);
+    border-color: var(--orange);
+    width: 10rem;
+}
+
+.profile-form .btn-secondary {
+    color: var(--orange);
+    background-color: var(--white);
+    border: 1px solid var(--orange);
+    width: 10rem;
+}
+
+.profile-form .btn-primary:hover {
+    background-color: var(--dark-orange);
+}
+
+.profile-form .btn-secondary:hover {
+    color: var(--dark-orange);
+    border-color: var(--dark-orange);
+}
+
+#oldPassword::placeholder,
+#newPassword::placeholder{
+    padding: 0.5rem;
+    color: var(--grey);
+    font-size: 0.9rem;
+}
+
+.profile-form .btn {
+    margin: 0 1rem; /* Adiciona margem horizontal entre os botões */
+}
+
+/*########################################################## Manage-my-books ##########################################################*/
+
+
+/********************************************** Banner **********************************************/
+
+.st-manage-banner {
+    position: relative;
+    width: 100%;
+    top: -5rem;
+    height: 13.5rem;
+    background-image: url('../images/banner.jpg'); /* Certifique-se de ajustar o caminho */
+    background-size: cover;
+    background-position: center;
+}
+
+.st-manage-banner .st-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 0.5rem 1rem;
+    color: var(--dark-orange);
+    font-family: var(--love);
+    font-size: 2rem;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/********************************************** Favourites **********************************************/
+
+/* Cabeçalho */
+.table-header {
+    margin-top: 14.5rem !important;
+    background-color: var(--white);
+    width: 100%;
+    padding: 0.5rem 0;
+    padding-right: 20rem;
+    padding-left: 16rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.text-orange {
+    color: var(--dark-orange);
+    font-family: var(--nunito);
+    font-weight: bold;
+}
+
+/* Container principal */
+.favourites-container {
+    background-color: var(--white);
+    border: 1px solid var(--light-grey);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo dos itens favoritos */
+.favourite-item {
+    padding: 1rem 0; /* Espaçamento entre as linhas */
+}
+
+/* Divisória laranja entre os itens */
+.favourite-divider {
+    border: none;
+    border-top: 2px solid var(--orange);
+    margin: 0;
+}
+
+/* Capa do livro */
+.favourite-cover {
+    border-radius: 0.5rem;
+    max-height: 100px;
+    object-fit: cover;
+}
+
+/* Texto do título */
+.favourite-title {
+    font-weight: bold;
+    font-size: 1rem;
+    color: var(--dark-grey);
+    text-align: center;
+}
+
+/* Tempo de leitura */
+.favourite-time {
+    color: var(--grey);
+    font-size: 0.9rem;
+}
+
+/* Ajusta os botões lado a lado */
+.d-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Botões */
+.btn-read {
+    background-color: var(--orange);
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 0.3rem 0.5rem;
+    text-decoration: none;
+    border-radius: 0.7rem;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+    color: white;
+}
+
+.btn-read:hover {
+    background-color: var(--dark-orange);
+    color: var(--white);
+    transform: translateY(-0.2rem);
+    box-shadow: 0 0.5rem 0.7rem rgba(0, 0, 0, 0.3);
+}
+
+/* Estilo do ícone de lixo */
+.delete-icon-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.delete-icon-btn:hover {
+    transform: scale(1.2);
+}
+
+.delete-icon-btn i {
+    font-size: 1.5rem;
+    color: var(--pink-red);
+}
+
+.delete-icon-btn i:hover {
+    color: red;
+}
+
+/* Overlay no favourite */
+.favourite-overlay{
+    background-color: var(--white);
+    border-radius: 1rem !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 2rem;
+    text-align: center;
+    width: 100%;
+}
+
+/********************************************** Progress **********************************************/
+
+/* Container principal */
+.progress-container {
+    text-align: center;
+    margin: 1rem 0;
+}
+
+/* Container dos blocos */
+.progress-blocks {
+    display: flex;
+    justify-content: center;
+    gap: 0.2rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Blocos individuais */
+.progress-block {
+    width: 1.2rem;
+    height: 0.9rem;
+    border: 1.5px solid var(--orange);
+    background-color: var(--medium-grey);
+    border-radius: 0.3rem;
+    transition: background-color 0.3s ease;
+}
+
+/* Blocos preenchidos */
+.progress-block.filled {
+    background-color: var(--orange);
+}
+
+/* Texto da percentagem */
+.progress-percentage {
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: var(--orange);
+}
+
+
+/* Ajuste do botão READ */
+.btn-read {
+    background-color: var(--orange);
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 0.3rem 0.5rem;
+    text-decoration: none;
+    border-radius: 0.7rem;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+    color: white;
+}
+
+.btn-read:hover {
+    background-color: var(--dark-orange);
+    color: var(--white);
+    transform: translateY(-0.2rem);
+    box-shadow: 0 0.5rem 0.7rem rgba(0, 0, 0, 0.3);
+}
+
+/* Responsividade para tablets */
+@media (max-width: 900px) {
+    .table-header {
+        margin-top: 14rem !important;
+        padding-right: 10rem;
+        padding-left: 10rem;
+        font-size: 0.9rem;
+    }
+
+    .text-orange {
+        font-size: 1rem;
+    }
+
+    .progress-blocks {
+        justify-content: flex-start;
+        gap: 0.1rem;
+        width: 5rem;
+    }
+
+
+    .progress-percentage {
+        font-size: 0.7rem;
+    }
+}
+
+/* Responsividade para telemóveis */
+@media (max-width: 480px) {
+    .table-header {
+        margin-top: 14rem !important;
+        padding-right: 1rem;
+        padding-left: 1rem;
+        font-size: 0.8rem;
+    }
+
+    .text-orange {
+        font-size: 0.9rem;
+        text-align: center;
+    }
+
+    .progress-blocks {
+        justify-content: center;
+        gap: 0.1rem;
+        width: 5rem;
+    }
+}
+
+/********************************************** Badges **********************************************/
+
+/* Container do menu */
+.menu-main-content{
+    position: fixed;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+    margin-top: 9rem;
+}
+
+/* Menu de Navegação */
+.menu {
+    background-color: rgba(255, 255, 255, 0.5);
+    width: 100vw; /* Ocupa a largura do ecrã */
+    position: relative; /* Assegura que ocupa toda a largura */
+    left: 50%; /* centraliza o texto */
+    transform: translateX(-50%); /* reforço para centralizar o texto */
+}
+
+.menu .nav-tabs .nav-item .nav-link {
+    font-family: var(--nunito), sans-serif;
+    font-weight: bold;
+    color: var(--dark-grey);
+    padding: 0.8rem 1.5rem;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+.menu .nav-tabs .nav-link.active {
+    color: var(--orange);
+    border-bottom: 3px solid var(--orange);
+}
+
+.menu .nav-tabs .nav-link:hover {
+    color: var(--dark-orange);
+}
+
+/* Container para os badges */
+.badges-container {
+    border: 1px solid var(--light-grey);
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    padding: 1.5rem !important;
+    justify-content: flex-start;
+    max-width: 90%;
+    margin-top: -3rem !important;
+    margin: auto;
+}
+
+/* Container individual dos badges */
+.badge-container {
+    width: 7rem;
+    height: 7rem;
+    border: 2px dashed #b9b9b9;
+    border-radius: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.badge-container:hover {
+    transform: scale(1.1);
+}
+
+/* Badge item */
+.badge-item {
+    width: 6.5rem;
+    height: 6.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.7rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* Imagem dentro do badge */
+.badge-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/*########################################################## Books ##########################################################*/
+
+/********************************************** Book-details **********************************************/
+
+/************** Book-banner **************/
+
+/* Estilizar o título dentro do banner */
+.st-book-banner {
+    position: relative; /* Define o contexto para posicionamento absoluto do título */
+    width: 100%;
+    top: -5rem;
+    height: 10rem;
+    background-image: url("../images/banner.jpg");
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+}
+
+.st-book-banner .st-title {
+    position: absolute;
+    top: 47%;
+    left: 50%;
+    width: 100%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.5);
+    color: var(--dark-orange);
+    font-size: 2.5rem;
+    text-align: center;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+/************** Book-info **************/
+.book-main-content{
+    position: fixed;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+    margin-top: 5.5rem;
+}
+
+.book-main-content .home-menu{
+    background-color: var(--white) !important;
+}
+
+.main-content-book{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-top: 9rem ;
+}
+
+
+/* Conteiner da info do Book */
+.book-about {
+    border: 1px solid var(--light-grey);
+    background-color: var(--white);
+    box-shadow: 0 4px 9px rgba(0, 0, 0, 0.1);
+    border-radius: 1rem !important;
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+    padding: 1rem;
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+/* Container com a info do livro */
+.book-info {
+    flex: 1;
+    min-width: 0;
+    margin-left: 1rem;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+/* Icon de favorito */
+.favorite-btn {
+    position: absolute;
+    top: 2rem;
+    right: 0.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;    /* Adiciona padding para aumentar área clicável */
+    display: flex;     /* Usa flexbox para centralizar o ícone */
+    align-items: center;
+    justify-content: center;
+    z-index: 10;      /* Garante que está acima de outros elementos */
+    transition: transform 0.2s ease; /* Adiciona transição suave */
+}
+
+/* Aumenta a área de hover */
+.favorite-btn:hover {
+    transform: scale(1.1); /* Efeito de zoom suave ao hover */
+}
+
+/* Icon dentro do botão */
+.favorite-btn i {
+    font-size: 1.5rem;
+    transition: color 0.3s ease;
+}
+
+/* Icon favorito ativo */
+.favorite-btn.active i {
+    color: var(--pink-red);
+}
+
+/* Icon de lido */
+.status-icon {
+    font-size: 1.2rem;
+    position: absolute;
+    top: 1rem;
+    left: 0.5rem;
+    width: 1.9rem;
+    height: 1.9rem;
+    background-color: var(--green);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+}
+
+.status-icon i{
+    color: var(--white);
+    font-size: 1.2rem;
+}
+
+/* Capa do livro */
+.book-cover {
+    width: 150px;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Titulo do livro */
+.book-title {
+    font-weight: bold !important;
+    font-size: 1.5rem !important;
+    color: var(--dark-grey);
+}
+
+/* Nome do autor */
+.author-name {
+    color: var(--orange);
+}
+
+.author-name a {
+    color: var(--orange);
+    cursor: pointer;
+}
+
+.author-name a:hover {
+    color: var(--dark-orange);
+}
+
+/* Caracteristicas do livro e avaliação */
+.book-details {
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 1rem;
+    gap: 1rem;
+    font-size: 0.9rem;
+    color: var(--grey);
+    margin-bottom: 0.5rem;
+}
+
+/* Ícone e texto estilizados */
+.book-details .icon-wrapper i {
+    display: inline-flex;
+    font-size: 1.2rem;
+    margin-right: 0.3rem;
+    text-shadow:0px 0px 0px rgba(249, 119, 0, 1);
+    color: var(--orange);
+}
+
+/* Descrição */
+.description {
+    color: var(--dark-grey);
+    font-size: 0.9rem;
+    margin-bottom: 3rem;
+    padding-left: 0.5rem;
+    white-space: normal;
+}
+
+.book-info .btn {
+    position: absolute;
+    right: 1rem;
+    bottom: 0.1rem;
+    background-color: var(--orange);
+    color: white;
+    font-weight: bold;
+    border-radius: 1rem;
+    padding: 0.5rem 1rem;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+}
+
+.book-info .btn:hover {
+    background-color: var(--dark-orange);
+    transform: translateY(-0.2rem);
+    box-shadow: 0 0.5rem 0.7rem rgba(0, 0, 0, 0.3);
+}
+
+/* Mensagens informativas */
+.alert-info{
+    margin-top: 2rem !important;
+}
+/************** Book-comments **************/
+
+.comments-section {
+    background-color: var(--white);
+    border: 1px solid var(--light-grey);
+    box-shadow: 0 4px 9px rgba(0, 0, 0, 0.1);
+    border-radius: 1rem !important;
+}
+
+.section-Title {
+    font-size: 1.5rem;
+    color: var(--dark-grey);
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.comment {
+    background-color: var(--lighter-grey);
+    border-radius: 1rem !important;
+    display: flex;
+    align-items: center;
+}
+
+.comment-photo {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    border: 2px solid var(--orange);
+    transform: translateY(-0.5rem);
+}
+
+.comment .name {
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--dark-grey);
+}
+
+.rating i {
+    font-size: 1rem;
+    color: var(--orange);
+}
+
+.comment-text {
+    font-size: 0.9rem;
+    color: var(--grey);
+    margin-top: 0.5rem;
+}
+
+/************** Book-author-about **************/
+
+.st-book-banner .st-author-title{
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    width: 100%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.5);
+    color: var(--dark-orange);
+    font-family: var(--love), sans-serif;
+    font-size: 2.5rem;
+    text-align: center;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.main-content-author{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-top: 12rem ;
+}
+
+.author-photo {
+    width: 12rem;
+    height: auto;
+    border-radius: 1rem;
+}
+
+/* Data nascimento */
+.author-nat{
+    color: var(--dark-grey);
+}
+
+
+/************** Book-read **************/
+
+.progress-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+
+.progress-bar {
+    transition: width 0.4s ease-in-out;
+}
+
+/* Container do livro */
+.book-slider-container {
+    position: relative;
+    width: 100%;
+    max-width: 54rem;
+    margin: -1rem auto;
+    overflow: hidden;
+    border: 1px solid var(--light-grey);
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: var(--white);
+    height: calc(100vh - 21rem); /* Altura dinâmica ajustada para o layout fixo */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: #f5f5f5;
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    display: block;
+}
+
+
+/* Slider */
+.book-slider {
+    display: flex;
+    transition: transform 0.3s ease-in-out;
+    height: 100%;
+    max-width: 100%;
+}
+
+/* Configuração dos slides */
+.slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+/* Imagens do livro */
+.book-page {
+    max-height: 100%;
+    border-radius: 0.5rem;
+    object-fit: cover;
+}
+
+/* Formulário de comentário */
+.add-comment {
+    width: 100%;
+    max-width: 600px;
+    padding: 2rem;
+    background-color: var(--white);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+}
+
+.add-comment .st-title{
+    font-size: 1.8rem;
+}
+
+.add-comment label {
+    font-weight: bold;
+    font-size: 1rem;
+    color: var(--dark-grey);
+}
+
+/* Ajuste das estrelas relativamente à label */
+.star-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Label Your Comment */
+.add-comment .comment-label {
+    text-align: left;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.add-comment .comment-area {
+    resize: none;
+    border-radius: 0.5rem !important;
+    border: 1px solid var(--light-grey);
+    padding: 0.5rem;
+    font-size: 1rem;
+    width: 100%;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.add-comment textarea:focus {
+    border-color: var(--orange); /* Muda a cor da borda ao focar */
+    outline: none;
+}
+
+/* Botões de navegação */
+.slider-nav {
+    position: absolute;
+    bottom: 1rem;
+    background-color: var(--orange);
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: var(--white);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.9);
+    border-radius: 1rem;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0.1rem solid var(--white);
+}
+
+.slider-nav.prev {
+    right: 48rem;
+    top: 15.5rem;
+    bottom: 15.5rem;
+}
+
+.slider-nav.next {
+    left: 48rem;
+    top: 15.5rem;
+    bottom: 15.5rem;
+}
+
+.slider-nav:hover {
+    background-color: var(--dark-orange);
+    color: white;
+}
+
+/* Responsividade para ecrans maiores */
+@media (min-width: 1440px) {
+    .slider-nav {
+        position: absolute;
+        bottom: 1rem;
+        width: 3rem;
+        height: 3rem;
+        font-size: 1.5rem;
+    }
+
+    .slider-nav.prev {
+        right: 38rem;
+        top: 44.4rem;
+        bottom: 15.5rem;
+    }
+
+    .slider-nav.next {
+        left: 38rem;
+        top: 44.4rem;
+        bottom: 15.5rem;
+    }
+}
+
+/* Responsividade para tablets */
+@media (max-width: 900px) {
+    .progress-container {
+        padding: 1.5rem;
+    }
+
+    .book-slider-container {
+        max-width: 90%;
+        height: calc(100vh - 18rem); /* Altura ajustada para tablets */
+
+    }
+
+    .book-slider {
+        transition: none !important;
+    }
+
+    .page{
+        margin-top: 2rem;
+    }
+
+    .slider-nav {
+        margin-top: 0.5rem;
+        right: 2rem;
+        left: auto;
+        width: 2rem;
+        height: 2rem;
+        font-size: 1.2rem;
+    }
+
+    .slider-nav.prev {
+        left: 4rem;
+        top: 0rem;
+    }
+
+    .slider-nav.next {
+        right: 4rem;
+        left: auto;
+        top: 0rem;
+    }
+
+    .add-comment {
+        max-width: 100%;
+        padding: 1.5rem;
+    }
+
+    .add-comment .st-title {
+        font-size: 1.5rem;
+    }
+
+    .add-comment label {
+        font-size: 0.9rem;
+    }
+
+    .add-comment .comment-area {
+        font-size: 0.9rem;
+    }
+
+    .progress-container {
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+    }
+}
+
+/* Responsividade para telemóveis */
+@media (max-width: 480px) {
+    .progress-container {
+        padding: 1rem;
+    }
+
+    .book-slider-container {
+        max-width: 100%;
+        height: calc(100vh - 15rem);
+    }
+
+    .book-slider {
+        transition: none !important;
+    }
+
+    .slider-nav {
+        right: 1rem;
+        left: auto;
+        width: 2rem;
+        height: 2rem;
+        font-size: 1rem;
+    }
+
+    .slider-nav.prev {
+        left: 3rem;
+        top: 7rem;
+    }
+
+    .slider-nav.next {
+        right: 3rem;
+        left: auto;
+        top: 7rem;
+    }
+
+    .add-comment {
+        max-width: 100%;
+        padding: 1rem;
+    }
+
+    .add-comment .st-title {
+        font-size: 1.2rem;
+    }
+
+    .add-comment label {
+        font-size: 0.8rem;
+    }
+
+    .add-comment .comment-area {
+        font-size: 0.8rem;
+    }
+
+    .progress-container {
+        margin-top: 1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .image-container img {
+        object-fit: contain; /* Ajusta a imagem para dispositivos menores */
+    }
+}
+
+/************** Book-video **************/
+/* Container do video */
+.book-video-container {
+    position: relative;
+    width: 100%;
+    max-width: 54rem;
+    margin: -1rem auto;
+    margin-top: 2.5rem;
+    overflow: hidden;
+    border: 1px solid var(--light-grey);
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: var(--white);
+    height: calc(100vh - 20rem); /* Altura dinâmica ajustada para o layout fixo */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/************** Book-activitie **************/
+
+/* Container das atividades */
+.container-activity{
+    border: 1px solid var(--light-grey);
+    background-color: var(--white);
+    box-shadow: 0 4px 9px rgba(0, 0, 0, 0.1);
+    border-radius: 1rem !important;
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+    padding: 1rem;
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.activity-card{
+    border-radius: 1rem !important;
+    overflow: hidden;
+}
+
+.activity-card img{
+    border-radius: 1rem !important;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+
+    display: block;
+    width: 100%;
+    height: 20rem;
+}
+
+/****************** Responsividade ******************/
+/* Responsividade para tablets */
+@media (max-width: 768px) {
+    .container-activitie img {
+        height: 200px; /* Altura reduzida para tablets */
+    }
+}
+
+/* Responsividade para telemóveis */
+@media (max-width: 480px) {
+    .container-activitie img {
+        height: 150px; /* Altura reduzida para celulares */
+    }
+}
+/*########################################################## Views API ##########################################################*/
+
+/********************************************** books-list **********************************************/
+
+/*Container da lista de livros*/
+.card-title {
+    white-space: nowrap; /* Não permite que o texto quebre em várias linhas */
+    overflow: hidden; /* Esconde o excesso de texto que não cabe */
+    text-overflow: ellipsis; /* Adiciona '...' ao final do texto que não cabe */
+}
+
+
+/*#######################################################################################################################################################*/
+
+

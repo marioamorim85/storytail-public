@@ -1,0 +1,1318 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Storytail API",
+        "description": "API documentation for Storytail",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/books/{bookId}/activities": {
+            "get": {
+                "tags": [
+                    "Activities"
+                ],
+                "summary": "Lista de atividades do livro",
+                "description": "Retorna todas as atividades associadas a um livro específico",
+                "operationId": "3eac295cf0b31de68230a111b5d6f61b",
+                "parameters": [
+                    {
+                        "name": "bookId",
+                        "in": "path",
+                        "description": "ID do livro",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de atividades",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "title": {
+                                                "type": "string",
+                                                "example": "Atividade de Leitura"
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "example": "Descrição da atividade"
+                                            },
+                                            "is_active": {
+                                                "type": "boolean",
+                                                "example": true
+                                            },
+                                            "images": {
+                                                "type": "array",
+                                                "items": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "title": {
+                                                            "type": "string"
+                                                        },
+                                                        "image_url": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Livro não encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Livro não encontrado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/popular-books": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Livros mais populares",
+                "description": "Retorna os 3 livros mais clicados nos últimos 3 meses",
+                "operationId": "0e836a1c2fb8f650c0d4fe8fb27053a2",
+                "responses": {
+                    "200": {
+                        "description": "Lista dos livros mais populares",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "book_id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "clicks_count": {
+                                                "type": "integer",
+                                                "example": 150
+                                            },
+                                            "book": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "title": {
+                                                        "type": "string",
+                                                        "example": "O Livro Mais Popular"
+                                                    },
+                                                    "description": {
+                                                        "type": "string"
+                                                    },
+                                                    "read_time": {
+                                                        "type": "integer",
+                                                        "example": 15
+                                                    },
+                                                    "access_level": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "is_active": {
+                                                        "type": "boolean",
+                                                        "example": true
+                                                    },
+                                                    "authors": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "name": {
+                                                                    "type": "string"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro ao processar pedido",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Erro ao processar pedido"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/peak-usage-times": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Horários de pico",
+                "description": "Retorna o horário com mais cliques em livros",
+                "operationId": "fc81d60e4bf17e1e67311873c67bbcc5",
+                "responses": {
+                    "200": {
+                        "description": "Horário com mais acessos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "hour": {
+                                                "description": "Hora do dia (0-23)",
+                                                "type": "integer",
+                                                "example": 14
+                                            },
+                                            "clicks_count": {
+                                                "description": "Número de cliques nessa hora",
+                                                "type": "integer",
+                                                "example": 250
+                                            },
+                                            "percentage": {
+                                                "description": "Percentagem do total de cliques",
+                                                "type": "number",
+                                                "example": 15.5
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro ao processar pedido",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Erro ao processar pedido"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/age-groups/{id}/books": {
+            "get": {
+                "tags": [
+                    "Age Groups"
+                ],
+                "summary": "Livros por grupo etário",
+                "description": "Retorna os livros de um grupo etário específico",
+                "operationId": "3663f7a31e9d42ea3be1e45781158477",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do grupo etário",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de livros do grupo etário",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "age_group": {
+                                            "type": "string",
+                                            "example": "3-5 anos"
+                                        },
+                                        "books": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "title": {
+                                                        "type": "string",
+                                                        "example": "O Grande Livro"
+                                                    },
+                                                    "description": {
+                                                        "type": "string"
+                                                    },
+                                                    "read_time": {
+                                                        "type": "integer",
+                                                        "example": 15
+                                                    },
+                                                    "is_active": {
+                                                        "type": "boolean",
+                                                        "example": true
+                                                    },
+                                                    "cover_url": {
+                                                        "type": "string"
+                                                    },
+                                                    "authors": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "name": {
+                                                                    "type": "string"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "tags": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "name": {
+                                                                    "type": "string"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Grupo etário não encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Grupo etário não encontrado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/age-groups": {
+            "get": {
+                "tags": [
+                    "Age Groups"
+                ],
+                "summary": "Lista grupos etários",
+                "description": "Retorna todos os grupos etários disponíveis",
+                "operationId": "0fd85566969a99c2c63c7c55f36271cd",
+                "responses": {
+                    "200": {
+                        "description": "Lista de grupos etários",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "age_group": {
+                                                "type": "string",
+                                                "example": "3-5 anos"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/authors/{id}": {
+            "get": {
+                "tags": [
+                    "Authors"
+                ],
+                "summary": "Detalhes do autor com livros ativos",
+                "description": "Retorna os detalhes de um autor e os seus livros ativos.",
+                "operationId": "00578a154adb7ed4ddf1e9271f19dd7d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do autor",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "book_id",
+                        "in": "query",
+                        "description": "ID do livro a excluir da listagem",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 5
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalhes do autor com livros ativos.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "John Doe"
+                                        },
+                                        "description": {
+                                            "type": "string",
+                                            "example": "Renowned international author."
+                                        },
+                                        "nationality": {
+                                            "type": "string",
+                                            "example": "American"
+                                        },
+                                        "author_photo_url": {
+                                            "type": "string",
+                                            "example": "photos/john_doe.png"
+                                        },
+                                        "books": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 2
+                                                    },
+                                                    "title": {
+                                                        "type": "string",
+                                                        "example": "The Great Book"
+                                                    },
+                                                    "description": {
+                                                        "type": "string",
+                                                        "example": "A detailed description of the book."
+                                                    },
+                                                    "read_time": {
+                                                        "type": "integer",
+                                                        "example": 120
+                                                    },
+                                                    "is_active": {
+                                                        "type": "boolean",
+                                                        "example": true
+                                                    },
+                                                    "cover_url": {
+                                                        "type": "string",
+                                                        "example": "covers/great_book.png"
+                                                    },
+                                                    "age_group": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 3
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "3-5 years"
+                                                            }
+                                                        },
+                                                        "type": "object",
+                                                        "nullable": true
+                                                    },
+                                                    "tags": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer",
+                                                                    "example": 1
+                                                                },
+                                                                "name": {
+                                                                    "type": "string",
+                                                                    "example": "Fantasy"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Autor não encontrado."
+                    }
+                }
+            }
+        },
+        "/api/books": {
+            "get": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Listar livros com filtros",
+                "description": "Retorna lista de livros com base nos filtros fornecidos",
+                "operationId": "13275a89eeecb0563d33599601df25fe",
+                "parameters": [
+                    {
+                        "name": "author_name",
+                        "in": "query",
+                        "description": "Filtrar por nome do autor",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "title",
+                        "in": "query",
+                        "description": "Filtrar por título do livro",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "author_id",
+                        "in": "query",
+                        "description": "Filtrar por ID do autor",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "age_group_id",
+                        "in": "query",
+                        "description": "Filtrar por faixa etária",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "access_level",
+                        "in": "query",
+                        "description": "Filtrar por nível de acesso (1=Gratuito, 2=Premium)",
+                        "schema": {
+                            "type": "integer",
+                            "enum": [
+                                1,
+                                2
+                            ]
+                        }
+                    },
+                    {
+                        "name": "is_active",
+                        "in": "query",
+                        "description": "Filtrar por estado ativo",
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "activity_id",
+                        "in": "query",
+                        "description": "Filtrar por atividade relacionada",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "tag_id",
+                        "in": "query",
+                        "description": "Filtrar por tag",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "min_read_time",
+                        "in": "query",
+                        "description": "Tempo mínimo de leitura (minutos)",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "max_read_time",
+                        "in": "query",
+                        "description": "Tempo máximo de leitura (minutos)",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de livros",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "title": {
+                                                "type": "string",
+                                                "example": "O Grande Livro"
+                                            },
+                                            "description": {
+                                                "type": "string"
+                                            },
+                                            "access_level": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "is_active": {
+                                                "type": "boolean",
+                                                "example": true
+                                            },
+                                            "age_group_id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "read_time": {
+                                                "type": "integer",
+                                                "example": 15
+                                            },
+                                            "cover_url": {
+                                                "type": "string"
+                                            },
+                                            "authors": {
+                                                "type": "array",
+                                                "items": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "name": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "age_group": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer"
+                                                    },
+                                                    "name": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            },
+                                            "tags": {
+                                                "type": "array",
+                                                "items": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "name": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/books/{id}": {
+            "get": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Detalhes do livro",
+                "description": "Retorna os detalhes completos de um livro específico",
+                "operationId": "e473ab3a66f0daaa9bf1b70b29dd5288",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do livro",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalhes do livro",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Book"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Livro não encontrado"
+                    }
+                }
+            }
+        },
+        "/api/books/{bookId}/comments": {
+            "get": {
+                "tags": [
+                    "Comments"
+                ],
+                "summary": "Comentários de um livro",
+                "description": "Retorna todos os comentários aprovados de um livro",
+                "operationId": "5548b168f53f4d8c03c1b9812e0d6ffe",
+                "parameters": [
+                    {
+                        "name": "bookId",
+                        "in": "path",
+                        "description": "ID do livro",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de comentários",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "book_title": {
+                                            "type": "string",
+                                            "example": "O Grande Livro"
+                                        },
+                                        "comments": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "comment_text": {
+                                                        "type": "string",
+                                                        "example": "Excelente livro!"
+                                                    },
+                                                    "rating": {
+                                                        "type": "integer",
+                                                        "example": 5
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "format": "date-time"
+                                                    },
+                                                    "moderation_status": {
+                                                        "type": "string",
+                                                        "example": "approved"
+                                                    },
+                                                    "user": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "name": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Comments"
+                ],
+                "summary": "Criar comentário",
+                "description": "Adiciona um novo comentário ao livro",
+                "operationId": "44c0983143366f14c0cd0cb6ae715eec",
+                "parameters": [
+                    {
+                        "name": "bookId",
+                        "in": "path",
+                        "description": "ID do livro",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "rating": {
+                                        "type": "integer",
+                                        "maximum": 5,
+                                        "minimum": 1
+                                    },
+                                    "comment_text": {
+                                        "type": "string",
+                                        "maxLength": 500
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Comentário criado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Comentário submetido com sucesso"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erro de validação ou progresso insuficiente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/plans": {
+            "get": {
+                "tags": [
+                    "Plans"
+                ],
+                "summary": "Lista de planos",
+                "description": "Retorna os planos disponíveis e estatísticas de utilizadores",
+                "operationId": "da32ad8388e0a1247fe1c6a0a108032c",
+                "responses": {
+                    "200": {
+                        "description": "Lista de planos com estatísticas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "plans": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "Free"
+                                                    },
+                                                    "active_users_count": {
+                                                        "type": "integer",
+                                                        "example": 150
+                                                    },
+                                                    "features": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string",
+                                                            "example": "Acesso a livros gratuitos"
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users/{userId}/books": {
+            "get": {
+                "tags": [
+                    "User Books"
+                ],
+                "summary": "Lista de livros do utilizador",
+                "description": "Retorna os livros lidos e favoritos de um utilizador específico",
+                "operationId": "1390ea3bef4247364045d078364b39e4",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "ID do utilizador",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de livros do utilizador",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "books_read": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "title": {
+                                                        "type": "string",
+                                                        "example": "O Grande Livro"
+                                                    },
+                                                    "description": {
+                                                        "type": "string",
+                                                        "example": "Descrição do livro"
+                                                    },
+                                                    "read_time": {
+                                                        "type": "integer",
+                                                        "example": 15
+                                                    },
+                                                    "access_level": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "is_active": {
+                                                        "type": "boolean",
+                                                        "example": true
+                                                    },
+                                                    "progress": {
+                                                        "type": "integer",
+                                                        "example": 75
+                                                    },
+                                                    "read_date": {
+                                                        "type": "string",
+                                                        "format": "date-time"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "favorite_books": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 2
+                                                    },
+                                                    "title": {
+                                                        "type": "string",
+                                                        "example": "Outro Livro"
+                                                    },
+                                                    "description": {
+                                                        "type": "string",
+                                                        "example": "Descrição do livro"
+                                                    },
+                                                    "is_active": {
+                                                        "type": "boolean",
+                                                        "example": true
+                                                    },
+                                                    "favorited_at": {
+                                                        "type": "string",
+                                                        "format": "date-time"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Utilizador não encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Utilizador não encontrado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users/{userId}/suggested-books": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Livros sugeridos para o utilizador",
+                "description": "Retorna uma lista de livros sugeridos baseados nas tags dos livros lidos e favoritos do utilizador",
+                "operationId": "e0aea318fff8213aafa604fe34fa2af8",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "ID do utilizador",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de livros sugeridos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "title": {
+                                                "type": "string",
+                                                "example": "Livro Sugerido"
+                                            },
+                                            "description": {
+                                                "type": "string"
+                                            },
+                                            "read_time": {
+                                                "type": "integer",
+                                                "example": 15
+                                            },
+                                            "access_level": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "is_active": {
+                                                "type": "boolean",
+                                                "example": true
+                                            },
+                                            "tags": {
+                                                "type": "array",
+                                                "items": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "name": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Utilizador não encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Utilizador não encontrado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api_views/users/{userId}/profile": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Perfil do utilizador",
+                "description": "Retorna a view do perfil do utilizador com livros lidos, favoritos e sugeridos",
+                "operationId": "eecc87c24dccce1d7e6293df77a77dc6",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "ID do utilizador",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "View do perfil do utilizador"
+                    },
+                    "404": {
+                        "description": "Utilizador não encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Erro ao carregar perfil do utilizador"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api_views/users": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Lista de utilizadores",
+                "description": "Retorna a view com lista de todos os utilizadores",
+                "operationId": "ca9ea7b97c9d156668736655e81e5488",
+                "responses": {
+                    "200": {
+                        "description": "View com lista de utilizadores"
+                    },
+                    "500": {
+                        "description": "Erro ao carregar lista",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Erro ao carregar lista de utilizadores"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Book": {
+                "description": "Modelo de Livro",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "O Grande Livro"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Descrição detalhada do livro"
+                    },
+                    "read_time": {
+                        "type": "integer",
+                        "example": 15
+                    },
+                    "access_level": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "is_active": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "cover_url": {
+                        "type": "string",
+                        "example": "covers/book.jpg"
+                    },
+                    "video_url": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "age_group_id": {
+                        "type": "integer",
+                        "example": 1
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Activities",
+            "description": "APIs relacionadas com atividades dos livros"
+        },
+        {
+            "name": "Admin",
+            "description": "APIs para funcionalidades administrativas"
+        },
+        {
+            "name": "Age Groups",
+            "description": "APIs relacionadas com grupos etários e seus livros"
+        },
+        {
+            "name": "Authors",
+            "description": "APIs relacionadas a autores"
+        },
+        {
+            "name": "Books",
+            "description": "APIs para gestão e consulta de livros"
+        },
+        {
+            "name": "Comments",
+            "description": "APIs relacionadas com comentários dos livros"
+        },
+        {
+            "name": "Plans",
+            "description": "APIs relacionadas com planos de subscrição"
+        },
+        {
+            "name": "User Books",
+            "description": "APIs relacionadas com os livros dos utilizadores"
+        },
+        {
+            "name": "Users",
+            "description": "APIs relacionadas com utilizadores e suas recomendações"
+        }
+    ]
+}
