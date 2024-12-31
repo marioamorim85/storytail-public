@@ -20,7 +20,6 @@ RUN composer install --optimize-autoloader --no-dev
 
 # Apache configuration
 RUN a2enmod rewrite
-COPY apache2.conf /etc/apache2/apache2.conf
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 RUN echo '<Directory /var/www/html/public>\n\
     Options Indexes FollowSymLinks\n\
