@@ -35,4 +35,4 @@ RUN chown -R www-data:www-data /var/www/html
 RUN chmod -R 755 /var/www/html/public
 
 RUN php artisan storage:link
-RUN php artisan migrate:fresh --seed
+RUN php artisan migrate:fresh --seed --force
