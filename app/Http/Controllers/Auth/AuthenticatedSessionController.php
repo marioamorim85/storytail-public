@@ -24,12 +24,51 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
+        try {
+            // Regista a tentativa de login
+            \Log::info('Login attempt', [
+                'email' => $request->input('email'),
+                'ip' => $request->ip(),
+                'session_id' => $request->session()->getId(),
+            ]);
 
-        $request->session()->regenerate();
+            // Regenera o token CSRF antes da autenticação
+            $request->session()->regenerateToken();
 
-        return redirect()->intended(route('home', absolute: false))
-    ->with('success', 'Welcome back ' . Auth::user()->first_name . ' ' . Auth::user()->last_name . '! You have successfully logged in.');
+            // Tenta autenticar
+            $request->authenticate();
+
+            // Regenera a sessão após autenticação bem-sucedida
+            $request->session()->regenerate();
+
+            // Redireciona com mensagem de boas-vindas
+            return redirect()->intended(route('home', absolute: false))
+                ->with('success', 'Welcome back ' . Auth::user()->first_name . ' ' . Auth::user()->last_name . '! You have successfully logged in.');
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Trata erros de validação (credenciais inválidas)
+            \Log::warning('Login validation failed', [
+                'email' => $request->input('email'),
+                'errors' => $e->errors()
+            ]);
+
+            return back()
+                ->withErrors($e->errors())
+                ->withInput($request->only('email'));
+
+        } catch (\Exception $e) {
+            // Regista qualquer outro erro inesperado
+            \Log::error('Login error', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            return back()
+                ->withErrors([
+                    'email' => 'An unexpected error occurred. Please try again.',
+                ])
+                ->withInput($request->only('email'));
+        }
     }
 
     /**
