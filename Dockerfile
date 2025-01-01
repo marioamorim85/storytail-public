@@ -27,6 +27,12 @@ RUN composer install --optimize-autoloader --no-dev
 RUN touch database/database.sqlite
 RUN chmod 777 database/database.sqlite
 
+# Optimize Laravel
+RUN php artisan optimize
+RUN php artisan view:cache
+RUN php artisan config:cache
+RUN php artisan route:cache
+
 # Apache configuration
 RUN a2enmod rewrite
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
@@ -36,8 +42,12 @@ RUN echo '<Directory /var/www/html/public>\n\
     Require all granted\n</Directory>' > /etc/apache2/conf-available/laravel.conf
 RUN a2enconf laravel
 
+# Set permissions
 RUN chown -R www-data:www-data /var/www/html
 RUN chmod -R 755 /var/www/html/public
+RUN mkdir -p /var/www/html/public/storage
+RUN chmod -R 775 /var/www/html/storage
 
+# Setup storage and migrate
 RUN php artisan storage:link
 RUN php artisan migrate:fresh --seed --force
