@@ -1,22 +1,54 @@
+# Ignore ficheiros de caches e compilação locais
 /.phpunit.cache
+/.phpunit.result.cache
+/.phpactor.json
+
+# Node.js e npm/Yarn
 /node_modules
+/npm-debug.log
+/yarn-error.log
+
+# Laravel public assets
 /public/build
 /public/hot
-/public/storage
-/storage/*.key
-/storage/pail
+/public/storage # Mantém o link simbólico ignorado
+
+# Laravel storage
+/storage/*.key # Ficheiros chave
+/storage/pail  # Se for uma pasta específica, podes personalizar
+/storage/logs  # Logs gerados pela aplicação
+/storage/framework/cache/data
+/storage/framework/sessions
+/storage/framework/testing
+/storage/framework/views
+
+# Exceção para a pasta public
+!/storage/app/public
+
+
+# Vendor
 /vendor
+
+# Arquivos de ambiente e configuração local
 .env
 .env.backup
 .env.production
-.phpactor.json
-.phpunit.result.cache
-Homestead.json
-Homestead.yaml
-auth.json
-npm-debug.log
-yarn-error.log
+
+# Ferramentas de desenvolvimento e IDEs
 /.fleet
 /.idea
 /.vscode
 /.zed
+
+# Vagrant/Homestead
+Homestead.json
+Homestead.yaml
+
+# Composer
+auth.json
+
+# Ignorar temporários
+.DS_Store
+Thumbs.db
+desktop.ini
+

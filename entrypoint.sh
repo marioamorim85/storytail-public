@@ -20,8 +20,10 @@ if [ ! -f /var/www/html/database/database.sqlite ]; then
     chmod 777 /var/www/html/database/database.sqlite
 fi
 
-# Storage setup
-php artisan storage:link
+# Recria o link de storage
+echo "Recriando o link de storage..."
+rm -rf /var/www/html/public/storage
+php artisan storage:link || { echo "Erro ao criar o link de storage"; exit 1; }
 
 # Cache e rotas
 php artisan config:cache
