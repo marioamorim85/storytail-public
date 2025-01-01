@@ -5,13 +5,14 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-av
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
 RUN apt-get update && apt-get install -y \
-   git \
-   curl \
-   libpng-dev \
-   libonig-dev \
-   libxml2-dev \
-   zip \
-   unzip
+    git \
+    curl \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    unzip \
+    sqlite3
 
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
@@ -22,13 +23,17 @@ COPY . .
 
 RUN composer install --optimize-autoloader --no-dev
 
+# Create SQLite database
+RUN touch database/database.sqlite
+RUN chmod 777 database/database.sqlite
+
 # Apache configuration
 RUN a2enmod rewrite
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 RUN echo '<Directory /var/www/html/public>\n\
-   Options Indexes FollowSymLinks\n\
-   AllowOverride All\n\
-   Require all granted\n</Directory>' > /etc/apache2/conf-available/laravel.conf
+    Options Indexes FollowSymLinks\n\
+    AllowOverride All\n\
+    Require all granted\n</Directory>' > /etc/apache2/conf-available/laravel.conf
 RUN a2enconf laravel
 
 RUN chown -R www-data:www-data /var/www/html
