@@ -21,7 +21,6 @@ if [ ! -f /var/www/html/database/database.sqlite ]; then
 fi
 
 # Storage setup
-rm -f /var/www/html/public/storage
 php artisan storage:link
 
 # Cache e rotas
