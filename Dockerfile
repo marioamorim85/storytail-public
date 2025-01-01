@@ -27,9 +27,7 @@ RUN composer install --optimize-autoloader --no-dev
 RUN touch database/database.sqlite
 RUN chmod 777 database/database.sqlite
 
-# Optimize Laravel
-RUN php artisan optimize
-RUN php artisan view:cache
+# Optimize Laravel (sem view:cache)
 RUN php artisan config:cache
 RUN php artisan route:cache
 

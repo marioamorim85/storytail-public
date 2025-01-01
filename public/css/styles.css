@@ -77,21 +77,27 @@ footer {
     font-family: var(--love), cursive;
 }
 
-/* Botão principal */
-.btn {
-    background-color: var(--orange);
-    border-color: var(--orange);
-    font-weight: bold;
+/* Estilos comuns */
+.btn, .btnSecundary {
+    font-size: 1rem; /* Tamanho de fonte consistente */
+    padding: 0.5rem 1rem; /* Espaçamento interno consistente */
+    line-height: 1.5; /* Consistência no espaçamento vertical */
+    border: 1px solid var(--orange); /* Uniformiza o border */
     width: 10rem;
     border-radius: 1rem;
     transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+    font-weight: bold;
+}
+
+/* Botão principal */
+.btn {
+    background-color: var(--orange);
     color: white;
 }
 
 .btn:hover {
     background-color: var(--dark-orange);
     border-color: var(--dark-orange);
-    color: var(--white);
     transform: translateY(-0.2rem);
     box-shadow: 0 0.5rem 0.7rem rgba(0, 0, 0, 0.3);
 }
@@ -100,11 +106,6 @@ footer {
 .btnSecundary {
     color: var(--orange);
     background-color: var(--white);
-    border: 1px solid var(--orange);
-    font-weight: bold;
-    width: 10rem;
-    border-radius: 1rem;
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s;
     text-decoration: none;
 }
 
