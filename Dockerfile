@@ -35,9 +35,11 @@ COPY . .
 # Instala dependências do Laravel
 RUN composer install --optimize-autoloader --no-dev
 
-# Cria a base de dados SQLite e ajusta permissões
+# Cria a base de dados SQLite, ajusta permissões e executa seed
 RUN touch database/database.sqlite && \
-    chmod 777 database/database.sqlite
+    chmod 777 database/database.sqlite && \
+    php artisan config:cache && \
+    php artisan migrate --force --seed
 
 # Configurações do Apache
 RUN echo '<Directory /var/www/html/public>\n\
