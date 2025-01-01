@@ -1,9 +1,9 @@
 FROM php:8.2-apache
 
-# Define o diretório público para o Apache
+# Define o diretório público para o Apache e configurações do Laravel
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public \
     APP_ENV=production \
-    APP_DEBUG=true \
+    APP_DEBUG=false \
     APP_URL=https://storytail-public.onrender.com
 
 # Atualiza o documento root no Apache e instala pacotes necessários
@@ -29,7 +29,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Define o diretório de trabalho
 WORKDIR /var/www/html
 
-# Copia os ficheiros do Laravel
+# Copia os ficheiros do Laravel para o container
 COPY . .
 
 # Instala dependências do Laravel
@@ -46,7 +46,7 @@ RUN echo '<Directory /var/www/html/public>\n\
     Require all granted\n</Directory>' > /etc/apache2/conf-available/laravel.conf && \
     a2enconf laravel
 
-# Permissões de pastas do Laravel
+# Ajusta permissões das pastas essenciais do Laravel
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache && \
     chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache && \
     mkdir -p /var/www/html/storage/logs && \
@@ -57,5 +57,5 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-# Define o entrypoint
+# Define o entrypoint para o container
 CMD ["/entrypoint.sh"]

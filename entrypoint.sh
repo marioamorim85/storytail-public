@@ -16,6 +16,14 @@ if [ ! -f /var/www/html/storage/logs/laravel.log ]; then
     chmod 666 /var/www/html/storage/logs/laravel.log
 fi
 
+# Certifica-te de que o ficheiro de base de dados SQLite existe
+if [ ! -f /var/www/html/database/database.sqlite ]; then
+    echo "Criando o ficheiro de base de dados SQLite: database/database.sqlite..."
+    mkdir -p /var/www/html/database
+    touch /var/www/html/database/database.sqlite
+    chmod 777 /var/www/html/database/database.sqlite
+fi
+
 # Garante que o link de storage foi criado
 echo "Criando o link de storage, se necessário..."
 php artisan storage:link || true
@@ -25,11 +33,9 @@ echo "Atualizando cache de configuração e rotas..."
 php artisan config:cache || { echo "Erro ao atualizar config cache"; exit 1; }
 php artisan route:cache || { echo "Erro ao atualizar route cache"; exit 1; }
 
-# Executa migrações (opcional, apenas para ambientes de desenvolvimento)
-if [ "$RUN_MIGRATIONS" = "true" ]; then
-    echo "Executando migrações..."
-    php artisan migrate:fresh --seed --force || { echo "Erro ao executar migrações"; exit 1; }
-fi
+# Executa migrações (opcional, apenas para ambientes de produção)
+echo "Executando migrações..."
+php artisan migrate --force || { echo "Erro ao executar migrações"; exit 1; }
 
 # Inicia o Apache e acompanha os logs
 echo "Iniciando o servidor Apache..."
