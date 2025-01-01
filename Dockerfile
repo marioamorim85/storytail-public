@@ -49,6 +49,11 @@ RUN a2enconf laravel
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
+# Garante que as permissões do Laravel estão corretas
+RUN mkdir -p /var/www/html/storage/logs
+RUN touch /var/www/html/storage/logs/laravel.log
+RUN chmod 666 /var/www/html/storage/logs/laravel.log
+
 # Copia o entrypoint.sh para o container
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh

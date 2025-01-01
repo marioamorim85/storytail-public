@@ -7,6 +7,13 @@ echo "Preparando o ambiente de Laravel..."
 chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
+# Garante que o ficheiro de log existe e tem as permissões corretas
+if [ ! -f /var/www/html/storage/logs/laravel.log ]; then
+    echo "Criando o ficheiro de log: storage/logs/laravel.log..."
+    touch /var/www/html/storage/logs/laravel.log
+    chmod 666 /var/www/html/storage/logs/laravel.log
+fi
+
 # Garante que o link de storage foi criado
 php artisan storage:link || true
 
@@ -22,4 +29,4 @@ fi
 
 # Inicia o Apache e acompanha os logs
 echo "Iniciando o servidor Apache..."
-tail -f storage/logs/laravel.log & apache2-foreground
+tail -f /var/www/html/storage/logs/laravel.log & apache2-foreground
