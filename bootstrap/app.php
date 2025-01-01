@@ -14,9 +14,13 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
         ]);
+
+        // Adiciona esta linha para garantir o middleware CSRF
+        $middleware->web(append: [
+            \Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })
     ->create();
-
