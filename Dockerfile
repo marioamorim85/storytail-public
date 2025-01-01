@@ -39,7 +39,8 @@ RUN composer install --optimize-autoloader --no-dev
 RUN touch database/database.sqlite && \
     chmod 777 database/database.sqlite && \
     php artisan config:cache && \
-    php artisan migrate --force --seed
+    php artisan migrate --force --seed && \
+    php artisan storage:link
 
 # Configurações do Apache
 RUN echo '<Directory /var/www/html/public>\n\
