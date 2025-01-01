@@ -25,18 +25,20 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/html
 COPY . .
 
-RUN composer install --optimize-autoloader --no-dev
+# Setup inicial de diretórios e arquivos
+RUN mkdir -p database \
+   && mkdir -p storage/app/public/covers \
+   && mkdir -p public/storage \
+   && chown -R www-data:www-data /var/www/html \
+   && touch database/database.sqlite \
+   && chmod -R 777 database \
+   && chmod -R 775 storage
 
-# Configuração do SQLite e Storage
-RUN touch database/database.sqlite && \
-   chmod 777 database/database.sqlite && \
-   mkdir -p /var/www/html/public/storage && \
-   mkdir -p storage/app/public/covers && \
-   chmod -R 775 storage/app/public && \
-   php artisan config:cache && \
-   php artisan migrate --force --seed && \
-   rm -f /var/www/html/public/storage && \
-   php artisan storage:link
+# Instalação e configuração
+RUN composer install --optimize-autoloader --no-dev \
+   && php artisan config:cache \
+   && php artisan migrate --force --seed \
+   && php artisan storage:link
 
 # Configurações do Apache
 RUN echo '<Directory /var/www/html/public>\n\
@@ -49,12 +51,12 @@ RUN echo '<Directory /var/www/html/public>\n\
 </Directory>' > /etc/apache2/conf-available/laravel.conf && \
    a2enconf laravel
 
-# Ajusta permissões
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/public/storage && \
-   chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/public/storage && \
-   mkdir -p /var/www/html/storage/logs && \
-   touch /var/www/html/storage/logs/laravel.log && \
-   chmod 666 /var/www/html/storage/logs/laravel.log
+# Ajustes finais de permissões
+RUN chmod -R 775 storage/app/public \
+   && chown -R www-data:www-data storage public/storage \
+   && mkdir -p /var/www/html/storage/logs \
+   && touch /var/www/html/storage/logs/laravel.log \
+   && chmod 666 /var/www/html/storage/logs/laravel.log
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
