@@ -14,7 +14,8 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     zip \
     unzip \
-    sqlite3
+    sqlite3 \
+    libsqlite3-dev
 
 # Instala extensões PHP
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd pdo_sqlite
@@ -43,6 +44,10 @@ RUN echo '<Directory /var/www/html/public>\n\
     AllowOverride All\n\
     Require all granted\n</Directory>' > /etc/apache2/conf-available/laravel.conf
 RUN a2enconf laravel
+
+# Permissões de pastas do Laravel
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
 # Copia o entrypoint.sh para o container
 COPY entrypoint.sh /entrypoint.sh
