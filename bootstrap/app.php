@@ -6,38 +6,42 @@ use Illuminate\Foundation\Configuration\Middleware;
 use App\Http\Middleware\VerifyCsrfToken;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\Authenticate;
+use Illuminate\Session\Middleware\AuthenticateSession;
+use Illuminate\Auth\Middleware\AuthenticateWithBasicAuth;
+use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
+use Illuminate\Cookie\Middleware\EncryptCookies;
+use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use Illuminate\Session\Middleware\StartSession;
+use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Illuminate\Routing\Middleware\SubstituteBindings;
 
 return Application::configure(basePath: dirname(__DIR__))
-
-    // Configura os middlewares
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'csrf' => VerifyCsrfToken::class,
             'admin' => AdminMiddleware::class,
             'auth' => Authenticate::class,
-            'auth.session' => \Illuminate\Session\Middleware\AuthenticateSession::class,
-            'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-            'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+            'auth.session' => AuthenticateSession::class,
+            'auth.basic' => AuthenticateWithBasicAuth::class,
+            'verified' => EnsureEmailIsVerified::class,
         ]);
 
         $middleware->web(append: [
-            \Illuminate\Cookie\Middleware\EncryptCookies::class,
-            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
-            \Illuminate\Session\Middleware\StartSession::class,
-            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+            EncryptCookies::class,
+            AddQueuedCookiesToResponse::class,
+            StartSession::class,
+            ShareErrorsFromSession::class,
             VerifyCsrfToken::class,
-            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            SubstituteBindings::class,
         ]);
     })
 
-    // Configura as rotas
     ->withRouting(
         web: __DIR__ . '/../routes/web.php',
         commands: __DIR__ . '/../routes/console.php',
-        health: '/up', // Endpoint de verificação de saúde
+        health: '/up'
     )
 
-    // Configura exceções (se necessário)
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })

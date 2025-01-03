@@ -19,50 +19,54 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         try {
-            // Log inicial com informações do ambiente
-            \Log::info('Login attempt', [
-                'email' => $request->input('email'),
-                'ip' => $request->ip(),
-                'session_id' => session()->getId(),
-                'session_driver' => config('session.driver'),
-                'session_domain' => config('session.domain'),
-                'cookies' => $request->cookie(), // Corrigido aqui
-                'headers' => $request->headers->all()
+            \Log::info('=== INÍCIO DO LOGIN ===');
+
+            // Verifica estado inicial
+            \Log::info('Estado inicial', [
+                'auth_check' => Auth::check(),
+                'session_id' => session()->getId()
             ]);
 
-            // Tenta autenticar
             $request->authenticate();
 
-            // Regenera a sessão após autenticação bem-sucedida
-            $request->session()->regenerate();
-
-            // Log após autenticação bem-sucedida
-            \Log::info('Login successful', [
-                'user_id' => Auth::id(),
-                'new_session_id' => session()->getId(),
-                'is_authenticated' => Auth::check()
+            \Log::info('Após authenticate()', [
+                'auth_check' => Auth::check(),
+                'user_id' => Auth::id()
             ]);
 
-            // Força o salvamento da sessão
+            $request->session()->regenerate();
+
+            \Log::info('Após regenerate()', [
+                'auth_check' => Auth::check(),
+                'session_id' => session()->getId()
+            ]);
+
+            // Força persistência da sessão
+            $user = Auth::user();
+            session(['user_id' => $user->id]);
             session()->save();
+
+            \Log::info('Estado final', [
+                'auth_check' => Auth::check(),
+                'session_data' => session()->all()
+            ]);
 
             return redirect()
                 ->intended(route('home', absolute: false))
-                ->with('success', 'Welcome back ' . Auth::user()->first_name . ' ' . Auth::user()->last_name . '!')
+                ->with('success', 'Welcome back ' . $user->first_name . ' ' . $user->last_name . '!')
                 ->withHeaders([
-                    'Cache-Control' => 'no-cache, no-store, must-revalidate'
+                    'Cache-Control' => 'no-cache, no-store, must-revalidate',
+                    'Pragma' => 'no-cache',
+                    'Expires' => '0'
                 ]);
 
         } catch (\Exception $e) {
-            \Log::error('Authentication error', [
+            \Log::error('Erro no login', [
                 'message' => $e->getMessage(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine()
+                'trace' => $e->getTraceAsString()
             ]);
 
-            return back()
-                ->withErrors(['email' => 'Authentication failed. Please try again.'])
-                ->withInput($request->only('email'));
+            return back()->withErrors(['email' => 'Authentication failed.']);
         }
     }
 
