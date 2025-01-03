@@ -11,9 +11,6 @@ use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
 {
-    /**
-     * Display the login view.
-     */
     public function create(): View
     {
         return view('auth.login');
@@ -22,50 +19,83 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         try {
-            // Log antes da autenticação com informações detalhadas
-            \Log::info('Login attempt', [
+            // Log inicial com informações do ambiente
+            \Log::info('Login environment check', [
+                'app_env' => config('app.env'),
+                'app_url' => config('app.url'),
+                'session_config' => config('session'),
+                'server_vars' => request()->server->all()
+            ]);
+
+            // Log detalhado da tentativa de login
+            \Log::info('Login attempt details', [
                 'email' => $request->input('email'),
                 'ip' => $request->ip(),
+                'session_exists' => $request->hasSession(),
                 'session_id' => session()->getId(),
                 'session_driver' => config('session.driver'),
                 'session_domain' => config('session.domain'),
                 'cookies' => request()->cookies()->all(),
-                'headers' => request()->headers->all()
+                'headers' => request()->headers->all(),
+                'user_agent' => $request->userAgent(),
+                'current_session_data' => session()->all()
             ]);
 
-            // Regenera o token CSRF antes da autenticação
-            $request->session()->regenerateToken();
-
-            // Tenta autenticar
+            // Tenta autenticar antes de regenerar tokens
             $request->authenticate();
 
-            // Regenera a sessão após autenticação bem-sucedida
-            $request->session()->regenerate();
-
-            // Log após autenticação bem-sucedida
-            \Log::info('Login successful', [
+            // Log após autenticação, antes da regeneração
+            \Log::info('Authentication successful, pre-session regeneration', [
                 'user_id' => Auth::id(),
-                'new_session_id' => session()->getId(),
-                'is_authenticated' => Auth::check(),
-                'cookies_after' => request()->cookies()->all()
+                'auth_check' => Auth::check(),
+                'session_id' => session()->getId(),
+                'session_data' => session()->all()
             ]);
 
-            // Força o salvamento da sessão
+            // Regenera sessão e token
+            $request->session()->regenerate();
+            $request->session()->regenerateToken();
+
+            // Log após regeneração da sessão
+            \Log::info('Session regenerated', [
+                'new_session_id' => session()->getId(),
+                'user_still_auth' => Auth::check(),
+                'new_session_data' => session()->all(),
+                'new_cookies' => request()->cookies()->all()
+            ]);
+
+            // Força salvamento da sessão
             session()->save();
 
-            // Redireciona com mensagem de boas-vindas
+            // Log final antes do redirecionamento
+            \Log::info('Preparing redirect', [
+                'intended_url' => session()->get('url.intended'),
+                'route_home' => route('home', absolute: false),
+                'user_data' => Auth::user()->only(['id', 'first_name', 'last_name', 'email'])
+            ]);
+
             return redirect()
                 ->intended(route('home', absolute: false))
                 ->with('success', 'Welcome back ' . Auth::user()->first_name . ' ' . Auth::user()->last_name . '! You have successfully logged in.')
-                ->withCookie(cookie()->forever('auth_check', 'true', null, null, false, false));
+                ->withHeaders([
+                    'Cache-Control' => 'no-cache, no-store, must-revalidate',
+                    'Pragma' => 'no-cache',
+                    'Expires' => '0'
+                ])
+                ->withCookie(cookie()->forever('auth_check', 'true', null, config('session.domain'), true, true));
 
         } catch (\Illuminate\Validation\ValidationException $e) {
-            // Log detalhado de falha na validação
-            \Log::warning('Login validation failed', [
+            \Log::warning('Validation failed', [
                 'email' => $request->input('email'),
                 'errors' => $e->errors(),
                 'session_status' => session()->all(),
-                'cookies' => request()->cookies()->all()
+                'cookies' => request()->cookies()->all(),
+                'validation_exception' => [
+                    'message' => $e->getMessage(),
+                    'code' => $e->getCode(),
+                    'file' => $e->getFile(),
+                    'line' => $e->getLine()
+                ]
             ]);
 
             return back()
@@ -73,36 +103,56 @@ class AuthenticatedSessionController extends Controller
                 ->withInput($request->only('email'));
 
         } catch (\Exception $e) {
-            // Log detalhado de erros inesperados
-            \Log::error('Login error', [
+            \Log::error('Authentication error', [
                 'message' => $e->getMessage(),
+                'code' => $e->getCode(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
                 'trace' => $e->getTraceAsString(),
                 'session_data' => session()->all(),
-                'request_data' => $request->all()
+                'request_data' => $request->all(),
+                'auth_status' => Auth::check(),
+                'current_url' => $request->url(),
+                'previous_url' => url()->previous(),
+                'server_info' => [
+                    'php_version' => PHP_VERSION,
+                    'server_software' => $_SERVER['SERVER_SOFTWARE'] ?? 'unknown'
+                ]
             ]);
 
             return back()
-                ->withErrors([
-                    'email' => 'An unexpected error occurred. Please try again.',
-                ])
+                ->withErrors(['email' => 'An unexpected error occurred. Please try again.'])
                 ->withInput($request->only('email'));
         }
     }
 
-    /**
-     * Destroy an authenticated session.
-     */
     public function destroy(Request $request): RedirectResponse
     {
-        $userName = Auth::user()->first_name . ' ' . Auth::user()->last_name;
+        try {
+            $userName = Auth::user()->first_name . ' ' . Auth::user()->last_name;
 
-        Auth::guard('web')->logout();
+            \Log::info('Logout attempt', [
+                'user_id' => Auth::id(),
+                'session_id' => session()->getId()
+            ]);
 
-        $request->session()->invalidate();
+            Auth::guard('web')->logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
 
-        $request->session()->regenerateToken();
+            \Log::info('Logout successful', [
+                'previous_session_id' => session()->getId()
+            ]);
 
-        return redirect('/')
-            ->with('info', 'Goodbye ' . $userName . '! You have successfully logged out.');
+            return redirect('/')
+                ->with('info', 'Goodbye ' . $userName . '! You have successfully logged out.');
+        } catch (\Exception $e) {
+            \Log::error('Logout error', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            return redirect('/');
+        }
     }
 }
