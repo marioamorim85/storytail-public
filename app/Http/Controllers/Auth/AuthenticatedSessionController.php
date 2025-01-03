@@ -19,45 +19,43 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         try {
-            \Log::info('=== INÍCIO DO PROCESSO DE LOGIN ===', [
-                'ip' => $request->ip(),
-                'user_agent' => $request->userAgent()
+            \Log::info('=== INÍCIO DO PROCESSO DE LOGIN ===');
+
+            // Verifica estado inicial
+            \Log::info('Estado inicial', [
+                'session_exists' => $request->hasSession(),
+                'old_session_id' => session()->getId(),
+                'driver' => config('session.driver'),
+                'domain' => config('session.domain')
             ]);
 
-            // Verifica estado antes da autenticação
-            \Log::info('Estado pré-autenticação', [
-                'has_session' => $request->hasSession(),
-                'session_id' => session()->getId(),
-                'auth_check' => Auth::check()
-            ]);
-
-            // Tenta autenticar
+            // Autentica o usuário
             $request->authenticate();
 
-            // Verifica estado após autenticação
-            \Log::info('Estado pós-autenticação', [
-                'auth_check' => Auth::check(),
-                'user_id' => Auth::id(),
-                'session_id' => session()->getId()
-            ]);
+            // Recupera o usuário atual
+            $user = Auth::user();
 
             // Regenera a sessão
             $request->session()->regenerate();
 
-            // Armazena dados importantes na sessão
+            // Armazena dados na sessão
             session([
-                'user_id' => Auth::id(),
-                'auth_check' => true
+                'auth.id' => $user->id,
+                'auth.email' => $user->email,
+                'auth.name' => $user->first_name . ' ' . $user->last_name,
+                'auth.logged_in' => true,
+                'auth.timestamp' => now()->toISOString()
             ]);
 
-            // Força o salvamento
+            // Força o salvamento da sessão
             session()->save();
 
-            // Log final
-            \Log::info('Estado final antes do redirecionamento', [
-                'auth_check' => Auth::check(),
-                'session_data' => session()->all(),
-                'cookies' => $request->cookies->all()
+            // Log de verificação final
+            \Log::info('Estado final', [
+                'new_session_id' => session()->getId(),
+                'user_authenticated' => Auth::check(),
+                'user_id' => Auth::id(),
+                'session_data' => session()->all()
             ]);
 
             \Log::info('=== FIM DO PROCESSO DE LOGIN ===');
@@ -68,14 +66,14 @@ class AuthenticatedSessionController extends Controller
                     'Cache-Control' => 'no-cache, no-store, must-revalidate',
                     'Pragma' => 'no-cache',
                     'Expires' => '0'
-                ]);
+                ])
+                ->with('success', 'Welcome back ' . $user->first_name . ' ' . $user->last_name . '!');
 
         } catch (\Exception $e) {
-            \Log::error('Erro durante o login', [
+            \Log::error('Erro no login', [
                 'message' => $e->getMessage(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine(),
-                'trace' => $e->getTraceAsString()
+                'trace' => $e->getTraceAsString(),
+                'session_data' => session()->all()
             ]);
 
             return back()
