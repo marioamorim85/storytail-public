@@ -4,7 +4,8 @@ FROM php:8.2-apache
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public \
     APP_ENV=production \
     APP_DEBUG=false \
-    APP_URL=https://storytail-public.onrender.com
+    APP_URL=https://storytail-public.onrender.com \
+    COMPOSER_MEMORY_LIMIT=-1
 
 # Atualiza pacotes e instala dependências necessárias
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf && \
@@ -40,7 +41,8 @@ RUN mkdir -p /var/www/html/database && \
     chmod 777 /var/www/html/database
 
 # Instala dependências do Laravel, configura o ambiente e executa o seed
-RUN composer install --optimize-autoloader --no-dev && \
+RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader --no-scripts && \
+    composer dump-autoload --optimize --no-dev --classmap-authoritative && \
     php artisan config:cache && \
     php artisan route:cache && \
     php artisan storage:link && \
