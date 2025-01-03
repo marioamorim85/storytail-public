@@ -3,42 +3,33 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-
-
-
+use App\Http\Middleware\VerifyCsrfToken;
+use App\Http\Middleware\AdminMiddleware;
 
 return Application::configure(basePath: dirname(__DIR__))
+
+    // Configura os middlewares
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
-            'csrf' => \App\Http\Middleware\VerifyCsrfToken::class,
+            'csrf' => VerifyCsrfToken::class,
+            'admin' => AdminMiddleware::class, // Define o alias 'admin'
         ]);
 
         $middleware->web(append: [
-            \App\Http\Middleware\VerifyCsrfToken::class,
+            VerifyCsrfToken::class, // Adiciona o middleware CSRF às rotas web
         ]);
     })
+
+    // Configura as rotas
     ->withRouting(
-        web: __DIR__.'/../routes/web.php',
-        commands: __DIR__.'/../routes/console.php',
-        health: '/up',
+        web: __DIR__ . '/../routes/web.php',
+        commands: __DIR__ . '/../routes/console.php',
+        health: '/up', // Endpoint de verificação de saúde
     )
-    ->withMiddleware(function (Middleware $middleware) {
-        $middleware->alias([
-            'admin' => \App\Http\Middleware\AdminMiddleware::class,
-        ]);
 
-        // Configura o CSRF
-        $middleware->validateCsrfTokens(
-            except: [
-                //
-            ]
-        );
-
-        $middleware->web(append: [
-            \Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class,
-        ]);
-    })
+    // Configura exceções (se necessário)
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })
+
     ->create();
