@@ -29,6 +29,12 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->environment('production')) {
             URL::forceScheme('https');
             Config::set('session.secure', true);
+            Config::set('session.http_only', true);
+            Config::set('session.same_site', 'lax');
+            Config::set('app.force_https', true);
+            Config::set('session.domain', 'storytail-public.onrender.com');
+            Config::set('session.cookie', 'storytail_session');
+            Config::set('session.path', '/');
         }
     }
 }

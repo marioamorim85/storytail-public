@@ -50,7 +50,7 @@
 <header class="navbar navbar-expand-lg navbar">
     <div class="container">
         <a class="navbar-brand" href="{{ route('home') }}">
-            <img src="{{ asset('images/logo.png') }}" alt="StoryTail Logo" class="logo">
+            <img src="{{ secure_asset('images/logo.png') }}" alt="StoryTail Logo" class="logo">
         </a>
         {{-- Botão de navegação para ecrãs pequenos--}}
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -131,7 +131,7 @@
     <div class="footer-top">
         <div class="container">
             <a href="{{ route('home') }}" class="footer-logo">
-                <img src="{{ asset('images/logo-storyTail.png') }}" alt="StoryTail Logo">
+                <img src="{{ secure_asset('images/logo-storyTail.png') }}" alt="StoryTail Logo">
             </a>
             <div class="footer-links">
                 <a href="{{ route('contacts') }}" class="footer-link">Contacts</a>
@@ -173,11 +173,9 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://npmcdn.com/flatpickr/dist/l10n/pt.js"></script>
 
-{{-- Inicialização do Turn.js --}}
-<script src="{{ asset('js/turn.js') }}"></script>
-
-{{-- JavaScript personalizado --}}
-<script src="{{ asset('js/java.js') }}"></script>
+{{-- Scripts --}}
+<script src="{{ secure_asset('js/turn.js') }}"></script>
+<script src="{{ secure_asset('js/java.js') }}"></script>
 
 {{-- Scripts adicionais --}}
 @stack('scripts')
