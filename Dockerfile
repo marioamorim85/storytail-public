@@ -33,13 +33,17 @@ WORKDIR /var/www/html
 # Copia os ficheiros do Laravel
 COPY . .
 
+# Configura o diretório e arquivo do SQLite com permissões adequadas
+RUN mkdir -p /var/www/html/database && \
+    touch /var/www/html/database/database.sqlite && \
+    chmod 777 /var/www/html/database/database.sqlite && \
+    chmod 777 /var/www/html/database
+
 # Instala dependências do Laravel, configura o ambiente e executa o seed
 RUN composer install --optimize-autoloader --no-dev && \
     php artisan config:cache && \
     php artisan route:cache && \
     php artisan storage:link && \
-    touch database/database.sqlite && \
-    chmod 777 database/database.sqlite && \
     php artisan migrate --force --seed
 
 # Configurações do Apache para permitir acesso ao storage
