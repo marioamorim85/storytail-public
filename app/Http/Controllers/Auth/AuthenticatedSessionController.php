@@ -20,108 +20,48 @@ class AuthenticatedSessionController extends Controller
     {
         try {
             // Log inicial com informações do ambiente
-            \Log::info('Login environment check', [
-                'app_env' => config('app.env'),
-                'app_url' => config('app.url'),
-                'session_config' => config('session'),
-                'server_vars' => request()->server->all()
-            ]);
-
-            // Log detalhado da tentativa de login
-            \Log::info('Login attempt details', [
+            \Log::info('Login attempt', [
                 'email' => $request->input('email'),
                 'ip' => $request->ip(),
-                'session_exists' => $request->hasSession(),
                 'session_id' => session()->getId(),
                 'session_driver' => config('session.driver'),
                 'session_domain' => config('session.domain'),
-                'cookies' => request()->cookies()->all(),
-                'headers' => request()->headers->all(),
-                'user_agent' => $request->userAgent(),
-                'current_session_data' => session()->all()
+                'cookies' => $request->cookie(), // Corrigido aqui
+                'headers' => $request->headers->all()
             ]);
 
-            // Tenta autenticar antes de regenerar tokens
+            // Tenta autenticar
             $request->authenticate();
 
-            // Log após autenticação, antes da regeneração
-            \Log::info('Authentication successful, pre-session regeneration', [
-                'user_id' => Auth::id(),
-                'auth_check' => Auth::check(),
-                'session_id' => session()->getId(),
-                'session_data' => session()->all()
-            ]);
-
-            // Regenera sessão e token
+            // Regenera a sessão após autenticação bem-sucedida
             $request->session()->regenerate();
-            $request->session()->regenerateToken();
 
-            // Log após regeneração da sessão
-            \Log::info('Session regenerated', [
+            // Log após autenticação bem-sucedida
+            \Log::info('Login successful', [
+                'user_id' => Auth::id(),
                 'new_session_id' => session()->getId(),
-                'user_still_auth' => Auth::check(),
-                'new_session_data' => session()->all(),
-                'new_cookies' => request()->cookies()->all()
+                'is_authenticated' => Auth::check()
             ]);
 
-            // Força salvamento da sessão
+            // Força o salvamento da sessão
             session()->save();
-
-            // Log final antes do redirecionamento
-            \Log::info('Preparing redirect', [
-                'intended_url' => session()->get('url.intended'),
-                'route_home' => route('home', absolute: false),
-                'user_data' => Auth::user()->only(['id', 'first_name', 'last_name', 'email'])
-            ]);
 
             return redirect()
                 ->intended(route('home', absolute: false))
-                ->with('success', 'Welcome back ' . Auth::user()->first_name . ' ' . Auth::user()->last_name . '! You have successfully logged in.')
+                ->with('success', 'Welcome back ' . Auth::user()->first_name . ' ' . Auth::user()->last_name . '!')
                 ->withHeaders([
-                    'Cache-Control' => 'no-cache, no-store, must-revalidate',
-                    'Pragma' => 'no-cache',
-                    'Expires' => '0'
-                ])
-                ->withCookie(cookie()->forever('auth_check', 'true', null, config('session.domain'), true, true));
-
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            \Log::warning('Validation failed', [
-                'email' => $request->input('email'),
-                'errors' => $e->errors(),
-                'session_status' => session()->all(),
-                'cookies' => request()->cookies()->all(),
-                'validation_exception' => [
-                    'message' => $e->getMessage(),
-                    'code' => $e->getCode(),
-                    'file' => $e->getFile(),
-                    'line' => $e->getLine()
-                ]
-            ]);
-
-            return back()
-                ->withErrors($e->errors())
-                ->withInput($request->only('email'));
+                    'Cache-Control' => 'no-cache, no-store, must-revalidate'
+                ]);
 
         } catch (\Exception $e) {
             \Log::error('Authentication error', [
                 'message' => $e->getMessage(),
-                'code' => $e->getCode(),
                 'file' => $e->getFile(),
-                'line' => $e->getLine(),
-                'trace' => $e->getTraceAsString(),
-                'session_data' => session()->all(),
-                'request_data' => $request->all(),
-                'auth_status' => Auth::check(),
-                'current_url' => $request->url(),
-                'previous_url' => url()->previous(),
-                'server_info' => [
-                    'php_version' => PHP_VERSION,
-                    'server_software' => $_SERVER['SERVER_SOFTWARE'] ?? 'unknown'
-                ]
+                'line' => $e->getLine()
             ]);
 
             return back()
-                ->withErrors(['email' => 'An unexpected error occurred. Please try again.'])
+                ->withErrors(['email' => 'Authentication failed. Please try again.'])
                 ->withInput($request->only('email'));
         }
     }
