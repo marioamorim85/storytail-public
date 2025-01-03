@@ -12,11 +12,15 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'csrf' => VerifyCsrfToken::class,
-            'admin' => AdminMiddleware::class, // Define o alias 'admin'
+            'admin' => AdminMiddleware::class,
+            'auth' => \App\Http\Middleware\Authenticate::class,
+            'auth.session' => \Illuminate\Session\Middleware\AuthenticateSession::class,
         ]);
 
         $middleware->web(append: [
-            VerifyCsrfToken::class, // Adiciona o middleware CSRF às rotas web
+            \Illuminate\Session\Middleware\StartSession::class,
+            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+            VerifyCsrfToken::class,
         ]);
     })
 
