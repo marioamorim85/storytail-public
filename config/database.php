@@ -95,8 +95,10 @@ return [
             'prefix_indexes' => true,
             'search_path' => 'public',
             'sslmode' => env('PGSQL_SSL_MODE', 'prefer'),
+            'options' => [
+                PDO::MYSQL_ATTR_SSL_CA => env('PGSQL_SSL_CA'),
+            ],
         ],
-
 
         'sqlsrv' => [
             'driver' => 'sqlsrv',
