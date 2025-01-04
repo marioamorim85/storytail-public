@@ -9,7 +9,8 @@
         "darkaonline/l5-swagger": "^8.6",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
-        "symfony/error-handler": "^7.1"
+        "symfony/error-handler": "^7.1",
+        "ext-pdo": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
