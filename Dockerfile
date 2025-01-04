@@ -1,4 +1,4 @@
-ROM php:8.2-apache
+FROM php:8.2-apache
 
 # Define o diretório público para o Apache e configurações do Laravel
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public \
@@ -46,7 +46,7 @@ RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoload
     php artisan config:cache && \
     php artisan route:cache && \
     php artisan storage:link && \
-    php artisan migrate --force --seed
+    php artisan migrate:fresh --force --seed
 
 # Configurações do Apache para permitir acesso ao storage
 RUN echo '<Directory /var/www/html/public>\n\

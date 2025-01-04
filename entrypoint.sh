@@ -29,8 +29,5 @@ php artisan storage:link || { echo "Erro ao criar o link de storage"; exit 1; }
 php artisan config:cache
 php artisan route:cache
 
-# Migrações
-php artisan migrate --force
-
 echo "Iniciando o servidor Apache..."
 tail -f /var/www/html/storage/logs/laravel.log & apache2-foreground
