@@ -1,4 +1,4 @@
-ROM php:8.2-apache
+FROM php:8.2-apache
 
 # Define o diretório público para o Apache e configurações do Laravel
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public \
