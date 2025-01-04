@@ -174,8 +174,8 @@
 <script src="https://npmcdn.com/flatpickr/dist/l10n/pt.js"></script>
 
 {{-- Scripts --}}
-<script src="{{ secure_asset('js/turn.js') }}"></script>
-<script src="{{ secure_asset('js/java.js') }}"></script>
+<link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+<link rel="stylesheet" href="{{ asset('css/admin.css') }}">
 
 {{-- Scripts adicionais --}}
 @stack('scripts')
