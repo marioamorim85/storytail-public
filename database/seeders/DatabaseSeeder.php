@@ -218,14 +218,15 @@ class DatabaseSeeder extends Seeder
         $this->command->info('Books seeded successfully!');
 
         // 6. Associate Authors with Books
-        DB::table('author_book')->insert([
+        DB::table('author_book')->upsert([
             ['author_id' => $giles->id, 'book_id' => $giraffes->id, 'created_at' => now(), 'updated_at' => now()],
             ['author_id' => $julia->id, 'book_id' => $monkey->id, 'created_at' => now(), 'updated_at' => now()],
             ['author_id' => $eric->id, 'book_id' => $brownBear->id, 'created_at' => now(), 'updated_at' => now()],
             ['author_id' => $rachel->id, 'book_id' => $koala->id, 'created_at' => now(), 'updated_at' => now()],
             ['author_id' => $eric->id, 'book_id' => $pancakes->id, 'created_at' => now(), 'updated_at' => now()],
             ['author_id' => $marcus->id, 'book_id' => $fish->id, 'created_at' => now(), 'updated_at' => now()],
-        ]);
+        ], ['author_id', 'book_id'], ['updated_at']);
+
 
 
         // 7. Insert Users
