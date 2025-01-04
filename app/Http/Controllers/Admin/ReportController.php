@@ -64,7 +64,7 @@ class ReportController extends Controller
 
         // Horários de Pico de Uso
         $peakUsageTimes = DB::table('book_clicks')
-            ->select(DB::raw('HOUR(clicked_at) as hour'), DB::raw('COUNT(*) as clicks_count'))
+            ->select(DB::raw("strftime('%H', clicked_at) as hour"), DB::raw('COUNT(*) as clicks_count'))
             ->groupBy('hour')
             ->orderByDesc('clicks_count')
             ->limit(3) // Top 3 horários
