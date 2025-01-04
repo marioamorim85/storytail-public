@@ -351,7 +351,7 @@ class BookController extends Controller
                             [
                                 'progress' => $request->progress,
                                 'read_date' => $request->progress == 100 ? now()->format('Y-m-d H:i:s') : null,
-                                'created_at' => DB::raw("COALESCE(created_at, datetime('now'))"),
+                                'created_at' => now()->format('Y-m-d H:i:s'),
                                 'updated_at' => now()->format('Y-m-d H:i:s')
                             ]
                         );
@@ -433,7 +433,7 @@ class BookController extends Controller
                     [
                         'progress' => $request->progress,
                         'updated_at' => now()->format('Y-m-d H:i:s'),
-                        'created_at' => DB::raw("COALESCE(created_at, datetime('now'))")
+                        'created_at' => now()->format('Y-m-d H:i:s')
                     ]
                 );
 
