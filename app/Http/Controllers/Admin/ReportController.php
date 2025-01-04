@@ -53,10 +53,10 @@ class ReportController extends Controller
         // Livros Populares (últimos 3 meses)
         $popularBooks = BookClick::with('book')
             ->whereHas('book', function ($query) {
-                $query->where('is_active', true); // Apenas livros ativos
+                $query->where('is_active', true);
             })
             ->select('book_id', DB::raw('COUNT(*) as clicks_count'))
-            ->where('clicked_at', '>=', now()->subMonths(3))
+            ->where('clicked_at', '>=', DB::raw("datetime('now', '-3 months')"))
             ->groupBy('book_id')
             ->orderByDesc('clicks_count')
             ->limit(3)
