@@ -23,12 +23,12 @@ php artisan config:cache
 php artisan route:cache
 
 # Verifica se as migrações já foram aplicadas
-if php artisan migrate:status | grep -q 'No'; then
-    echo "Executando migrações e seeds..."
-    php artisan migrate --force --seed || { echo "Erro ao executar as migrações com seeds"; exit 1; }
-else
-    echo "Migrações já aplicadas. Ignorando execução de seeds."
-fi
+#if php artisan migrate:status | grep -q 'No'; then
+#    echo "Executando migrações e seeds..."
+#    php artisan migrate --force --seed || { echo "Erro ao executar as migrações com seeds"; exit 1; }
+#else
+#    echo "Migrações já aplicadas. Ignorando execução de seeds."
+#fi
 
 echo "Iniciando o servidor Apache..."
 tail -f /var/www/html/storage/logs/laravel.log & apache2-foreground
