@@ -17,8 +17,6 @@ use App\Models\Page;
 
 class BookController extends Controller
 {
-
-
     public function index()
     {
         $books = Book::with('ageGroup', 'authors')->get()->map(function ($book) {
