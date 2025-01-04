@@ -545,6 +545,32 @@ class BookController extends Controller
         }
     }
 
+    public function checkActivityProgress(Request $request, $activityId)
+    {
+        try {
+            $activityBook = DB::table('activity_book')
+                ->where('activity_id', $activityId)
+                ->where('book_id', $request->book_id)
+                ->first();
+
+            if (!$activityBook) {
+                throw new \Exception('Activity Book not found');
+            }
+
+            $progress = DB::table('activity_book_user')
+                ->where('activity_book_id', $activityBook->id)
+                ->where('user_id', auth()->id())
+                ->value('progress') ?? 0;
+
+            return response()->json([
+                'success' => true,
+                'progress' => $progress
+            ]);
+        } catch (\Throwable $e) {
+            return $this->handleException($e);
+        }
+    }
+
 
     // Handler genérico para exceções
     private function handleException(\Throwable $e)
