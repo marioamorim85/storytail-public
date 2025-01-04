@@ -35,7 +35,8 @@ WORKDIR /var/www/html
 COPY . .
 
 # Instala dependências do Laravel, configura o ambiente e executa o seed
-RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader && \
+RUN set -x && \
+    composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader && \
     composer dump-autoload --optimize --no-dev --classmap-authoritative && \
     php artisan config:cache && \
     php artisan route:cache && \
