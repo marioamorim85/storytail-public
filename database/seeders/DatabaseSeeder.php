@@ -29,6 +29,7 @@ use App\Models\ActivityBook;
 use App\Models\SubscriptionApproval;
 use App\Models\PointAction;
 use App\Services\RankingService;
+use Illuminate\Support\Facades\DB;
 
 
 class DatabaseSeeder extends Seeder
@@ -217,12 +218,15 @@ class DatabaseSeeder extends Seeder
         $this->command->info('Books seeded successfully!');
 
         // 6. Associate Authors with Books
-        AuthorBook::firstOrCreate(['author_id' => $giles->id, 'book_id' => $giraffes->id], ['created_at' => now(), 'updated_at' => now()]);
-        AuthorBook::firstOrCreate(['author_id' => $julia->id, 'book_id' => $monkey->id], ['created_at' => now(), 'updated_at' => now()]);
-        AuthorBook::firstOrCreate(['author_id' => $eric->id, 'book_id' => $brownBear->id], ['created_at' => now(), 'updated_at' => now()]);
-        AuthorBook::firstOrCreate(['author_id' => $rachel->id, 'book_id' => $koala->id], ['created_at' => now(), 'updated_at' => now()]);
-        AuthorBook::firstOrCreate(['author_id' => $eric->id, 'book_id' => $pancakes->id], ['created_at' => now(), 'updated_at' => now()]);
-        AuthorBook::firstOrCreate(['author_id' => $marcus->id, 'book_id' => $fish->id], ['created_at' => now(), 'updated_at' => now()]);
+        DB::table('author_book')->insert([
+            ['author_id' => $giles->id, 'book_id' => $giraffes->id, 'created_at' => now(), 'updated_at' => now()],
+            ['author_id' => $julia->id, 'book_id' => $monkey->id, 'created_at' => now(), 'updated_at' => now()],
+            ['author_id' => $eric->id, 'book_id' => $brownBear->id, 'created_at' => now(), 'updated_at' => now()],
+            ['author_id' => $rachel->id, 'book_id' => $koala->id, 'created_at' => now(), 'updated_at' => now()],
+            ['author_id' => $eric->id, 'book_id' => $pancakes->id, 'created_at' => now(), 'updated_at' => now()],
+            ['author_id' => $marcus->id, 'book_id' => $fish->id, 'created_at' => now(), 'updated_at' => now()],
+        ]);
+
 
         // 7. Insert Users
         $adminUser = User::firstOrCreate(
