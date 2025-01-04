@@ -1321,6 +1321,13 @@ function updateActivityProgress(activityId, bookId, progress) {
     const token = document.querySelector('meta[name="csrf-token"]').content;
     const progressId = `act_${activityId}_book_${bookId}`;
 
+    // Log para debug
+    console.log('Atualizando progresso:', {
+        activityId,
+        bookId,
+        progress
+    });
+
     return fetch(`/activities/${activityId}/progress`, {
         method: 'POST',
         headers: {
@@ -1333,7 +1340,13 @@ function updateActivityProgress(activityId, bookId, progress) {
             book_id: bookId
         })
     })
-        .then(response => response.json())
+        .then(async response => {
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data.message || 'Failed to update progress');
+            }
+            return data;
+        })
         .then(data => {
             if (data.success) {
                 const progressBar = document.querySelector(`[data-activity-progress="${progressId}"]`);
@@ -1344,15 +1357,51 @@ function updateActivityProgress(activityId, bookId, progress) {
                     progressBar.setAttribute('aria-valuenow', progress);
                     progressText.innerHTML = `<span style="color: orange;">${progress}%</span>`;
                 }
-            } else {
-                throw new Error(data.message || 'Update failed');
+
+                // Salvar localmente o último progresso
+                localStorage.setItem(`activity_${activityId}_progress`, progress);
             }
         })
         .catch(error => {
-            console.error('Error:', error);
+            console.error('Error updating progress:', error);
             alert('Failed to update progress. Please try again.');
         });
 }
+
+// Adicionar função para carregar o progresso ao carregar a página
+document.addEventListener('DOMContentLoaded', () => {
+    const activityCards = document.querySelectorAll('.activity-card');
+
+    activityCards.forEach(card => {
+        const button = card.querySelector('button[data-activity-id]');
+        if (button) {
+            const activityId = button.dataset.activityId;
+            const bookId = button.dataset.bookId;
+            const progressId = `act_${activityId}_book_${bookId}`;
+
+            // Verificar progresso salvo
+            fetch(`/activities/${activityId}/check-progress?book_id=${bookId}`, {
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const progressBar = document.querySelector(`[data-activity-progress="${progressId}"]`);
+                        const progressText = document.querySelector(`[data-progress-text="${progressId}"]`);
+
+                        if (progressBar && progressText) {
+                            progressBar.style.width = `${data.progress}%`;
+                            progressBar.setAttribute('aria-valuenow', data.progress);
+                            progressText.innerHTML = `<span style="color: orange;">${data.progress}%</span>`;
+                        }
+                    }
+                })
+                .catch(console.error);
+        }
+    });
+});
 
 
 // ########################### ADMIN JAVA ###########################
