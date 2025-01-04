@@ -690,93 +690,97 @@ class DatabaseSeeder extends Seeder
         );
 
 
+        // Obtém a data atual para calcular os últimos três meses
+        $currentDate = Carbon::now();
+        $threeMonthsAgo = $currentDate->copy()->subMonths(3);
+
         // 16. Insert Book Clicks
         // Para o livro "Giraffes Can't Dance" (4 cliques)
         BookClick::create([
             'book_id' => $giraffes->id,
-            'clicked_at' => Carbon::create(2024, 7, 23, 19, 15, 0),
-            'created_at' => Carbon::create(2024, 7, 23),
-            'updated_at' => Carbon::create(2024, 7, 23)
+            'clicked_at' => $threeMonthsAgo->copy()->addDays(5),
+            'created_at' => $threeMonthsAgo->copy()->addDays(5),
+            'updated_at' => $threeMonthsAgo->copy()->addDays(5),
         ]);
         BookClick::create([
             'book_id' => $giraffes->id,
-            'clicked_at' => Carbon::create(2024, 8, 15, 16, 30, 0),
-            'created_at' => Carbon::create(2024, 8, 15),
-            'updated_at' => Carbon::create(2024, 8, 15)
+            'clicked_at' => $threeMonthsAgo->copy()->addDays(20),
+            'created_at' => $threeMonthsAgo->copy()->addDays(20),
+            'updated_at' => $threeMonthsAgo->copy()->addDays(20),
         ]);
         BookClick::create([
             'book_id' => $giraffes->id,
-            'clicked_at' => Carbon::create(2024, 9, 10, 11, 45, 0),
-            'created_at' => Carbon::create(2024, 9, 10),
-            'updated_at' => Carbon::create(2024, 9, 10)
+            'clicked_at' => $currentDate->copy()->subDays(10),
+            'created_at' => $currentDate->copy()->subDays(10),
+            'updated_at' => $currentDate->copy()->subDays(10),
         ]);
         BookClick::create([
             'book_id' => $giraffes->id,
-            'clicked_at' => Carbon::create(2024, 9, 20, 20, 10, 0),
-            'created_at' => Carbon::create(2024, 9, 20),
-            'updated_at' => Carbon::create(2024, 9, 20)
+            'clicked_at' => $currentDate->copy()->subDays(2),
+            'created_at' => $currentDate->copy()->subDays(2),
+            'updated_at' => $currentDate->copy()->subDays(2),
         ]);
 
-        // Para o livro "Monkey Puzzle" (3 cliques)
+// Para o livro "Monkey Puzzle" (3 cliques)
         BookClick::create([
             'book_id' => $monkey->id,
-            'clicked_at' => Carbon::create(2024, 7, 23, 19, 30, 0),
-            'created_at' => Carbon::create(2024, 7, 23),
-            'updated_at' => Carbon::create(2024, 7, 23)
+            'clicked_at' => $threeMonthsAgo->copy()->addDays(10),
+            'created_at' => $threeMonthsAgo->copy()->addDays(10),
+            'updated_at' => $threeMonthsAgo->copy()->addDays(10),
         ]);
         BookClick::create([
             'book_id' => $monkey->id,
-            'clicked_at' => Carbon::create(2024, 8, 23, 13, 25, 0),
-            'created_at' => Carbon::create(2024, 8, 23),
-            'updated_at' => Carbon::create(2024, 8, 23)
+            'clicked_at' => $currentDate->copy()->subDays(15),
+            'created_at' => $currentDate->copy()->subDays(15),
+            'updated_at' => $currentDate->copy()->subDays(15),
         ]);
         BookClick::create([
             'book_id' => $monkey->id,
-            'clicked_at' => Carbon::create(2024, 9, 15, 14, 40, 0),
-            'created_at' => Carbon::create(2024, 9, 15),
-            'updated_at' => Carbon::create(2024, 9, 15)
+            'clicked_at' => $currentDate->copy()->subDays(5),
+            'created_at' => $currentDate->copy()->subDays(5),
+            'updated_at' => $currentDate->copy()->subDays(5),
         ]);
 
-        // Para o livro "Brown Bear, Brown Bear" (2 cliques)
+// Para o livro "Brown Bear, Brown Bear" (2 cliques)
         BookClick::create([
             'book_id' => $brownBear->id,
-            'clicked_at' => Carbon::create(2024, 7, 22, 19, 50, 0),
-            'created_at' => Carbon::create(2024, 7, 22),
-            'updated_at' => Carbon::create(2024, 7, 22)
+            'clicked_at' => $threeMonthsAgo->copy()->addDays(15),
+            'created_at' => $threeMonthsAgo->copy()->addDays(15),
+            'updated_at' => $threeMonthsAgo->copy()->addDays(15),
         ]);
         BookClick::create([
             'book_id' => $brownBear->id,
-            'clicked_at' => Carbon::create(2024, 9, 5, 12, 10, 0),
-            'created_at' => Carbon::create(2024, 9, 5),
-            'updated_at' => Carbon::create(2024, 9, 5)
+            'clicked_at' => $currentDate->copy()->subDays(7),
+            'created_at' => $currentDate->copy()->subDays(7),
+            'updated_at' => $currentDate->copy()->subDays(7),
         ]);
 
-        // Para o livro "The Koala Who Could" (3 cliques)
+// Para o livro "The Koala Who Could" (3 cliques)
         BookClick::create([
             'book_id' => $koala->id,
-            'clicked_at' => Carbon::create(2024, 7, 23, 19, 55, 0),
-            'created_at' => Carbon::create(2024, 7, 23),
-            'updated_at' => Carbon::create(2024, 7, 23)
+            'clicked_at' => $threeMonthsAgo->copy()->addDays(18),
+            'created_at' => $threeMonthsAgo->copy()->addDays(18),
+            'updated_at' => $threeMonthsAgo->copy()->addDays(18),
         ]);
         BookClick::create([
             'book_id' => $koala->id,
-            'clicked_at' => Carbon::create(2024, 8, 20, 20, 45, 0),
-            'created_at' => Carbon::create(2024, 8, 20),
-            'updated_at' => Carbon::create(2024, 8, 20)
+            'clicked_at' => $currentDate->copy()->subDays(12),
+            'created_at' => $currentDate->copy()->subDays(12),
+            'updated_at' => $currentDate->copy()->subDays(12),
         ]);
         BookClick::create([
             'book_id' => $koala->id,
-            'clicked_at' => Carbon::create(2024, 9, 25, 10, 30, 0),
-            'created_at' => Carbon::create(2024, 9, 25),
-            'updated_at' => Carbon::create(2024, 9, 25)
+            'clicked_at' => $currentDate->copy()->subDays(3),
+            'created_at' => $currentDate->copy()->subDays(3),
+            'updated_at' => $currentDate->copy()->subDays(3),
         ]);
 
-        // Para o livro "Pancakes, Pancakes!" (1 clique)
+// Para o livro "Pancakes, Pancakes!" (1 clique)
         BookClick::create([
             'book_id' => $pancakes->id,
-            'clicked_at' => Carbon::create(2024, 8, 23, 16, 45, 0),
-            'created_at' => Carbon::create(2024, 8, 23),
-            'updated_at' => Carbon::create(2024, 8, 23)
+            'clicked_at' => $currentDate->copy()->subDays(20),
+            'created_at' => $currentDate->copy()->subDays(20),
+            'updated_at' => $currentDate->copy()->subDays(20),
         ]);
 
 
