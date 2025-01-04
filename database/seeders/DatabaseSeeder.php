@@ -392,7 +392,7 @@ class DatabaseSeeder extends Seeder
 
 
         // 8. Insert Subscriptions
-// Inserir Subscrições e aprovações automáticas para Free
+        // Inserir Subscrições e aprovações automáticas para Free
         $users = [$premiumUser, $anaUser, $luisUser, $mariaUser, $joaoUser, $sofiaUser, $tiagoUser, $claraUser];
 
         foreach ($users as $user) {
