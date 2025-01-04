@@ -18,9 +18,8 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-av
         libxml2-dev \
         zip \
         unzip \
-        sqlite3 \
-        libsqlite3-dev && \
-    docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd pdo_sqlite && \
+        libpq-dev && \
+    docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd pdo_pgsql && \
     a2enmod rewrite headers deflate && \
     echo "ServerName localhost" >> /etc/apache2/apache2.conf && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -33,12 +32,6 @@ WORKDIR /var/www/html
 
 # Copia os ficheiros do Laravel
 COPY . .
-
-# Configura o diretório e arquivo do SQLite com permissões adequadas
-RUN mkdir -p /var/www/html/database && \
-    touch /var/www/html/database/database.sqlite && \
-    chmod 777 /var/www/html/database/database.sqlite && \
-    chmod 777 /var/www/html/database
 
 # Instala dependências do Laravel, configura o ambiente e executa o seed
 RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader --no-scripts && \
