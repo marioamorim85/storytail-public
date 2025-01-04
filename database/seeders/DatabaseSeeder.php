@@ -29,7 +29,6 @@ use App\Models\ActivityBook;
 use App\Models\SubscriptionApproval;
 use App\Models\PointAction;
 use App\Services\RankingService;
-use Illuminate\Support\Facades\DB;
 
 
 class DatabaseSeeder extends Seeder
@@ -218,16 +217,12 @@ class DatabaseSeeder extends Seeder
         $this->command->info('Books seeded successfully!');
 
         // 6. Associate Authors with Books
-        DB::table('author_book')->upsert([
-            ['author_id' => $giles->id, 'book_id' => $giraffes->id, 'created_at' => now(), 'updated_at' => now()],
-            ['author_id' => $julia->id, 'book_id' => $monkey->id, 'created_at' => now(), 'updated_at' => now()],
-            ['author_id' => $eric->id, 'book_id' => $brownBear->id, 'created_at' => now(), 'updated_at' => now()],
-            ['author_id' => $rachel->id, 'book_id' => $koala->id, 'created_at' => now(), 'updated_at' => now()],
-            ['author_id' => $eric->id, 'book_id' => $pancakes->id, 'created_at' => now(), 'updated_at' => now()],
-            ['author_id' => $marcus->id, 'book_id' => $fish->id, 'created_at' => now(), 'updated_at' => now()],
-        ], ['author_id', 'book_id'], ['updated_at']);
-
-
+        AuthorBook::firstOrCreate(['author_id' => $giles->id, 'book_id' => $giraffes->id], ['created_at' => now(), 'updated_at' => now()]);
+        AuthorBook::firstOrCreate(['author_id' => $julia->id, 'book_id' => $monkey->id], ['created_at' => now(), 'updated_at' => now()]);
+        AuthorBook::firstOrCreate(['author_id' => $eric->id, 'book_id' => $brownBear->id], ['created_at' => now(), 'updated_at' => now()]);
+        AuthorBook::firstOrCreate(['author_id' => $rachel->id, 'book_id' => $koala->id], ['created_at' => now(), 'updated_at' => now()]);
+        AuthorBook::firstOrCreate(['author_id' => $eric->id, 'book_id' => $pancakes->id], ['created_at' => now(), 'updated_at' => now()]);
+        AuthorBook::firstOrCreate(['author_id' => $marcus->id, 'book_id' => $fish->id], ['created_at' => now(), 'updated_at' => now()]);
 
         // 7. Insert Users
         $adminUser = User::firstOrCreate(
@@ -392,7 +387,7 @@ class DatabaseSeeder extends Seeder
 
 
         // 8. Insert Subscriptions
-        // Inserir Subscrições e aprovações automáticas para Free
+// Inserir Subscrições e aprovações automáticas para Free
         $users = [$premiumUser, $anaUser, $luisUser, $mariaUser, $joaoUser, $sofiaUser, $tiagoUser, $claraUser];
 
         foreach ($users as $user) {
@@ -639,92 +634,60 @@ class DatabaseSeeder extends Seeder
 
 
         // 14. Insert Book User Read
-        DB::table('book_user_read')->insert([
-            [
-                'book_id' => $giraffes->id,
-                'user_id' => $premiumUser->id,
-                'progress' => 50,
-                'rating' => 5,
-                'read_date' => now(),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'book_id' => $brownBear->id,
-                'user_id' => $premiumUser->id,
-                'progress' => 80,
-                'rating' => 4,
-                'read_date' => now(),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'book_id' => $koala->id,
-                'user_id' => $premiumUser->id,
-                'progress' => 100,
-                'rating' => 5,
-                'read_date' => now(),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'book_id' => $giraffes->id,
-                'user_id' => $anaUser->id,
-                'progress' => 100,
-                'rating' => 4,
-                'read_date' => now(),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'book_id' => $monkey->id,
-                'user_id' => $anaUser->id,
-                'progress' => 90,
-                'rating' => 5,
-                'read_date' => now(),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'book_id' => $brownBear->id,
-                'user_id' => $luisUser->id,
-                'progress' => 75,
-                'rating' => 4,
-                'read_date' => now(),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
+        BookUserRead::firstOrCreate(
+            ['book_id' => $giraffes->id, 'user_id' => $premiumUser->id, 'progress' => 50],
+            ['rating' => 5, 'read_date' => now(), 'created_at' => now(), 'updated_at' => now()]
+        );
 
+        BookUserRead::firstOrCreate(
+            ['book_id' => $brownBear->id, 'user_id' => $premiumUser->id, 'progress' => 80],
+            ['rating' => 4, 'read_date' => now(), 'created_at' => now(), 'updated_at' => now()]
+        );
+
+        BookUserRead::firstOrCreate(
+            ['book_id' => $koala->id, 'user_id' => $premiumUser->id, 'progress' => 100],
+            ['rating' => 5, 'read_date' => now(), 'created_at' => now(), 'updated_at' => now()]
+        );
+
+        // Livros lidos para Ana
+        BookUserRead::firstOrCreate(
+            ['book_id' => $giraffes->id, 'user_id' => $anaUser->id, 'progress' => 100],
+            ['rating' => 4, 'read_date' => now(), 'created_at' => now(), 'updated_at' => now()]
+        );
+
+        BookUserRead::firstOrCreate(
+            ['book_id' => $monkey->id, 'user_id' => $anaUser->id, 'progress' => 90],
+            ['rating' => 5, 'read_date' => now(), 'created_at' => now(), 'updated_at' => now()]
+        );
+
+        // Livros lidos para Luís
+        BookUserRead::firstOrCreate(
+            ['book_id' => $brownBear->id, 'user_id' => $luisUser->id, 'progress' => 75],
+            ['rating' => 4, 'read_date' => now(), 'created_at' => now(), 'updated_at' => now()]
+        );
 
         // 15. Insert Book User Favourite
-        DB::table('book_user_favourite')->insert([
-            [
-                'book_id' => $giraffes->id,
-                'user_id' => $premiumUser->id,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'book_id' => $monkey->id,
-                'user_id' => $premiumUser->id,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'book_id' => $koala->id,
-                'user_id' => $anaUser->id,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'book_id' => $brownBear->id,
-                'user_id' => $luisUser->id,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
+        BookUserFavourite::firstOrCreate(
+            ['book_id' => $giraffes->id, 'user_id' => $premiumUser->id],
+            ['created_at' => now(), 'updated_at' => now()]
+        );
 
+        BookUserFavourite::firstOrCreate(
+            ['book_id' => $monkey->id, 'user_id' => $premiumUser->id],
+            ['created_at' => now(), 'updated_at' => now()]
+        );
+
+        // Livros favoritos para Ana
+        BookUserFavourite::firstOrCreate(
+            ['book_id' => $koala->id, 'user_id' => $anaUser->id],
+            ['created_at' => now(), 'updated_at' => now()]
+        );
+
+        // Livros favoritos para Luís
+        BookUserFavourite::firstOrCreate(
+            ['book_id' => $brownBear->id, 'user_id' => $luisUser->id],
+            ['created_at' => now(), 'updated_at' => now()]
+        );
 
 
         // Obtém a data atual para calcular os últimos três meses

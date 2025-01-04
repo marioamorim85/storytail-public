@@ -1,4 +1,4 @@
-FROM php:8.2-apache
+ROM php:8.2-apache
 
 # Define o diretório público para o Apache e configurações do Laravel
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public \
@@ -18,8 +18,9 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-av
         libxml2-dev \
         zip \
         unzip \
-        libpq-dev && \
-    docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd pdo_pgsql && \
+        sqlite3 \
+        libsqlite3-dev && \
+    docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd pdo_sqlite && \
     a2enmod rewrite headers deflate && \
     echo "ServerName localhost" >> /etc/apache2/apache2.conf && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -33,12 +34,19 @@ WORKDIR /var/www/html
 # Copia os ficheiros do Laravel
 COPY . .
 
-# Instala dependências do Laravel e configura o ambiente
+# Configura o diretório e arquivo do SQLite com permissões adequadas
+RUN mkdir -p /var/www/html/database && \
+    touch /var/www/html/database/database.sqlite && \
+    chmod 777 /var/www/html/database/database.sqlite && \
+    chmod 777 /var/www/html/database
+
+# Instala dependências do Laravel, configura o ambiente e executa o seed
 RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader --no-scripts && \
     composer dump-autoload --optimize --no-dev --classmap-authoritative && \
     php artisan config:cache && \
     php artisan route:cache && \
-    php artisan storage:link
+    php artisan storage:link && \
+    php artisan migrate --force --seed
 
 # Configurações do Apache para permitir acesso ao storage
 RUN echo '<Directory /var/www/html/public>\n\
