@@ -56,19 +56,21 @@ class ReportController extends Controller
                 $query->where('is_active', true);
             })
             ->select('book_id', DB::raw('COUNT(*) as clicks_count'))
-            ->where('clicked_at', '>=', DB::raw("datetime('now', '-3 months')"))
+            ->where('clicked_at', '>=', DB::raw("NOW() - INTERVAL '3 months'"))
             ->groupBy('book_id')
             ->orderByDesc('clicks_count')
             ->limit(3)
             ->get();
 
+
         // Horários de Pico de Uso
         $peakUsageTimes = DB::table('book_clicks')
-            ->select(DB::raw("strftime('%H', clicked_at) as hour"), DB::raw('COUNT(*) as clicks_count'))
+            ->select(DB::raw("EXTRACT(HOUR FROM clicked_at) as hour"), DB::raw('COUNT(*) as clicks_count'))
             ->groupBy('hour')
             ->orderByDesc('clicks_count')
             ->limit(3) // Top 3 horários
             ->get();
+
 
         /// Atividades Mais Populares
         $mostPopularActivities = DB::table('activities')
