@@ -315,8 +315,6 @@ class BookController extends Controller
             ], 500);
         }
     }
-
-    // Método para guardar o progresso de leitura
     public function saveProgress(Request $request, $bookId)
     {
         try {
@@ -352,9 +350,9 @@ class BookController extends Controller
                             ],
                             [
                                 'progress' => $request->progress,
-                                'read_date' => $request->progress == 100 ? now() : null,
-                                'created_at' => DB::raw('COALESCE(created_at, NOW())'),
-                                'updated_at' => now(),
+                                'read_date' => $request->progress == 100 ? now()->format('Y-m-d H:i:s') : null,
+                                'created_at' => DB::raw("COALESCE(created_at, datetime('now'))"),
+                                'updated_at' => now()->format('Y-m-d H:i:s')
                             ]
                         );
 
@@ -414,7 +412,6 @@ class BookController extends Controller
         }
     }
 
-    // Método para atualizar o progresso de uma atividade
     public function updateActivityProgress(Request $request, $activityBookId)
     {
         try {
@@ -435,8 +432,8 @@ class BookController extends Controller
                     ],
                     [
                         'progress' => $request->progress,
-                        'updated_at' => now(),
-                        'created_at' => DB::raw('COALESCE(created_at, NOW())')
+                        'updated_at' => now()->format('Y-m-d H:i:s'),
+                        'created_at' => DB::raw("COALESCE(created_at, datetime('now'))")
                     ]
                 );
 
@@ -471,34 +468,6 @@ class BookController extends Controller
                 'message' => 'Progress updated successfully'
             ]);
 
-        } catch (\Throwable $e) {
-            return $this->handleException($e);
-        }
-    }
-
-
-    // Método para verificar o progresso de uma atividade
-    public function checkActivityProgress(Request $request, $activityId)
-    {
-        try {
-            $activityBook = DB::table('activity_book')
-                ->where('activity_id', $activityId)
-                ->where('book_id', $request->book_id)
-                ->first();
-
-            if (!$activityBook) {
-                throw new \Exception('Activity Book not found');
-            }
-
-            $progress = DB::table('activity_book_user')
-                ->where('activity_book_id', $activityBook->id)
-                ->where('user_id', auth()->id())
-                ->value('progress') ?? 0;
-
-            return response()->json([
-                'success' => true,
-                'progress' => $progress
-            ]);
         } catch (\Throwable $e) {
             return $this->handleException($e);
         }
