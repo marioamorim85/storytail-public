@@ -25,12 +25,13 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-av
    echo "ServerName localhost" >> /etc/apache2/apache2.conf && \
    apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Adicione estas configurações no seu Dockerfile
+# configurações do Dockerfile
 RUN echo "upload_max_filesize=128M" >> /usr/local/etc/php/conf.d/uploads.ini && \
-   echo "post_max_size=128M" >> /usr/local/etc/php/conf.d/uploads.ini && \
-   echo "memory_limit=512M" >> /usr/local/etc/php/conf.d/uploads.ini && \
-   echo "max_execution_time=300" >> /usr/local/etc/php/conf.d/uploads.ini && \
-   echo "max_input_time=300" >> /usr/local/etc/php/conf.d/uploads.ini
+    echo "post_max_size=128M" >> /usr/local/etc/php/conf.d/uploads.ini && \
+    echo "memory_limit=512M" >> /usr/local/etc/php/conf.d/uploads.ini && \
+    echo "max_execution_time=300" >> /usr/local/etc/php/conf.d/uploads.ini && \
+    echo "max_input_time=300" >> /usr/local/etc/php/conf.d/uploads.ini && \
+    echo "max_file_uploads=100" >> /usr/local/etc/php/conf.d/uploads.ini
 
 # Configuração do Apache para aceitar arquivos grandes
 RUN echo "LimitRequestBody 134217728" >> /etc/apache2/apache2.conf  # 128MB em bytes
