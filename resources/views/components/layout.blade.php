@@ -23,6 +23,16 @@
         <meta name="flash-message" content="{{ session('info') }}">
     @endif
 
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ secure_asset('apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ secure_asset('favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ secure_asset('favicon-16x16.png') }}">
+    <link rel="icon" type="image/x-icon" href="{{ secure_asset('favicon.ico') }}">
+    <!-- Chrome para Android -->
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ secure_asset('android-chrome-192x192.png') }}">
+    <link rel="icon" type="image/png" sizes="512x512" href="{{ secure_asset('android-chrome-512x512.png') }}">
+    <meta name="theme-color" content="#ff6a00">
+
     {{-- Bootstrap --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     {{-- Bootstrap Icons --}}
