@@ -50,9 +50,9 @@ class BookController extends Controller
                 'authors.*' => 'exists:authors,id',
                 'tags' => 'required|array',
                 'tags.*' => 'exists:tags,id',
-                'cover_url' => 'required|file|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
+                'cover_url' => 'required|file|image|mimes:jpeg,png,jpg,gif,svg|max:131072',
                 'pages' => 'required|array',
-                'pages.*' => 'file|image|mimes:jpeg,png,jpg|max:5120',
+                'pages.*' => 'file|image|mimes:jpeg,png,jpg|max:131072',
                 'page_index' => 'required|array',
                 'page_index.*' => 'required|integer|min:1',
                 'video_url' => ['nullable', 'url', 'regex:/^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/']
@@ -72,12 +72,12 @@ class BookController extends Controller
                 'cover_url.file' => 'The cover must be a valid file.',
                 'cover_url.image' => 'The cover must be an image.',
                 'cover_url.mimes' => 'The cover must be a file of type: jpeg, png, jpg, gif, svg.',
-                'cover_url.max' => 'The cover may not be greater than 5MB.',
+                'cover_url.max' => 'The cover may not be greater than 128MB.',
                 'pages.required' => 'At least one page image is required.',
                 'pages.*.file' => 'Each page must be a valid file.',
                 'pages.*.image' => 'Each page must be an image.',
                 'pages.*.mimes' => 'Each page must be a file of type: jpeg, png, jpg.',
-                'pages.*.max' => 'Each page may not be greater than 5MB.',
+                'pages.*.max' => 'Each page may not be greater than 128MB.',
                 'page_index.required' => 'Each page must have an order index.',
                 'page_index.*.integer' => 'Each page index must be an integer.',
                 'page_index.*.min' => 'Each page index must be at least 1.',
@@ -188,7 +188,6 @@ class BookController extends Controller
     public function update(Request $request, string $id)
     {
         try {
-            // Validação condicional
             $request->validate([
                 'title' => 'required|string|max:255',
                 'description' => 'required|string',
@@ -198,9 +197,9 @@ class BookController extends Controller
                 'authors.*' => 'exists:authors,id',
                 'tags' => 'required|array',
                 'tags.*' => 'exists:tags,id',
-                'cover_url' => $request->hasFile('cover_url') ? 'required|file|image|mimes:jpeg,png,jpg,gif,svg|max:5120' : 'nullable',
+                'cover_url' => $request->hasFile('cover_url') ? 'required|file|image|mimes:jpeg,png,jpg,gif,svg|max:131072' : 'nullable', // 128MB
                 'pages' => $request->hasFile('pages') ? 'required|array' : 'nullable',
-                'pages.*' => $request->hasFile('pages') ? 'file|image|mimes:jpeg,png,jpg|max:5120' : 'nullable',
+                'pages.*' => $request->hasFile('pages') ? 'file|image|mimes:jpeg,png,jpg|max:131072' : 'nullable', // 128MB
                 'page_index' => $request->has('page_index') ? 'required|array' : 'nullable',
                 'page_index.*' => $request->has('page_index') ? 'required|integer|min:1' : 'nullable',
                 'video_url' => ['nullable', 'url', 'regex:/^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/']
