@@ -162,15 +162,7 @@
     </div>
 </footer>
 
-{{-- Adicionar eventos passivos para touchstart --}}
-<script>
-    // Tornar eventos touchstart passivos globalmente
-    jQuery.event.special.touchstart = {
-        setup: function (_, ns, handle) {
-            this.addEventListener("touchstart", handle, { passive: true });
-        }
-    };
-</script>
+
 
 {{-- Scripts de dependências --}}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -183,12 +175,27 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://npmcdn.com/flatpickr/dist/l10n/pt.js"></script>
 
-{{-- Scripts --}}
+{{-- Tornar eventos touchstart passivos globalmente --}}
+<script>
+    // Garantir que jQuery foi carregado antes de usar
+    if (typeof jQuery !== 'undefined') {
+        jQuery.event.special.touchstart = {
+            setup: function (_, ns, handle) {
+                this.addEventListener("touchstart", handle, { passive: true });
+            }
+        };
+    } else {
+        console.error("jQuery não foi carregado corretamente.");
+    }
+</script>
+
+{{-- Scripts personalizados --}}
 <script src="{{ secure_asset('js/turn.js') }}"></script>
 <script src="{{ secure_asset('js/java.js') }}"></script>
 
 {{-- Scripts adicionais --}}
 @stack('scripts')
+
 
 </body>
 </html>

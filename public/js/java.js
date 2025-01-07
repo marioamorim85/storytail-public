@@ -58,26 +58,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (emailInput) {
             emailInput.addEventListener('input', (e) => validateField(e.target, 'email'));
-        } else {
-            console.warn('Campo de e-mail não encontrado.');
         }
 
         if (passwordInput) {
             passwordInput.addEventListener('input', (e) => validateField(e.target, 'password'));
-        } else {
-            console.warn('Campo de password não encontrado.');
         }
 
         if (confirmPasswordInput) {
             confirmPasswordInput.addEventListener('input', (e) => validateConfirmPassword(e.target));
             passwordInput.addEventListener('input', (e) => validateConfirmPassword(confirmPasswordInput));
-        } else {
-            console.warn('Campo de confirmação de password não encontrado.');
         }
-    } else {
-        console.log('Esta página não é de autenticação. Ignorando validações.');
     }
 });
+
 
 // Função para alternar a visibilidade da senha
 function togglePasswordVisibility(passwordFieldId, toggleIconId) {
@@ -145,7 +138,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Identifica a categoria selecionada
             const category = this.getAttribute('data-category');
-            console.log(`Categoria selecionada: ${category}`);
 
             // Esconde todas as secções
             allSections.forEach(section => section.classList.add('hidden'));
@@ -154,9 +146,8 @@ document.addEventListener('DOMContentLoaded', function () {
             const targetSection = document.getElementById(`${category}-section`);
             if (targetSection) {
                 targetSection.classList.remove('hidden');
-            } else {
-                console.warn(`Secção não encontrada para a categoria: ${category}`);
             }
+
 
             // Atualiza filtros e configurações com base na categoria
             if (category === 'all') {
@@ -168,7 +159,6 @@ document.addEventListener('DOMContentLoaded', function () {
             } else if (category === 'popular') {
                 // Para "Popular", não reaplica ordenação; utiliza a ordem do backend
                 clearFilters();
-                console.log('Livros da seção "Popular" mantêm a ordenação do backend.');
                 if (sortSelect) {
                     sortSelect.value = ''; // Remove seleção no frontend para evitar confusão
                 }
@@ -182,6 +172,7 @@ document.addEventListener('DOMContentLoaded', function () {
             } else {
                 clearFilters(); // Limpa os filtros para outras abas
             }
+
 
             // Atualiza os componentes visuais relacionados
             showFilterComponent(category);
@@ -297,7 +288,6 @@ function showFilterComponent(category) {
 function loadOriginalBooks(section) {
     if (section === 'popular' || section === 'picks') {
         // Essas abas já carregam os livros ordenados pelo backend
-        console.log(`Livros da secção "${section}" já carregados pelo backend.`);
         return;
     } else if (section === 'all') {
         // Ordena "All Books" por A-Z ao carregar
@@ -308,20 +298,18 @@ function loadOriginalBooks(section) {
             success: function (response) {
                 if (response.success && response.books) {
                     updateBooksList(response.books);
-                    console.log('Livros da secção "all" carregados e ordenados por A-Z.');
                 }
             },
             error: function (xhr) {
-                console.error('Erro ao carregar livros da secção "all":', xhr.responseText);
+                // Pode incluir um tratamento de erro, se necessário, sem logs
             },
         });
     } else {
-        console.warn(
-            `Elemento "recommended-books-data" ou "popular-books-data" não encontrado para a seção "${section}". Certifique-se de que o backend o está fornecendo.`
-        );
+        // Certifique-se de que o backend fornece os dados necessários
         updateBooksList([]); // Carrega uma lista vazia para evitar erros.
     }
 }
+
 
 
 // Função para ordenar os livros na secção ativa
@@ -635,7 +623,6 @@ function applyFilters() {
         method: 'GET',
         data: activeFilters, // Envia todos os filtros e opções
         success: function(response) {
-            console.log('Resposta do servidor:', response);
             const booksList = document.querySelector('#books-list');
             if (response.success && response.books) {
                 booksList.innerHTML = response.books.length
@@ -644,11 +631,12 @@ function applyFilters() {
             }
         },
         error: function(xhr) {
-            console.error('Erro ao aplicar filtros:', xhr.responseText);
+            // Mostra uma mensagem amigável ao utilizador
+            const booksList = document.querySelector('#books-list');
+            booksList.innerHTML = '<div class="col-12 text-center"><p>An error occurred while applying filters. Please try again later.</p></div>';
         }
     });
 }
-
 
 
 // Carregar as opções de filtro quando a página carregar
@@ -793,8 +781,6 @@ function toggleFavorite(bookId, context = 'book-details') {
             }
         })
         .catch((error) => {
-            console.error('Error:', error);
-
             // Exibir toast de erro
             const toast = document.createElement('div');
             toast.className = 'notification error';
@@ -804,7 +790,7 @@ function toggleFavorite(bookId, context = 'book-details') {
                 </div>
                 <div class="title">
                     <h1>Error</h1>
-                    <h6>${error.message}</h6>
+                    <h6>${error.message || 'An unexpected error occurred. Please try again.'}</h6>
                 </div>
                 <div class="close" onclick="this.parentElement.remove()">
                     <i class="bi bi-x"></i>
@@ -821,6 +807,7 @@ function toggleFavorite(bookId, context = 'book-details') {
 
             setTimeout(() => toast.remove(), 5000);
         });
+
 }
 
 
@@ -828,7 +815,6 @@ function toggleFavorite(bookId, context = 'book-details') {
 document.addEventListener("DOMContentLoaded", () => {
     // Verificar se jQuery está carregado
     if (typeof jQuery === 'undefined') {
-        console.error("jQuery não está carregado. Carregando jQuery...");
         // Carregar jQuery dinamicamente
         const script = document.createElement('script');
         script.src = 'https://code.jquery.com/jquery-3.6.0.min.js';
@@ -841,7 +827,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function initializeBookReader() {
-    console.log("DOM completamente carregado e analisado.");
 
     const tabs = document.querySelectorAll("#book-menu-tabs .nav-link");
     const sections = document.querySelectorAll(".content-section");
@@ -876,10 +861,9 @@ function initializeBookReader() {
         };
     };
 
+
     const initReadingSlider = () => {
-        console.log("Iniciando o slider de leitura...");
         if (isReadingSliderInitialized) {
-            console.warn("Slider já inicializado.");
             return;
         }
 
@@ -889,15 +873,12 @@ function initializeBookReader() {
         const progressBar = document.getElementById("reading-progress-bar");
         const progressText = document.getElementById("progress-text");
 
-        console.log("Elementos encontrados:", { slider, prevButton, nextButton, progressBar, progressText });
 
         if (!slider.length || !prevButton || !nextButton) {
-            console.warn("Elementos necessários em falta. Verificar IDs.");
             return;
         }
 
         // Inicializar Turn.js
-        console.log("Inicializando Turn.js...");
         try {
             const totalPages = slider.children('.page').length;
             const startPage = Math.max(1, Math.floor((currentProgress / 100) * totalPages));
@@ -959,7 +940,6 @@ function initializeBookReader() {
                 }
             }
 
-            console.log("Turn.js inicializado com sucesso.");
 
             // Ajustar o livro quando a janela for redimensionada
             window.addEventListener('resize', () => {
@@ -981,7 +961,6 @@ function initializeBookReader() {
 
             const updateProgressDisplay = (page) => {
                 const progress = calculateProgress(page);
-                console.log(`Atualizando progresso: Página ${page} de ${totalPages} (${progress}%).`);
 
                 if (progressBar && progressText) {
                     progressBar.style.width = `${progress}%`;
@@ -1001,11 +980,9 @@ function initializeBookReader() {
             };
 
             const saveProgressToServer = (progress) => {
-                console.log(`Salvando progresso no servidor: ${progress}%`);
                 const isLoggedIn = document.body.dataset.userLoggedIn === "true";
 
                 if (!isLoggedIn || progress <= lastSavedProgress) {
-                    console.warn("Progresso não será salvo.");
                     return;
                 }
 
@@ -1024,7 +1001,6 @@ function initializeBookReader() {
                     .then(response => response.ok ? response.json() : Promise.reject('Network response was not ok'))
                     .then(data => {
                         if (data.success) {
-                            console.log("Progress saved:", progress);
                             lastSavedProgress = progress;
                         }
                     })
@@ -1032,14 +1008,12 @@ function initializeBookReader() {
             };
 
             const nextPage = () => {
-                console.log("Próxima página clicada.");
                 if (slider.turn('page') < totalPages) {
                     slider.turn("next");
                 }
             };
 
             const prevPage = () => {
-                console.log("Página anterior clicada.");
                 if (slider.turn('page') > 1) {
                     slider.turn("previous");
                 }
@@ -1082,7 +1056,6 @@ function initializeBookReader() {
 
             // Atualizar progresso ao virar páginas
             slider.on("turned", function(event, page) {
-                console.log("Página virada para:", page);
                 updateProgressDisplay(page);
             });
 
@@ -1099,8 +1072,7 @@ function initializeBookReader() {
             updateProgressDisplay(startPage);
 
         } catch (error) {
-            console.error("Erro ao inicializar Turn.js:", error);
-            return;
+
         }
     };
 
@@ -1108,8 +1080,6 @@ function initializeBookReader() {
         tab.addEventListener("click", (event) => {
             event.preventDefault();
             const category = tab.getAttribute("data-category");
-
-            console.log(`Tab clicada: ${category}`);
 
             const isUserLoggedIn = document.body.dataset.userLoggedIn === "true";
 
@@ -1120,8 +1090,6 @@ function initializeBookReader() {
                     }
                     saveProgressToServer(currentProgress);
                 }
-            } else {
-                console.warn("O progresso não pode ser salvo porque o utilizador não está logado.");
             }
 
             activeReadingTab = category === "read";
@@ -1144,11 +1112,9 @@ function initializeBookReader() {
     // Ativar a aba inicial
     const initialActiveTab = document.querySelector("#book-menu-tabs .nav-link.active");
     if (initialActiveTab) {
-        console.log("Ativando aba inicial...");
         initialActiveTab.click();
-    } else {
-        console.warn("Nenhuma aba inicial ativa encontrada.");
     }
+
 }
 
 
@@ -1225,7 +1191,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const initActivitiesProgress = () => {
         if (isActivitiesInitialized) return;
 
-        console.log('Inicializando progresso das atividades');
         const activitiesSection = document.querySelector("#activities-section");
         if (!activitiesSection) return;
 
@@ -1253,7 +1218,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         }
                     }
                 })
-                .catch(error => console.error('Erro ao carregar progresso:', error));
         });
 
         isActivitiesInitialized = true;
@@ -1279,12 +1243,6 @@ function downloadAndUpdateProgress(button, imageUrl) {
     const imageIndex = parseInt(button.dataset.imageIndex);
     const totalImages = parseInt(button.dataset.totalImages);
 
-    console.log('Dados do download:', {
-        activityId,
-        bookId,
-        imageIndex,
-        totalImages
-    });
 
     // Calcular progresso
     const progressPerImage = 100 / totalImages;
@@ -1321,12 +1279,6 @@ function updateActivityProgress(activityId, bookId, progress) {
     const token = document.querySelector('meta[name="csrf-token"]').content;
     const progressId = `act_${activityId}_book_${bookId}`;
 
-    // Log para debug
-    console.log('Atualizando progresso:', {
-        activityId,
-        bookId,
-        progress
-    });
 
     return fetch(`/activities/${activityId}/progress`, {
         method: 'POST',
@@ -1692,8 +1644,9 @@ document.addEventListener('DOMContentLoaded', function() {
             allowInput: true,
             locale: "en",
             onChange: function(selectedDates, dateStr) {
-                console.log("Data selecionada:", dateStr);
+                // Callback para manipular a data selecionada, caso necessário
             }
         });
     }
 });
+
