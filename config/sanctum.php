@@ -12,7 +12,7 @@ return [
     */
     'stateful' => explode(',', env('SANCTUM_STATEFUL_DOMAINS', sprintf(
         '%s%s',
-        'storytail-public.onrender.com',
+        'storytail.org,www.storytail.org',
         env('APP_URL') ? ','.parse_url(env('APP_URL'), PHP_URL_HOST) : ''
     ))),
 

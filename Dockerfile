@@ -4,7 +4,7 @@ FROM php:8.2-apache
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public \
    APP_ENV=production \
    APP_DEBUG=false \
-   APP_URL=https://storytail-public.onrender.com \
+   APP_URL=https://storytail.org \
    COMPOSER_MEMORY_LIMIT=-1
 
 # Atualiza pacotes e instala dependências necessárias
