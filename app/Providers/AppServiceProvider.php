@@ -28,13 +28,17 @@ class AppServiceProvider extends ServiceProvider
         // Configurações para ambiente de produção
         if ($this->app->environment('production')) {
             URL::forceScheme('https');
+
+            // Configurações de sessão baseadas no domínio atual
+            $domain = parse_url(config('app.url'), PHP_URL_HOST); // Obtém o domínio do APP_URL
+
             Config::set('session.secure', true);
             Config::set('session.http_only', true);
             Config::set('session.same_site', 'lax');
-            Config::set('app.force_https', true);
-            Config::set('session.domain', 'storytail-public.onrender.com');
+            Config::set('session.domain', $domain); // Define o domínio dinamicamente
             Config::set('session.cookie', 'storytail_session');
             Config::set('session.path', '/');
         }
+
     }
 }
