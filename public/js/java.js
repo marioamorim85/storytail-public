@@ -1164,10 +1164,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Reset ao tirar o mouse
     const starContainer = document.querySelector('.star-rating');
-    starContainer.addEventListener('mouseleave', () => {
-        const selectedRating = parseInt(ratingInput.value) || 0;
-        updateStars(selectedRating); // Volta para o estado das estrelas clicadas ou limpa
-    });
+    if (starContainer) { // Verifica se o elemento existe
+        starContainer.addEventListener('mouseleave', () => {
+            const selectedRating = parseInt(ratingInput.value) || 0;
+            updateStars(selectedRating);
+        });
+    }
 });
 
 
@@ -1440,19 +1442,22 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Preview da capa
-    document.getElementById('cover_url').addEventListener('change', function(e) {
-        const container = document.getElementById('coverPreview');
-        const file = e.target.files[0];
-        const template = (src) => `
-                       <div class="position-relative">
-                           <div class="delete-image" onclick="removeCoverPreview(this)">×</div>
-                           <img src="${src}"
-                               alt="Cover preview"
-                               style="width: 70px; height: 100px; object-fit: cover; border-radius: 4px;">
-                       </div>
-                   `;
-        createImagePreview(file, container, template);
-    });
+    const coverInput = document.getElementById('cover_url');
+    if (coverInput) {
+        coverInput.addEventListener('change', function(e) {
+            const container = document.getElementById('coverPreview');
+            const file = e.target.files[0];
+            const template = (src) => `
+            <div class="position-relative">
+                <div class="delete-image" onclick="removeCoverPreview(this)">×</div>
+                <img src="${src}"
+                    alt="Cover preview"
+                    style="width: 70px; height: 100px; object-fit: cover; border-radius: 4px;">
+            </div>
+        `;
+            createImagePreview(file, container, template);
+        });
+    }
 
     // Preview das páginas
     document.getElementById('pages').addEventListener('change', function(e) {
