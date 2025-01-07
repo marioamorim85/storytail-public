@@ -1395,44 +1395,42 @@ document.addEventListener('DOMContentLoaded', function() {
     // Função para inicializar Choices.js apenas se ainda não foi inicializado
     function initializeChoices(selector, config) {
         const element = document.querySelector(selector);
-
-        if (element) {
-            // Verificar se Choices já foi inicializado
-            if (!element.choicesInstance) {
-                element.choicesInstance = new Choices(element, config);
-            }
+        if (element && !element.choicesInstance) {
+            element.choicesInstance = new Choices(element, config);
         }
     }
 
     // Tornar a função de inicialização globalmente acessível
     window.initializeChoices = initializeChoices;
 
-
     // Inicializar selects com as configurações adequadas
-    initializeChoices('#age_group_id', {
-        ...singleSelectConfig,
-        placeholderValue: 'Select Age Group',
-    });
+    const ageGroupSelect = document.querySelector('#age_group_id');
+    if (ageGroupSelect) {
+        initializeChoices('#age_group_id', {
+            ...singleSelectConfig,
+            placeholderValue: 'Select Age Group',
+        });
+    }
 
-    initializeChoices('#access_level', {
-        ...singleSelectConfig,
-        placeholderValue: 'Select Access Level',
-    });
+    const accessLevelSelect = document.querySelector('#access_level');
+    if (accessLevelSelect) {
+        initializeChoices('#access_level', {
+            ...singleSelectConfig,
+            placeholderValue: 'Select Access Level',
+        });
+    }
 
-    initializeChoices('#tags', {
-        ...multipleSelectConfig,
-        placeholderValue: 'Select Tags',
-    });
-
-
-
+    const tagsSelect = document.querySelector('#tags');
+    if (tagsSelect) {
+        initializeChoices('#tags', {
+            ...multipleSelectConfig,
+            placeholderValue: 'Select Tags',
+        });
+    }
 
     // Função de preview de imagens atualizada
     function createImagePreview(file, container, template) {
-        if (!file) {
-            container.innerHTML = '';
-            return;
-        }
+        if (!file || !container) return;
 
         const reader = new FileReader();
         reader.onload = function(e) {
@@ -1443,78 +1441,120 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Preview da capa
     const coverInput = document.getElementById('cover_url');
-    if (coverInput) {
+    const coverPreviewContainer = document.getElementById('coverPreview');
+    if (coverInput && coverPreviewContainer) {
         coverInput.addEventListener('change', function(e) {
-            const container = document.getElementById('coverPreview');
             const file = e.target.files[0];
             const template = (src) => `
-            <div class="position-relative">
-                <div class="delete-image" onclick="removeCoverPreview(this)">×</div>
-                <img src="${src}"
-                    alt="Cover preview"
-                    style="width: 70px; height: 100px; object-fit: cover; border-radius: 4px;">
-            </div>
-        `;
-            createImagePreview(file, container, template);
+                <div class="position-relative">
+                    <div class="delete-image" onclick="removeCoverPreview(this)">×</div>
+                    <img src="${src}"
+                        alt="Cover preview"
+                        style="width: 70px; height: 100px; object-fit: cover; border-radius: 4px;">
+                </div>
+            `;
+            createImagePreview(file, coverPreviewContainer, template);
         });
     }
 
     // Preview das páginas
-    document.getElementById('pages').addEventListener('change', function(e) {
-        const previewDiv = document.getElementById('pagePreview');
-        previewDiv.innerHTML = ''; // Limpa previews anteriores
+    const pagesInput = document.getElementById('pages');
+    const pagePreviewDiv = document.getElementById('pagePreview');
+    if (pagesInput && pagePreviewDiv) {
+        pagesInput.addEventListener('change', function(e) {
+            pagePreviewDiv.innerHTML = ''; // Limpa previews anteriores
 
-        Array.from(e.target.files).forEach((file, index) => {
-            const template = (src) => `
-                            <div class="position-relative">
-                                <div class="delete-image" onclick="removePagePreview(this, ${index})">×</div>
-                                <img src="${src}"
-                                     alt="Page preview"
-                                     style="width: 70px; height: 100px; object-fit: cover; border-radius: 4px;">
-                                <input type="text"
-                                       class="form-control form-control-sm mt-1"
-                                       name="page_index[]"
-                                       placeholder="Page"
-                                       required
-                                       style="width: 70px;">
-                            </div>
-                        `;
-            createImagePreview(file, previewDiv, template);
+            Array.from(e.target.files).forEach((file, index) => {
+                const template = (src) => `
+                    <div class="position-relative">
+                        <div class="delete-image" onclick="removePagePreview(this, ${index})">×</div>
+                        <img src="${src}"
+                             alt="Page preview"
+                             style="width: 70px; height: 100px; object-fit: cover; border-radius: 4px;">
+                        <input type="text"
+                               class="form-control form-control-sm mt-1"
+                               name="page_index[]"
+                               placeholder="Page"
+                               required
+                               style="width: 70px;">
+                    </div>
+                `;
+                createImagePreview(file, pagePreviewDiv, template);
+            });
         });
-    });
-
+    }
 
     // Preview do vídeo do YouTube
-    document.getElementById('video_url').addEventListener('input', function () {
-        const videoUrl = this.value;
-        const videoId = getYoutubeId(videoUrl); // Função para extrair o ID do YouTube
-        const previewContainer = this.parentElement.querySelector('.video-preview');
+    const videoInput = document.getElementById('video_url');
+    const videoPreviewContainer = document.getElementById('video-preview');
+    if (videoInput && videoPreviewContainer) {
+        videoInput.addEventListener('input', function () {
+            const videoUrl = this.value;
+            const videoId = getYoutubeId(videoUrl);
 
-        // Remove o preview antigo
-        if (previewContainer) {
-            previewContainer.remove();
-        }
+            // Limpa previews anteriores
+            const existingPreviews = videoPreviewContainer.querySelectorAll('.video-preview');
+            existingPreviews.forEach(preview => preview.remove());
 
-        if (videoId) {
-            const preview = document.createElement('div');
-            preview.className = 'video-preview mt-2 position-relative';
-            preview.innerHTML = `
-                <div class="delete-image" onclick="removeVideoPreview()">×</div>
-                <iframe width="300" height="169"
-                        src="https://www.youtube.com/embed/${videoId}"
-                        frameborder="0" allowfullscreen>
-                </iframe>
-            `;
-            // Adiciona o preview ao conteiner
-            document.getElementById('video-preview').appendChild(preview);
-        }
-    });
+            if (videoId) {
+                const preview = document.createElement('div');
+                preview.className = 'video-preview mt-2 position-relative';
+                preview.innerHTML = `
+                    <div class="delete-image" onclick="removeVideoPreview()">×</div>
+                    <iframe width="300" height="169"
+                            src="https://www.youtube.com/embed/${videoId}"
+                            frameborder="0" allowfullscreen>
+                    </iframe>
+                `;
+                videoPreviewContainer.appendChild(preview);
+            }
+        });
+    }
 
     function getYoutubeId(url) {
+        if (!url) return null;
         const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
         const match = url.match(regExp);
         return (match && match[2].length === 11) ? match[2] : null;
     }
+
+    // Funções globais para remover previews
+    window.removeCoverPreview = function(element) {
+        const coverInput = document.getElementById('cover_url');
+        if (coverInput) {
+            coverInput.value = '';
+        }
+        element.closest('.position-relative').remove();
+    };
+
+    window.removePagePreview = function(element, index) {
+        const pagesInput = document.getElementById('pages');
+        if (pagesInput) {
+            const dt = new DataTransfer();
+            const { files } = pagesInput;
+            for (let i = 0; i < files.length; i++) {
+                if (i !== index) {
+                    dt.items.add(files[i]);
+                }
+            }
+            pagesInput.files = dt.files;
+        }
+        element.closest('.position-relative').remove();
+    };
+
+    window.removeVideoPreview = function() {
+        const videoInput = document.getElementById('video_url');
+        const videoPreviewContainer = document.getElementById('video-preview');
+        if (videoInput) {
+            videoInput.value = '';
+        }
+        if (videoPreviewContainer) {
+            const preview = videoPreviewContainer.querySelector('.video-preview');
+            if (preview) {
+                preview.remove();
+            }
+        }
+    };
 });
 
 // Funções de remoção das pré-visualizações
