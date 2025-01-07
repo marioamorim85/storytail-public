@@ -116,8 +116,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Mostra a secção inicial "All Books" por padrão
     allSections.forEach(section => section.classList.add('hidden'));
-    document.getElementById('all-section').classList.remove('hidden');
-    showFilterComponent('all');
+
+    const allSection = document.getElementById('all-section');
+    if (allSection) {
+        allSection.classList.remove('hidden');
+        showFilterComponent('all');
+    }
 
     // Configura o seletor de ordenação para "A-Z" e aplica a ordenação automaticamente na aba inicial
     if (sortSelect) {
