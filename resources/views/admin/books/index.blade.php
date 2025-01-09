@@ -8,7 +8,7 @@
 
     <div class="d-flex justify-content-between align-items-center mb-4">
         <a class="btnAdmin" href="{{ route('admin.books.create') }}">
-            <i class="bi bi-plus-circle"></i>  Add New Book
+            <i class="bi bi-plus-circle"></i>&nbsp;Add New Book
         </a>
 
         {{-- Search/Filter Area --}}

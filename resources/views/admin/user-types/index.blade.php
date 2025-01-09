@@ -6,7 +6,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div class="usertype-form-container">
             <button id="showUserTypeForm" class="btnAdmin">
-                <i class="bi bi-plus-circle"></i> Add New
+                <i class="bi bi-plus-circle"></i>&nbsp;Add New Uer Type
             </button>
 
             {{-- Formulário dinâmico --}}

@@ -6,7 +6,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div class="age-group-form-container">
             <button id="showAgeGroupForm" class="btnAdmin">
-                <i class="bi bi-plus-circle"></i> Add New Age
+                <i class="bi bi-plus-circle"></i>&nbsp;Add New Age
             </button>
 
             {{-- Formulário dinâmico --}}

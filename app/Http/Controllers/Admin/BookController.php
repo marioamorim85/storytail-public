@@ -54,7 +54,7 @@ class BookController extends Controller
                 'pages' => 'required|array',
                 'pages.*' => 'file|image|mimes:jpeg,png,jpg|max:131072',
                 'page_index' => 'required|array',
-                'page_index.*' => 'required|integer|min:1',
+                'page_index.*' => 'required|integer|min:0',
                 'video_url' => ['nullable', 'url', 'regex:/^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/']
             ], [
                 'title.required' => 'The title field is required.',
@@ -80,7 +80,7 @@ class BookController extends Controller
                 'pages.*.max' => 'Each page may not be greater than 128MB.',
                 'page_index.required' => 'Each page must have an order index.',
                 'page_index.*.integer' => 'Each page index must be an integer.',
-                'page_index.*.min' => 'Each page index must be at least 1.',
+                'page_index.*.min' => 'Each page index must be at least 0.',
                 'video.file' => 'The video must be a valid file.',
                 'video.mimes' => 'The video must be a file of type: mp4, mov, ogg, qt.',
                 'video.max' => 'The video may not be greater than 20MB.',

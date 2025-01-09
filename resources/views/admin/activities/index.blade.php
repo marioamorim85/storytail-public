@@ -8,7 +8,7 @@
 
     <div class="d-flex justify-content-between align-items-center mb-4">
         <a class="btnAdmin" href="{{ route('admin.activities.create') }}">
-            <i class="bi bi-plus-circle"></i> Add New Activity
+            <i class="bi bi-plus-circle"></i>&nbsp;Add New Activity
         </a>
 
         {{-- Search/Filter Area --}}

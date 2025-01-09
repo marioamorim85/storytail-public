@@ -12,7 +12,7 @@
 
     <div class="d-flex justify-content-between align-items-center mb-4">
         <a class="btnAdmin" href="{{ route('admin.users.create') }}">
-            <i class="bi bi-plus-circle"></i> Add New User
+            <i class="bi bi-plus-circle"></i>&nbsp;Add New User
         </a>
 
         {{-- Search/Filter Area --}}

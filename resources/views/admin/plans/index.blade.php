@@ -7,7 +7,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div class="plan-form-container">
             <button id="showPlanForm" class="btnAdmin">
-                <i class="bi bi-plus-circle"></i> Add New Plan
+                <i class="bi bi-plus-circle"></i>&nbsp;Add New Plan
             </button>
 
             {{-- Formulário dinâmico --}}

@@ -7,7 +7,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div class="tag-form-container">
             <button id="showTagForm" class="btnAdmin">
-                <i class="bi bi-plus-circle"></i> Add New Tag
+                <i class="bi bi-plus-circle"></i>&nbsp;Add New Tag
             </button>
 
             {{-- Formulário dinâmico --}}

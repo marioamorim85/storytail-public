@@ -1464,26 +1464,51 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     // Preview das páginas
-    document.getElementById('pages').addEventListener('change', function(e) {
+    document.getElementById('pages').addEventListener('change', function (e) {
         const previewDiv = document.getElementById('pagePreview');
         previewDiv.innerHTML = ''; // Limpa previews anteriores
 
-        Array.from(e.target.files).forEach((file, index) => {
-            const template = (src) => `
-                            <div class="position-relative">
-                                <div class="delete-image" onclick="removePagePreview(this, ${index})">×</div>
-                                <img src="${src}"
-                                     alt="Page preview"
-                                     style="width: 70px; height: 100px; object-fit: cover; border-radius: 4px;">
-                                <input type="text"
-                                       class="form-control form-control-sm mt-1"
-                                       name="page_index[]"
-                                       placeholder="Page"
-                                       required
-                                       style="width: 70px;">
-                            </div>
-                        `;
-            createImagePreview(file, previewDiv, template);
+        // Cria array com os arquivos e ordena
+        const filesArray = Array.from(e.target.files).map(file => ({
+            file,
+            number: parseInt(file.name.split('.')[0], 10) || 0 // Garante que valores inválidos sejam tratados como 0
+        }));
+
+        filesArray.sort((a, b) => a.number - b.number);
+        console.log('Files after sorting:', filesArray.map(f => f.file.name));
+
+        // Aguarda todas as previews serem criadas em ordem
+        const promises = filesArray.map((item, index) => {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const template = `
+                    <div class="position-relative page-preview" data-index="${index}">
+                        <div class="delete-image" onclick="removePagePreview(this, ${index})">×</div>
+                        <img src="${e.target.result}"
+                             alt="Page preview"
+                             style="width: 70px; height: 100px; object-fit: cover; border-radius: 4px;">
+                        <input type="hidden" name="pages[]" value="${item.file.name}"> <!-- Garante correspondência com os ficheiros -->
+                        <input type="number"
+                               class="form-control form-control-sm mt-1 page-index"
+                               name="page_index[]"
+                               value="${item.number}"
+                               placeholder="Page"
+                               required
+                               style="width: 70px;">
+                    </div>
+                `;
+                    resolve({ template, index: item.number });
+                };
+                reader.readAsDataURL(item.file);
+            });
+        });
+
+        // Renderiza as previews em ordem
+        Promise.all(promises).then(results => {
+            results.forEach(result => {
+                previewDiv.insertAdjacentHTML('beforeend', result.template);
+            });
         });
     });
 

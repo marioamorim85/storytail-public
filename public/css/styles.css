@@ -2341,34 +2341,40 @@ select::-moz-focus-inner {
 /************** Book-activitie **************/
 
 /* Container das atividades */
-.container-activity{
+.container-activity {
     border: 1px solid var(--light-grey);
     background-color: var(--white);
     box-shadow: 0 4px 9px rgba(0, 0, 0, 0.1);
     border-radius: 1rem !important;
-    display: flex;
-    align-items: flex-start;
     position: relative;
     padding: 1rem;
     width: 100%;
-    flex-direction: row;
-    flex-wrap: wrap;
 }
 
-.activity-card{
+/* Garantir que o row ocupa todo o espaço */
+.container-activity .row {
+    width: 100%;
+    margin: 0;
+}
+
+/* Garantir que as colunas têm a mesma largura */
+.container-activity .col-md-6.col-lg-4 {
+    display: flex;
+    flex-direction: column;
+}
+
+.activity-card {
     border-radius: 1rem !important;
     overflow: hidden;
+    height: 100%;  /* Para ocupar toda a altura */
 }
 
-.activity-card img{
+.activity-card img {
     border-radius: 1rem !important;
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-
-    display: block;
     width: 100%;
     height: 20rem;
+    object-fit: contain;
+    display: block;
 }
 
 /****************** Responsividade ******************/
