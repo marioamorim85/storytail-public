@@ -48,9 +48,11 @@
                                 @endforeach
                             </select>
                         </div>
-                        <button type="button" class="btn btn-orange rounded-circle d-flex align-items-center justify-content-center"
-                                data-bs-toggle="modal" data-bs-target="#addAuthorModal"
-                                style="width: 25px; height: 25px; min-width: 25px; margin-top: 10px;">
+                        <button type="button"
+                                class="btn btn-orange rounded-circle d-flex align-items-center justify-content-center"
+                                data-bs-toggle="modal"
+                                data-bs-target="#addAuthorModal"
+                                style="width: 30px; height: 30px; margin-top: 10px;">
                             <i class="bi bi-plus-lg"></i>
                         </button>
                     </div>

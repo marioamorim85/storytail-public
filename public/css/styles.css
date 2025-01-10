@@ -2173,7 +2173,9 @@ select::-moz-focus-inner {
 }
 
 /* Responsividade para ecrans maiores */
-@media (min-width: 1440px) {
+/*@media (min-width: 1440px) and (max-width: 2048px) {*/
+@media (min-width: 1440px) and (max-width: 2048px) and (min-resolution: 1.5dppx) {
+/*@media (min-resolution: 1.5dppx) {*/
     .slider-nav {
         position: absolute;
         bottom: 1rem;
