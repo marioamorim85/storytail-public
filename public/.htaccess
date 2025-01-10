@@ -1,6 +1,5 @@
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
-        # Desativa MultiViews e listas de diretórios
         Options -MultiViews -Indexes
     </IfModule>
 
@@ -20,42 +19,3 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 </IfModule>
-
-# ============================
-# Bloqueios Adicionais
-# ============================
-
-# Bloquear Endpoints Relacionados ao WordPress
-<FilesMatch "^(wlwmanifest\.xml|xmlrpc\.php|wp-admin|wp-includes|setup-config\.php)$">
-    Require all denied
-</FilesMatch>
-
-# Bloquear User-Agents Suspeitos
-SetEnvIfNoCase User-Agent "python-httpx" bad_bot
-SetEnvIfNoCase User-Agent "curl" bad_bot
-SetEnvIfNoCase User-Agent "wget" bad_bot
-SetEnvIfNoCase User-Agent "bot" bad_bot
-SetEnvIfNoCase User-Agent "crawler" bad_bot
-SetEnvIfNoCase User-Agent "spider" bad_bot
-Deny from env=bad_bot
-
-# ============================
-# Segurança Adicional
-# ============================
-
-# Bloquear acesso direto a ficheiros .env
-<Files .env>
-    Require all denied
-</Files>
-
-# Bloquear acesso a ficheiros sensíveis
-<FilesMatch "^\.(env|git|htaccess|htpasswd|log|ini|bak|sh|sql|swp|phar)$">
-    Require all denied
-</FilesMatch>
-
-# Proteção contra ataques de navegação de diretórios
-Options -Indexes
-
-# ============================
-# Fim do Ficheiro
-# ============================

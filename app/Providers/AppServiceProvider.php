@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
-use App\Http\Middleware\BlockSuspiciousRequests;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -41,7 +40,5 @@ class AppServiceProvider extends ServiceProvider
             Config::set('session.path', '/');
         }
 
-        // Aplica o middleware globalmente
-        $this->app['router']->pushMiddlewareToGroup('web', BlockSuspiciousRequests::class);
     }
 }
