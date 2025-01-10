@@ -19,3 +19,14 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 </IfModule>
+
+# Bloquear Endpoints WordPress
+<FilesMatch "^(wlwmanifest\.xml|xmlrpc\.php|wp-admin|wp-includes|setup-config\.php)$">
+    Require all denied
+</FilesMatch>
+
+# Bloquear User-Agents suspeitos
+SetEnvIfNoCase User-Agent "python-httpx" bad_bot
+SetEnvIfNoCase User-Agent "curl" bad_bot
+SetEnvIfNoCase User-Agent "wget" bad_bot
+Deny from env=bad_bot
