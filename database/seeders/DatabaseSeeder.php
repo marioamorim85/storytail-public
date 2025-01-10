@@ -202,7 +202,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $fish = Book::firstOrCreate([
-            'title' => 'The rainbow fish',
+            'title' => 'The Rainbow Fish',
             'description' => 'A story about the beautiful rainbow fish.',
             'read_time' => 15,
             'access_level' => 1,
@@ -851,7 +851,7 @@ class DatabaseSeeder extends Seeder
             );
         }
 
-        $this->command->info('Pages for "The Rainbow fish" seeded successfully!');
+        $this->command->info('Pages for "The Rainbow Fish" seeded successfully!');
 
         // 19. Insert Comment Moderation
         CommentModeration::firstOrCreate(
