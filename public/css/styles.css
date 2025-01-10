@@ -86,18 +86,24 @@ footer {
     width: 10rem;
     border-radius: 1rem;
     transition: transform 0.2s ease-in-out, box-shadow 0.2s;
-    font-weight: bold;
+    font-weight:bold;
 }
 
 /* Botão principal */
 .btn {
     background-color: var(--orange);
+    border-color: var(--orange);
+    font-weight: bold;
+    width: 10rem;
+    border-radius: 1rem;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s;
     color: white;
 }
 
 .btn:hover {
     background-color: var(--dark-orange);
     border-color: var(--dark-orange);
+    color: var(--white);
     transform: translateY(-0.2rem);
     box-shadow: 0 0.5rem 0.7rem rgba(0, 0, 0, 0.3);
 }
@@ -106,6 +112,11 @@ footer {
 .btnSecundary {
     color: var(--orange);
     background-color: var(--white);
+    border: 1px solid var(--orange);
+    font-weight: bold;
+    width: 10rem;
+    border-radius: 1rem;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s;
     text-decoration: none;
 }
 
@@ -2086,16 +2097,18 @@ select::-moz-focus-inner {
     object-fit: cover;
 }
 
+
 /* Formulário de comentário */
 .add-comment {
-    width: 100%;
-    max-width: 600px;
+    width: 50%;
+    max-width: 54rem;
     padding: 2rem;
     background-color: var(--white);
     text-align: center;
     display: flex;
     flex-direction: column;
-    margin: auto;
+    margin-left: auto;
+    margin-right: 1.5rem;
 }
 
 .add-comment .st-title{
@@ -2173,9 +2186,7 @@ select::-moz-focus-inner {
 }
 
 /* Responsividade para ecrans maiores */
-/*@media (min-width: 1440px) and (max-width: 2048px) {*/
-@media (min-width: 1440px) and (max-width: 2048px) and (min-resolution: 1.5dppx) {
-/*@media (min-resolution: 1.5dppx) {*/
+@media (min-resolution: 1.5dppx) {
     .slider-nav {
         position: absolute;
         bottom: 1rem;
@@ -2339,6 +2350,7 @@ select::-moz-focus-inner {
     align-items: center;
     justify-content: center;
 }
+
 
 /************** Book-activitie **************/
 
