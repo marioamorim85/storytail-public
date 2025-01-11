@@ -20,7 +20,11 @@
         @forelse ($favourites as $index => $book)
             <div class="row align-items-center favourite-item" id="favourite-book-{{ $book->id }}">
                 {{-- Cover --}}
-                <div class="col-3 text-center">
+                <div class="col-3 text-center position-relative">
+                    {{-- Icon de Livro lido --}}
+                    @if($book->progress >= 90)
+                        <span class="status-icon-fav"><i class="bi bi-check-lg"></i></span>
+                    @endif
                     <img src="{{ $book->cover_url ? asset('storage/' . $book->cover_url) : asset('images/no-cover.png') }}"
                          alt="{{ $book->title }}" class="img-fluid favourite-cover">
                 </div>

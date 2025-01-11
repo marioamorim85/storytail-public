@@ -590,18 +590,18 @@ class BookController extends Controller
     // Método para obter os favoritos do utilizador
     public function myFavourites()
     {
-        // Obter o utilizador autenticado
         $user = auth()->user();
 
-        // Buscar os livros favoritos
         $favourites = $user->favoriteBooks()
-            ->select('books.id', 'books.title', 'books.cover_url', 'books.read_time')
+            ->leftJoin('book_user_read', function ($join) use ($user) {
+                $join->on('books.id', '=', 'book_user_read.book_id')
+                    ->where('book_user_read.user_id', '=', $user->id);
+            })
+            ->select('books.id', 'books.title', 'books.cover_url', 'books.read_time', 'book_user_read.progress')
             ->get();
 
-        // Retornar a view com a variável $favourites
         return view('manage-my-books.favourites', ['favourites' => $favourites]);
     }
-
 
     // Método para obter o progresso dos livros do utilizador
     public function myBooksProgress()

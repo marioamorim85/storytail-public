@@ -1445,6 +1445,7 @@ select::-moz-focus-inner {
 /* Estilo dos itens favoritos */
 .favourite-item {
     padding: 1rem 0; /* Espaçamento entre as linhas */
+    position: relative;
 }
 
 /* Divisória laranja entre os itens */
@@ -1459,6 +1460,27 @@ select::-moz-focus-inner {
     border-radius: 0.5rem;
     max-height: 100px;
     object-fit: cover;
+}
+
+.status-icon-fav {
+    font-size: 1.2rem;
+    position: absolute;
+    top: -0.5rem;
+    left: 11.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: var(--green);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5; /* Garante que está sobre a capa */
+    color: var(--white); /* Cor do ícone */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Leve sombra */
+}
+
+.status-icon-fav i {
+    font-size: 1.2rem; /* Tamanho do ícone */
 }
 
 /* Texto do título */
@@ -2093,10 +2115,8 @@ select::-moz-focus-inner {
 /* Imagens do livro */
 .book-page {
     max-height: 100%;
-    border-radius: 0.5rem;
     object-fit: cover;
 }
-
 
 /* Formulário de comentário */
 .add-comment {
@@ -2108,7 +2128,7 @@ select::-moz-focus-inner {
     display: flex;
     flex-direction: column;
     margin-left: auto;
-    margin-right: 1.5rem;
+    margin-right: 5.5rem;
 }
 
 .add-comment .st-title{
@@ -2186,7 +2206,7 @@ select::-moz-focus-inner {
 }
 
 /* Responsividade para ecrans maiores */
-@media (min-resolution: 1.5dppx) {
+@media (min-resolution: 1.5dppx){
     .slider-nav {
         position: absolute;
         bottom: 1rem;
@@ -2351,7 +2371,6 @@ select::-moz-focus-inner {
     justify-content: center;
 }
 
-
 /************** Book-activitie **************/
 
 /* Container das atividades */
@@ -2388,7 +2407,7 @@ select::-moz-focus-inner {
     width: 100%;
     height: 20rem;
     object-fit: contain;
-    display: block;
+    display:block;
 }
 
 /****************** Responsividade ******************/
