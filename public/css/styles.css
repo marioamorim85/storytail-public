@@ -1662,6 +1662,130 @@ select::-moz-focus-inner {
     }
 }
 
+/* Responsividade específica para telemóveis na horizontal */
+@media screen and (max-height: 480px) and (orientation: landscape) {
+    .st-home-banner {
+        height: 19rem;
+    }
+
+    .home-main-content {
+        margin-top: 12.2rem;
+    }
+
+    .filter {
+        margin-top: 280px !important; /* Reduz o espaçamento superior */
+        padding: 0.3rem 0;
+    }
+
+
+    /* Ajustes para os filtros e toggle button */
+    #toggle-filter-btn {
+        display: block !important;
+        visibility: visible !important;
+        top: 18rem; /* Ajustado para nova posição */
+        width: 2.4rem; /* Toggle mais largo */
+        height: 5rem; /* Toggle mais alto */
+        writing-mode: vertical-lr;
+        text-orientation: mixed;
+        font-size: 0.8rem; /* Texto maior */
+        font-weight: bold;
+        left: -0.8rem; /* Ajustado para não ficar muito para fora */
+    }
+
+    #toggle-filter-btn:hover {
+        left: -0.8rem;
+    }
+
+    .filter-container {
+        position: fixed;
+        top: 7rem;
+        /*height: calc(100vh - 8.5rem);*/
+        width: 0;
+        transition: width 0.3s ease;
+        background-color: rgba(255, 255, 255, 0.95);
+        z-index: 90;
+        overflow: hidden;
+        margin-bottom: 1rem;
+    }
+
+    /* Redução do tamanho das letras */
+    .filter-title {
+        font-size: 0.85rem;
+    }
+
+    .filter-item {
+        font-size: 0.85rem;
+    }
+
+    .filter-options {
+        font-size: 0.75rem;
+    }
+
+    .filter-container.expanded {
+        width: 11rem;
+    }
+
+    .filter-list {
+        max-height: calc(100vh - 10rem); /* Adjusted to show more content */
+        overflow-y: auto;
+        padding: 0.5rem;
+        scrollbar-width: thin;
+        scrollbar-color: var(--orange) var(--light-grey);
+    }
+
+    /* Estilização da scrollbar para Chrome/Safari */
+    .filter-list::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .filter-list::-webkit-scrollbar-track {
+        background: var(--light-grey);
+        border-radius: 3px;
+    }
+
+    .filter-list::-webkit-scrollbar-thumb {
+        background-color: var(--orange);
+        border-radius: 3px;
+    }
+
+    /* Ajuste do conteúdo principal */
+    #books-list {
+        padding: 0.5rem;
+        margin-left: 0;
+        transition: margin-left 0.3s ease;
+    }
+
+    /* Estado normal dos cards */
+    #books-list .book-card .card-title {
+        font-size: 0.9rem;
+    }
+
+    #books-list .book-card .btn {
+        font-size: 0.85rem;
+        padding: 0.3rem 0.6rem;
+    }
+
+    /* Ajuste quando os filtros estão expandidos */
+    .filter-container.expanded ~ #books-list {
+        margin-left: 13rem;
+    }
+
+    .filter-container.expanded ~ #books-list .book-card .card-title {
+        font-size: 0.8rem;
+    }
+
+    .filter-container.expanded ~ #books-list .book-card .btn {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+    }
+
+    /* Melhor visibilidade para os cards dos livros */
+    #books-list .book-card {
+        margin-bottom: 0.5rem;
+    }
+}
+
+
 /********************************************** Badges **********************************************/
 
 /* Container do menu */
