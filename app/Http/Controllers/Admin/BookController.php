@@ -260,7 +260,10 @@ class BookController extends Controller
             if ($request->has('video_url') && $request->video_url) {
                 $book->video()->updateOrCreate(
                     ['book_id' => $book->id],
-                    ['video_url' => $request->video_url]
+                    [
+                        'title' => $book->title . ' - Video', // Adicionar o título
+                        'video_url' => $request->video_url
+                    ]
                 );
             }
 
