@@ -56,7 +56,14 @@ RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoload
    composer dump-autoload --optimize --no-dev --classmap-authoritative && \
    php artisan config:cache && \
    php artisan route:cache && \
-   php artisan storage:link && \
+   php artisan storage:link
+
+# Instala dependências do Laravel, configura o ambiente e executa o seed
+#RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader --no-scripts && \
+#   composer dump-autoload --optimize --no-dev --classmap-authoritative && \
+#   php artisan config:cache && \
+#   php artisan route:cache && \
+#   php artisan storage:link && \
 #   php artisan migrate:fresh --force --seed
 
 # Configurações do Apache para permitir acesso ao storage
