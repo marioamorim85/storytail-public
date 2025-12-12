@@ -2310,18 +2310,21 @@ select::-moz-focus-inner {
     align-items: center;
     justify-content: center;
     border: 0.1rem solid var(--white);
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%; /* Make them circular */
 }
 
 .slider-nav.prev {
     right: 48rem;
-    top: 15.5rem;
-    bottom: 15.5rem;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .slider-nav.next {
     left: 48rem;
-    top: 15.5rem;
-    bottom: 15.5rem;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .slider-nav:hover {
@@ -2341,14 +2344,14 @@ select::-moz-focus-inner {
 
     .slider-nav.prev {
         right: 38rem;
-        top: 44.4rem;
-        bottom: 15.5rem;
+        top: 50%;
+        transform: translateY(-50%);
     }
 
     .slider-nav.next {
         left: 38rem;
-        top: 44.4rem;
-        bottom: 15.5rem;
+        top: 50%;
+        transform: translateY(-50%);
     }
 }
 

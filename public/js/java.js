@@ -116,7 +116,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Mostra a secção inicial "All Books" por padrão
     allSections.forEach(section => section.classList.add('hidden'));
-    document.getElementById('all-section').classList.remove('hidden');
+    const allSection = document.getElementById('all-section');
+    if (allSection) {
+        allSection.classList.remove('hidden');
+    }
     showFilterComponent('all');
 
     // Configura o seletor de ordenação para "A-Z" e aplica a ordenação automaticamente na aba inicial
@@ -528,7 +531,7 @@ function loadFilterOptions() {
     $.ajax({
         url: '/books/filter-options',
         method: 'GET',
-        success: function(response) {
+        success: function (response) {
             // Preencher planos
             const planOptions = document.getElementById('plan-options');
             response.plans.forEach(plan => {
@@ -580,7 +583,7 @@ function loadFilterOptions() {
                     checkbox.addEventListener('change', applyFilters);
                 });
         },
-        error: function(xhr) {
+        error: function (xhr) {
             console.error('Error loading filter options:', xhr.responseText);
         }
     });
@@ -622,7 +625,7 @@ function applyFilters() {
         url: '/books/apply-filters',
         method: 'GET',
         data: activeFilters, // Envia todos os filtros e opções
-        success: function(response) {
+        success: function (response) {
             const booksList = document.querySelector('#books-list');
             if (response.success && response.books) {
                 booksList.innerHTML = response.books.length
@@ -630,7 +633,7 @@ function applyFilters() {
                     : '<div class="col-12 text-center"><p>No books found matching your criteria.</p></div>';
             }
         },
-        error: function(xhr) {
+        error: function (xhr) {
             // Mostra uma mensagem amigável ao utilizador
             const booksList = document.querySelector('#books-list');
             booksList.innerHTML = '<div class="col-12 text-center"><p>An error occurred while applying filters. Please try again later.</p></div>';
@@ -640,7 +643,7 @@ function applyFilters() {
 
 
 // Carregar as opções de filtro quando a página carregar
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Carregar filtros apenas na seção "All Books"
     if (document.getElementById('all-section')) {
         loadFilterOptions();
@@ -648,7 +651,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Adicionar event listener para o botão de reset (se existir)
         const resetButton = document.querySelector('.filter-reset');
         if (resetButton) {
-            resetButton.addEventListener('click', function() {
+            resetButton.addEventListener('click', function () {
                 // Desmarcar todos os checkboxes
                 document.querySelectorAll('.filter-options input[type="checkbox"]')
                     .forEach(checkbox => checkbox.checked = false);
@@ -686,7 +689,7 @@ function toggleFilter(filterId) {
 }
 
 // Fechar a barra de filtros ao clicar fora
-document.addEventListener('click', function(event) {
+document.addEventListener('click', function (event) {
     const filterContainer = document.getElementById('filter-container');
     const toggleButton = document.getElementById('toggle-filter-btn');
 
@@ -845,7 +848,7 @@ function initializeBookReader() {
         const padding = 40;
         const containerWidth = container.offsetWidth - padding;
         const containerHeight = container.offsetHeight - padding;
-        const ratio = 4/3;
+        const ratio = 4 / 3;
 
         let width = containerWidth;
         let height = width / ratio;
@@ -895,7 +898,7 @@ function initializeBookReader() {
                 acceleration: true,
                 peel: false,
                 when: {
-                    turning: function(e, page) {
+                    turning: function (e, page) {
                         // Verifica se está indo para a última página (página de comentários)
                         if (page === totalPages) {
                             e.preventDefault(); // Previne a virada normal
@@ -915,13 +918,13 @@ function initializeBookReader() {
                             $(this).turn('size', dimensions.width, dimensions.height);
                         }
                     },
-                    start: function(e, pageObject) {
+                    start: function (e, pageObject) {
                         // Aplica o layout correto na inicialização
                         if (pageObject.page === totalPages) {
                             $(this).turn('size', dimensions.width * 2, dimensions.height);
                         }
                     },
-                    turned: function(e, page) {
+                    turned: function (e, page) {
                         // Garante o layout correto após a página ser virada
                         if (page === totalPages) {
                             $(this).turn('size', dimensions.width * 2, dimensions.height);
@@ -1037,11 +1040,11 @@ function initializeBookReader() {
 
             // Suporte a gestos touch
             let touchStartX = 0;
-            slider.on('touchstart', function(e) {
+            slider.on('touchstart', function (e) {
                 touchStartX = e.originalEvent.touches[0].pageX;
             });
 
-            slider.on('touchmove', function(e) {
+            slider.on('touchmove', function (e) {
                 if (!touchStartX) return;
 
                 const touchEndX = e.originalEvent.touches[0].pageX;
@@ -1055,7 +1058,7 @@ function initializeBookReader() {
             });
 
             // Atualizar progresso ao virar páginas
-            slider.on("turned", function(event, page) {
+            slider.on("turned", function (event, page) {
                 updateProgressDisplay(page);
             });
 
@@ -1119,7 +1122,7 @@ function initializeBookReader() {
 
 
 // estrelas de avaliação
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const stars = document.querySelectorAll('.rating-star');
     const ratingInput = document.getElementById('rating-value');
 
@@ -1370,7 +1373,7 @@ function toggleSidebar() {
 
 /************** Formulários **************/
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Configurações base para todos os selects
     const commonConfig = {
         itemSelectText: '',
@@ -1435,7 +1438,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         const reader = new FileReader();
-        reader.onload = function(e) {
+        reader.onload = function (e) {
             container.insertAdjacentHTML('beforeend', template(e.target.result));
         };
         reader.readAsDataURL(file);
@@ -1446,7 +1449,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const coverUrlInput = document.getElementById('cover_url');
         if (!coverUrlInput) return; // Sai do script se o elemento não existir
 
-        coverUrlInput.addEventListener('change', function(e) {
+        coverUrlInput.addEventListener('change', function (e) {
             const container = document.getElementById('coverPreview');
             const file = e.target.files[0];
             const template = (src) => `
@@ -1464,25 +1467,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     // Preview das páginas
-    document.getElementById('pages').addEventListener('change', function (e) {
-        const previewDiv = document.getElementById('pagePreview');
-        previewDiv.innerHTML = ''; // Limpa previews anteriores
+    const pagesInput = document.getElementById('pages');
+    if (pagesInput) {
+        pagesInput.addEventListener('change', function (e) {
+            const previewDiv = document.getElementById('pagePreview');
+            previewDiv.innerHTML = ''; // Limpa previews anteriores
 
-        // Cria array com os arquivos e ordena
-        const filesArray = Array.from(e.target.files).map(file => ({
-            file,
-            number: parseInt(file.name.split('.')[0], 10) || 0 // Garante que valores inválidos sejam tratados como 0
-        }));
+            // Cria array com os arquivos e ordena
+            const filesArray = Array.from(e.target.files).map(file => ({
+                file,
+                number: parseInt(file.name.split('.')[0], 10) || 0 // Garante que valores inválidos sejam tratados como 0
+            }));
 
-        filesArray.sort((a, b) => a.number - b.number);
-        console.log('Files after sorting:', filesArray.map(f => f.file.name));
+            filesArray.sort((a, b) => a.number - b.number);
+            console.log('Files after sorting:', filesArray.map(f => f.file.name));
 
-        // Aguarda todas as previews serem criadas em ordem
-        const promises = filesArray.map((item, index) => {
-            return new Promise((resolve) => {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    const template = `
+            // Aguarda todas as previews serem criadas em ordem
+            const promises = filesArray.map((item, index) => {
+                return new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        const template = `
                     <div class="position-relative page-preview" data-index="${index}">
                         <div class="delete-image" onclick="removePagePreview(this, ${index})">×</div>
                         <img src="${e.target.result}"
@@ -1498,46 +1503,50 @@ document.addEventListener('DOMContentLoaded', function() {
                                style="width: 70px;">
                     </div>
                 `;
-                    resolve({ template, index: item.number });
-                };
-                reader.readAsDataURL(item.file);
+                        resolve({ template, index: item.number });
+                    };
+                    reader.readAsDataURL(item.file);
+                });
             });
-        });
 
-        // Renderiza as previews em ordem
-        Promise.all(promises).then(results => {
-            results.forEach(result => {
-                previewDiv.insertAdjacentHTML('beforeend', result.template);
+            // Renderiza as previews em ordem
+            Promise.all(promises).then(results => {
+                results.forEach(result => {
+                    previewDiv.insertAdjacentHTML('beforeend', result.template);
+                });
             });
         });
-    });
+    }
 
 
     // Preview do vídeo do YouTube
-    document.getElementById('video_url').addEventListener('input', function () {
-        const videoUrl = this.value;
-        const videoId = getYoutubeId(videoUrl); // Função para extrair o ID do YouTube
-        const previewContainer = this.parentElement.querySelector('.video-preview');
+    const videoUrlInput = document.getElementById('video_url');
+    if (videoUrlInput) {
+        videoUrlInput.addEventListener('input', function () {
+            const videoUrl = this.value;
+            const videoId = getYoutubeId(videoUrl); // Função para extrair o ID do YouTube
+            const previewContainer = this.parentElement.querySelector('.video-preview');
 
-        // Remove o preview antigo
-        if (previewContainer) {
-            previewContainer.remove();
-        }
+            // Remove o preview antigo
+            if (previewContainer) {
+                previewContainer.remove();
+            }
 
-        if (videoId) {
-            const preview = document.createElement('div');
-            preview.className = 'video-preview mt-2 position-relative';
-            preview.innerHTML = `
+            if (videoId) {
+                const preview = document.createElement('div');
+                preview.className = 'video-preview mt-2 position-relative';
+                preview.innerHTML = `
                 <div class="delete-image" onclick="removeVideoPreview()">×</div>
                 <iframe width="300" height="169"
                         src="https://www.youtube.com/embed/${videoId}"
                         frameborder="0" allowfullscreen>
                 </iframe>
             `;
-            // Adiciona o preview ao conteiner
-            document.getElementById('video-preview').appendChild(preview);
-        }
-    });
+                // Adiciona o preview ao conteiner
+                document.getElementById('video-preview').appendChild(preview);
+            }
+        });
+    }
 
     function getYoutubeId(url) {
         const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
@@ -1615,7 +1624,7 @@ const createToast = (type, message) => {
     if (!box) return;
 
     let icon, title;
-    switch(type) {
+    switch (type) {
         case 'success':
             icon = "fa-solid fa-circle-check";
             title = "Success";
@@ -1666,7 +1675,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 // DataPicker para a data de nascimento
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const birthDateInput = document.querySelector('input[name="birth_date"]');
     if (birthDateInput) {
         flatpickr(birthDateInput, {
@@ -1677,7 +1686,7 @@ document.addEventListener('DOMContentLoaded', function() {
             monthSelectorType: "static",
             allowInput: true,
             locale: "en",
-            onChange: function(selectedDates, dateStr) {
+            onChange: function (selectedDates, dateStr) {
                 // Callback para manipular a data selecionada, caso necessário
             }
         });

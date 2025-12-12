@@ -24,13 +24,13 @@
     @endif
 
     <!-- Favicons -->
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ secure_asset('apple-touch-icon.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ secure_asset('favicon-32x32.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ secure_asset('favicon-16x16.png') }}">
-    <link rel="icon" type="image/x-icon" href="{{ secure_asset('favicon.ico') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     <!-- Chrome para Android -->
-    <link rel="icon" type="image/png" sizes="192x192" href="{{ secure_asset('android-chrome-192x192.png') }}">
-    <link rel="icon" type="image/png" sizes="512x512" href="{{ secure_asset('android-chrome-512x512.png') }}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('android-chrome-192x192.png') }}">
+    <link rel="icon" type="image/png" sizes="512x512" href="{{ asset('android-chrome-512x512.png') }}">
     <meta name="theme-color" content="#ff6a00">
 
     {{-- Bootstrap --}}
@@ -46,8 +46,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_orange.css">
     {{-- CSS --}}
-    <link rel="stylesheet" href="{{ secure_asset('css/styles.css') }}">
-    <link rel="stylesheet" href="{{ secure_asset('css/admin.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
     <script>
         const SORT_URL = '{{ route("books.sort") }}';
     </script>
@@ -60,7 +60,7 @@
 <header class="navbar navbar-expand-lg navbar">
     <div class="container">
         <a class="navbar-brand" href="{{ route('home') }}">
-            <img src="{{ secure_asset('images/logo.png') }}" alt="StoryTail Logo" class="logo">
+            <img src="{{ asset('images/logo.png') }}" alt="StoryTail Logo" class="logo">
         </a>
         {{-- Botão de navegação para ecrãs pequenos--}}
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -141,7 +141,7 @@
     <div class="footer-top">
         <div class="container">
             <a href="{{ route('home') }}" class="footer-logo">
-                <img src="{{ secure_asset('images/logo-storyTail.png') }}" alt="StoryTail Logo">
+                <img src="{{ asset('images/logo-storyTail.png') }}" alt="StoryTail Logo">
             </a>
             <div class="footer-links">
                 <a href="{{ route('contacts') }}" class="footer-link">Contacts</a>
@@ -190,8 +190,8 @@
 </script>
 
 {{-- Scripts personalizados --}}
-<script src="{{ secure_asset('js/turn.js') }}"></script>
-<script src="{{ secure_asset('js/java.js') }}"></script>
+<script src="{{ asset('js/turn.js') }}"></script>
+<script src="{{ asset('js/java.js') }}"></script>
 
 {{-- Scripts adicionais --}}
 @stack('scripts')

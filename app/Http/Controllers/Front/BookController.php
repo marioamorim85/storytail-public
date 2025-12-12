@@ -473,6 +473,12 @@ class BookController extends Controller
         }
     }
 
+    // Método para ordenar livros
+    public function sortBooks(Request $request)
+    {
+        return $this->filterBooks($request);
+    }
+
 
     // Método para aplicar filtros, ordenação e pesquisa diretamente
     public function filterBooks(Request $request)
