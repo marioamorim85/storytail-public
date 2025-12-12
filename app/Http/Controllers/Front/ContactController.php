@@ -14,6 +14,12 @@ class ContactController extends Controller
         \Log::info('Contact form submission started');
 
         try {
+            // Honeypot check
+            if ($request->filled('phone')) {
+                \Log::info('Honeypot triggered');
+                return redirect()->back()->with('success', 'Thank you for your message. We will contact you soon!');
+            }
+
             $request->validate([
                 'email' => 'required|email',
                 'name' => 'required|string',

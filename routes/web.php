@@ -110,7 +110,7 @@ Route::get('/contacts', function () {
     return view('utility-pages.contact');
 })->name('contacts');
 
-Route::post('/contacts', [ContactController::class, 'store'])->name('contacts.store');
+Route::post('/contacts', [ContactController::class, 'store'])->name('contacts.store')->middleware('throttle:3,1');
 
 // Rota para about
 Route::get('/about', function () {

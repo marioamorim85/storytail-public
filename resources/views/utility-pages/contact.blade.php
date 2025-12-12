@@ -17,6 +17,11 @@
                 <h2 class="contact-title">Contact us</h2>
                 <form action="{{ route('contacts.store') }}" method="POST">
                     @csrf
+                    <!-- Honeypot -->
+                    <div style="display:none;">
+                        <label for="phone">Phone</label>
+                        <input type="text" name="phone" id="phone">
+                    </div>
                     <div class="mb-3 form-contact">
                         <label for="email" class="form-label">Email</label>
                         <input type="email" id="email" name="email" class="form-control" placeholder="yourmail@example.com" required>
