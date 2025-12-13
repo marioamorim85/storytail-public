@@ -26,6 +26,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'verified' => EnsureEmailIsVerified::class,
         ]);
 
+        // Trust all proxies (Render Load Balancer)
+        $middleware->trustProxies(at: '*');
+
         $middleware->web(append: [
             EncryptCookies::class,
             AddQueuedCookiesToResponse::class,
