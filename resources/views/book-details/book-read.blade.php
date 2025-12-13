@@ -107,6 +107,20 @@
                 @endif
             @endauth
 
+            {{-- Última Página: Login para visitantes --}}
+            @guest
+                <div class="page d-flex justify-content-center align-items-center text-center">
+                    <div class="login-prompt p-4">
+                        <h4 class="st-title mb-4">Did you enjoy the book?</h4>
+                        <p class="mb-4">Create an account to track your reading progress, earn badges, and leave comments!</p>
+                        <div class="d-flex justify-content-center gap-3">
+                            <a href="{{ route('register') }}" class="btn btn-primary" onclick="window.location.href='{{ route('register') }}'">Register</a>
+                            <a href="{{ route('login') }}" class="btn btn-secondary" onclick="window.location.href='{{ route('login') }}'">Login</a>
+                        </div>
+                    </div>
+                </div>
+            @endguest
+
         </div>
 
         {{-- Botões de Navegação --}}
