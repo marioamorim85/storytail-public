@@ -35,23 +35,13 @@ class CommentApprovedMail extends Mailable
             with: [
                 'user' => $this->user,
                 'comment' => $this->comment,
-                'logo' => public_path('images/logo-storyTail.png')
+                'logo' => 'https://raw.githubusercontent.com/marioamorim85/storytail-public/master/public/images/logo-storyTail.png'
             ]
         );
     }
 
     public function attachments(): array
     {
-        $logoPath = public_path('images/logo-storyTail.png');
-
-        if (!file_exists($logoPath)) {
-            return [];
-        }
-
-        return [
-            Attachment::fromPath($logoPath)
-                ->as('logo-storyTail.png')
-                ->withMime('image/png'),
-        ];
+        return [];
     }
 }

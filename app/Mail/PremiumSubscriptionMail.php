@@ -28,29 +28,16 @@ class PremiumSubscriptionMail extends Mailable
 
     public function attachments(): array
     {
-        $logoPath = public_path('images/logo-storyTail.png');
-
-        if (!file_exists($logoPath)) {
-            Log::warning('Logo file not found for PremiumSubscriptionMail');
-            return [];
-        }
-
-        return [
-            Attachment::fromPath($logoPath)
-                ->as('logo-storyTail.png')
-                ->withMime('image/png'),
-        ];
+        return [];
     }
 
     public function content(): Content
     {
-        $logoPath = public_path('images/logo-storyTail.png');
-
         return new Content(
             view: 'emails.premium-subscription',
             with: [
                 'user' => $this->user,
-                'logo' => file_exists($logoPath) ? $logoPath : null
+                'logo' => 'https://raw.githubusercontent.com/marioamorim85/storytail-public/master/public/images/logo-storyTail.png'
             ]
         );
     }

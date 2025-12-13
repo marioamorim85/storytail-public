@@ -1,7 +1,7 @@
 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
     <div style="text-align: center; margin-bottom: 30px;">
         @if(isset($logo))
-            <img src="{{ $message->embed($logo) }}" alt="StoryTail Logo" style="max-width: 200px;">
+            <img src="{{ $logo }}" alt="StoryTail Logo" style="max-width: 200px;">
         @endif
     </div>
 
