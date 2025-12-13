@@ -46,7 +46,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_orange.css">
     {{-- CSS --}}
-    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/styles.css?v=1.1') }}">
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
     <script>
         const SORT_URL = '{{ route("books.sort") }}';
