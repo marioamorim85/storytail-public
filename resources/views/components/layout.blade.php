@@ -152,7 +152,7 @@
     </div>
     <div class="footer-bottom py-2">
         <div class="container d-flex justify-content-center text-white position-relative align-items-center">
-            <p class="mb-0">&copy; 2024 storytail.pt</p>
+            <p class="mb-0">&copy; 2026 storytail.org</p>
             <div class="social-links position-absolute end-0">
                 <a href="#" class="text-white me-3"><i class="bi bi-facebook"></i></a>
                 <a href="#" class="text-white me-3"><i class="bi bi-instagram"></i></a>
