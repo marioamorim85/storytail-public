@@ -191,7 +191,7 @@
 
 {{-- Scripts personalizados --}}
 <script src="{{ asset('js/turn.js') }}"></script>
-<script src="{{ asset('js/java.js') }}"></script>
+<script src="{{ asset('js/java.js?v=1.1') }}"></script>
 
 {{-- Scripts adicionais --}}
 @stack('scripts')
