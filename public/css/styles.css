@@ -2566,3 +2566,28 @@ select::-moz-focus-inner {
 /*#######################################################################################################################################################*/
 
 
+/* Cards de Livros */
+.book-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none; /* Remove bordas extras se necessário */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    overflow: hidden; /* Garante que a imagem não saia do card */
+}
+
+.book-card:hover {
+    transform: translateY(-5px); /* Efeito de elevação */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Sombra mais forte no hover */
+}
+
+.book-card .card-img-top {
+    height: 350px; /* Altura fixa para todas as imagens */
+    object-fit: cover; /* Garante que a imagem cubra a área sem distorcer */
+    width: 100%;
+}
+
+/* Ajuste específico para Related Books para serem mais pequenos */
+#related-books-list .book-card .card-img-top {
+    height: 200px; /* Altura menor para related books */
+}
+
+

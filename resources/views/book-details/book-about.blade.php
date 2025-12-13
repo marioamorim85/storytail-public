@@ -10,9 +10,9 @@
     @if($relatedBooks->isNotEmpty())
         <div class="container-books mt-4">
             <h3 class="section-title">Related Books</h3>
-            <div class="row" id="books-list">
+            <div class="row" id="related-books-list">
                 @foreach($relatedBooks as $relatedBook)
-                    @include('components.book-component', ['book' => $relatedBook])
+                    @include('components.book-component', ['book' => $relatedBook, 'colClass' => 'col-6 col-sm-4 col-md-3 col-lg-2'])
                 @endforeach
             </div>
         </div>

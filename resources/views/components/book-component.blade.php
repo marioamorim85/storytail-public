@@ -1,7 +1,7 @@
 {{-- Container que recebe os livros --}}
 
-<div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-    <div class="card book-card">
+<div class="{{ $colClass ?? 'col-12 col-sm-6 col-md-4 col-lg-3' }} mb-4">
+    <div class="card book-card h-100">
         <img src="{{ Storage::url($book->cover_url) }}"
              class="card-img-top"
              alt="{{ $book->title }}"

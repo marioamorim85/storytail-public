@@ -19,9 +19,10 @@
                     <!-- Resend Verification Email Form -->
                     <form method="POST" action="{{ route('verification.send') }}">
                         @csrf
-                        <button type="submit" class="btn">
-                            <i class="bi bi-send me-2"></i>Resend Verification Email
-                        </button>
+                        <button class="btn btn-primary d-flex align-items-center justify-content-center gap-2">
+                    <i class="bi bi-send"></i>
+                    Resend
+                </button>
                     </form>
 
                     <!-- Logout Form -->
