@@ -65,14 +65,7 @@ class RegisteredUserController extends Controller
                 'approval_date' => now(),
             ]);
 
-
             DB::commit();
-
-            event(new Registered($user));
-
-            return redirect()
-                ->route('login')
-                ->with('success', 'Registration successful! Please check your email to verify your account.');
 
         } catch (\Exception $e) {
             DB::rollBack();
@@ -80,7 +73,22 @@ class RegisteredUserController extends Controller
             return redirect()
                 ->back()
                 ->withInput()
-                ->with('error', 'Registration failed. Please try again.');
+                ->with('error', 'Registration failed during account creation: ' . $e->getMessage());
         }
+
+        // Tentar enviar email, mas não falhar o registo se o email falhar
+        try {
+            event(new Registered($user));
+        } catch (\Exception $e) {
+            \Log::error('Registration Email Failed: ' . $e->getMessage());
+            
+            return redirect()
+                ->route('login')
+                ->with('warning', 'Account created successfully, but verification email failed to send. Please login and try to resend it.');
+        }
+
+        return redirect()
+            ->route('login')
+            ->with('success', 'Registration successful! Please check your email to verify your account.');
     }
 }
