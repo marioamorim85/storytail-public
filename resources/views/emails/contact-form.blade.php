@@ -1,6 +1,6 @@
 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
     <div style="text-align: center; margin-bottom: 30px;">
-        <img src="{{ $message->embed($logo) }}" alt="StoryTail Logo" style="max-width: 200px;">
+        <img src="{{ $logo }}" alt="StoryTail Logo" style="max-width: 200px;">
     </div>
 
     <div style="background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); padding: 20px;">

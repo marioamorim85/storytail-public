@@ -34,17 +34,13 @@ class ContactFormMail extends Mailable
                 'name' => $this->data['name'],
                 'email' => $this->data['email'],
                 'messageText' => $this->data['message'],
-                'logo' => public_path('images/logo-storyTail.png')
+                'logo' => 'https://raw.githubusercontent.com/marioamorim85/storytail-public/master/public/images/logo-storyTail.png'
             ]
         );
     }
 
     public function attachments(): array
     {
-        return [
-            Attachment::fromPath(public_path('images/logo-storyTail.png'))
-                ->as('logo-storyTail.png')
-                ->withMime('image/png'),
-        ];
+        return [];
     }
 }
