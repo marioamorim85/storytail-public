@@ -1,4 +1,4 @@
-
+﻿
 
 /* Fonts */
 /* Love Ya Like a Sister*/
@@ -30,6 +30,12 @@
     --hover-light-grey: #f8f9fa;
     --hover-logout-bg: #ffe6e6;
     --orange-opacity: rgba(233, 90, 12, 0.1);
+    
+    /* Soft Shadow & Gradients */
+    --soft-shadow: 0 10px 20px rgba(249, 119, 0, 0.15);
+    --btn-gradient: linear-gradient(135deg, var(--light-orange), var(--dark-orange));
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-blur: blur(10px);
 
     /*Fontes*/
     --love: 'Love Ya Like A Sister', cursive;
@@ -39,7 +45,7 @@
 
 /*########################################################## Estilos Gerais ##########################################################*/
 
-/* Configuração básica para preenchimento do ecrã */
+/* ConfiguraÃ§Ã£o bÃ¡sica para preenchimento do ecrÃ£ */
 html, body {
     height: 100%;
     margin: 0;
@@ -48,13 +54,13 @@ html, body {
     font-family: var(--nunito), sans-serif;
 }
 
-/* Configuração do Footer para permanecer no final da página e por cima do conteúdo*/
+/* ConfiguraÃ§Ã£o do Footer para permanecer no final da pÃ¡gina e por cima do conteÃºdo*/
 footer {
     position: relative;
     z-index: 2;
 }
 
-/*Definição de um container para o conteúdo substituíel deixando espaço para o conteúdo fixo*/
+/*DefiniÃ§Ã£o de um container para o conteÃºdo substituÃ­el deixando espaÃ§o para o conteÃºdo fixo*/
 .main-content {
     flex: 1;
     display: flex;
@@ -67,7 +73,7 @@ footer {
     display: none !important;
 }
 
-/* Conteúdo de secções definido como visivel */
+/* ConteÃºdo de secÃ§Ãµes definido como visivel */
 .content-section {
     display: block;
 }
@@ -80,76 +86,69 @@ footer {
 /* Estilos comuns */
 .btn, .btnSecundary {
     font-size: 1rem; /* Tamanho de fonte consistente */
-    padding: 0.5rem 1rem; /* Espaçamento interno consistente */
-    line-height: 1.5; /* Consistência no espaçamento vertical */
-    border: 1px solid var(--orange); /* Uniformiza o border */
+    padding: 0.5rem 1rem; /* EspaÃ§amento interno consistente */
+    line-height: 1.5; /* ConsistÃªncia no espaÃ§amento vertical */
+    border: none;
     width: 10rem;
     border-radius: 1rem;
     transition: transform 0.2s ease-in-out, box-shadow 0.2s;
     font-weight:bold;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Sombra base suave */
 }
 
-/* Botão principal */
+/* BotÃ£o principal */
 .btn {
-    background-color: var(--orange);
-    border-color: var(--orange);
+    background: var(--btn-gradient);
     font-weight: bold;
-    width: 10rem;
-    border-radius: 1rem;
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s;
     color: white;
 }
 
 .btn:hover {
-    background-color: var(--dark-orange);
-    border-color: var(--dark-orange);
-    color: var(--white);
     transform: translateY(-0.2rem);
-    box-shadow: 0 0.5rem 0.7rem rgba(0, 0, 0, 0.3);
+    box-shadow: var(--soft-shadow);
+    color: white;
 }
 
-/* Botão secundário */
+/* BotÃ£o secundÃ¡rio */
 .btnSecundary {
     color: var(--orange);
-    background-color: var(--white);
+    background: var(--white); /* Changed from background-color to override gradient */
     border: 1px solid var(--orange);
-    font-weight: bold;
-    width: 10rem;
-    border-radius: 1rem;
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s;
     text-decoration: none;
 }
 
 .btnSecundary:hover {
-    color: var(--dark-orange);
-    border-color: var(--dark-orange);
+    background: var(--btn-gradient);
+    color: var(--white);
+    border-color: transparent;
     transform: translateY(-0.2rem);
-    box-shadow: 0 0.5rem 0.7rem rgba(0, 0, 0, 0.3);
+    box-shadow: var(--soft-shadow);
 }
 
 .btn-premium {
-    background-color: var(--orange);
+    background: var(--btn-gradient);
     color: var(--white);
     font-size: 0.875rem; /* Tamanho de fonte reduzido */
     font-weight: 500; /* Peso do texto */
-    padding: 0.4rem 0.8rem; /* Ajuste do espaçamento interno */
+    padding: 0.4rem 0.8rem; /* Ajuste do espaÃ§amento interno */
     border-radius: 6px; /* Bordas mais suaves */
     text-align: center;
     border: none; /* Remove bordas extras */
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s;
     cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .btn-premium:hover {
-    background-color: var(--dark-orange); /* Cor mais escura no hover */
     transform: scale(1.05); /* Leve aumento no hover */
+    box-shadow: var(--soft-shadow);
 }
 
 .btn-premium:active {
-    transform: scale(0.95); /* Leve redução ao clicar */
+    transform: scale(0.95); /* Leve reduÃ§Ã£o ao clicar */
 }
 
 
@@ -209,33 +208,54 @@ footer {
 
 /* Container do login */
 .auth-container {
-    background-color: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.75);
     padding: 2.58rem 3rem;
     border-radius: 2rem;
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
     width: 100%;
     max-width: 35rem;
     text-align: center;
     z-index: 1;
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
 
-    /* Título de login */
+    /* TÃ­tulo de login */
     .st-title{
         text-align: center;
         color: var(--orange);
         font-size: 2.5rem;
         margin-bottom: 1.5rem;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
     }
 }
 
 .dropdown-menu {
     border-radius: 8px; /* Define os cantos arredondados para todo o menu */
-    overflow: hidden;   /* Garante que o conteúdo não "escapa" dos cantos arredondados */
+    overflow: hidden;   /* Garante que o conteÃºdo nÃ£o "escapa" dos cantos arredondados */
 }
 
 /* Form textbox */
 .form-control {
     border-radius: 0.5rem;
     box-shadow: none;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0,0,0,0.1);
+    padding-left: 1rem; /* Adjust if using icons */
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    background: #fff;
+    box-shadow: 0 0 0 0.25rem rgba(249, 119, 0, 0.15);
+    border-color: var(--light-orange);
+}
+
+/* Input Group Text (Icons) */
+.input-group-text {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0,0,0,0.1);
+    border-right: none;
+    color: var(--orange);
 }
 
 /* Link forget password */
@@ -252,7 +272,7 @@ footer {
 }
 
 input[type="date"] {
-    /* Remove o ícone padrão em alguns navegadores */
+    /* Remove o Ã­cone padrÃ£o em alguns navegadores */
     &::-webkit-calendar-picker-indicator {
         cursor: pointer;
         opacity: 0.6;
@@ -274,13 +294,13 @@ input[type="date"] {
     margin-top: 18.2rem;
 }
 
-/* Menu de Navegação */
+/* Menu de NavegaÃ§Ã£o */
 .home-menu {
     background-color: rgba(255, 255, 255, 0.5);
-    width: 100vw; /* Ocupa a largura do ecrã */
+    width: 100vw; /* Ocupa a largura do ecrÃ£ */
     position: relative; /* Assegura que ocupa toda a largura */
     left: 50%; /* centraliza o texto */
-    transform: translateX(-50%); /* reforço para centralizar o texto */
+    transform: translateX(-50%); /* reforÃ§o para centralizar o texto */
 }
 
 .home-menu .nav-tabs .nav-item .nav-link {
@@ -331,7 +351,7 @@ input[type="date"] {
 
 /* Utility banner */
 .st-utility-banner {
-    position: relative; /* Define o contexto para posicionamento absoluto do título */
+    position: relative; /* Define o contexto para posicionamento absoluto do tÃ­tulo */
     width: 100%;
     top: -5rem;
     height: 10.5rem;
@@ -450,7 +470,7 @@ input[type="date"] {
     margin-bottom: 1.5rem;
 }
 
-/* Título */
+/* TÃ­tulo */
 .st-title {
     font-family: var(--love);
     color: var(--orange);
@@ -469,53 +489,58 @@ input[type="date"] {
 /********************************************** Layout Page **********************************************/
 
 /*-------- Navbar --------*/
+/*-------- Navbar --------*/
 .navbar {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    background: var(--dark-orange);
-    padding: 0.2rem 0;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* Glassmorphism with original size */
+    background: rgba(233, 90, 12, 0.90);
+    padding: 0.2rem 0; /* Original padding kept */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 10;
+    backdrop-filter: blur(10px);
 }
 
 /*Logo*/
 .navbar .navbar-brand img.logo {
-    width: 2.5rem;
+    width: 2.5rem; /* Original size kept */
     height: auto;
 }
 
-/* Formatação para os botões em ecrãs normais*/
+/* FormataÃ§Ã£o para os botÃµes em ecrÃ£s normais*/
 .navbar .nav-link {
     color: white;
     margin-left: 2rem;
 }
 
 .navbar .btn {
-    background-color: var(--light-orange);
+    background: rgba(255, 255, 255, 0.2); /* Glass style */
     color: white !important;
     width: 6rem !important;
     font-size: 0.8rem;
     padding: 0.4rem;
     border-radius: 1rem;
-    box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.2);
+    box-shadow: none;
     transition: transform 0.2s ease-in-out, box-shadow 0.2s;
     text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.3);
 }
 
 .navbar .btn:hover {
-    background-color: var(--orange);
+    background: white;
+    color: var(--dark-orange) !important;
     transform: translateY(-0.2rem);
-    box-shadow: 0 0.5rem 0.7rem rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0.5rem 0.7rem rgba(0, 0, 0, 0.1);
 }
 
-/* Botão de navegação para ecrãs pequenos */
+/* BotaÌƒo de navegacÌ§aÌƒo para ecrÃ£s pequenos */
 .navbar-toggler {
     border-color: var(--white);
 }
 
-/* Alteração do icon padrão do hamburguer menu para branco */
+/* AlteraÃ§Ã£o do icon padrÃ£o do hamburguer menu para branco */
 .navbar-toggler-icon {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='white' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
 }
@@ -523,7 +548,7 @@ input[type="date"] {
 /*-------- Account Menu --------*/
 
 /* Dropdown Menu Login */
-/* Define a cor branca no dropdown após o clique */
+/* Define a cor branca no dropdown apÃ³s o clique */
 .nav-link.text-white,
 .nav-link.text-white:focus,
 .nav-link.text-white:active,
@@ -556,13 +581,13 @@ input[type="date"] {
     color: var(--dark-grey);
 }
 
-/* Ícones para dar mais destaque */
+/* Ãcones para dar mais destaque */
 .custom-dropdown-menu .dropdown-item i {
     color: var(--dark-orange);
     font-size: 1rem;
 }
 
-/* Estilo do botão de logout */
+/* Estilo do botÃ£o de logout */
 .custom-dropdown-menu .logout-item {
     color: var(--pink-red);
 }
@@ -572,7 +597,7 @@ input[type="date"] {
     color: var(--pink-red);
 }
 
-/* Espaçamento inferior para remover excesso */
+/* EspaÃ§amento inferior para remover excesso */
 .custom-dropdown-menu .dropdown-divider {
     margin: 0;
 }
@@ -604,7 +629,7 @@ input[type="text"].form-control.is-valid {
     z-index: 3;
 }
 
-/* Customizações do Flatpickr */
+/* CustomizaÃ§Ãµes do Flatpickr */
 .flatpickr-calendar {
     border-radius: 8px;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
@@ -629,10 +654,10 @@ input[type="text"].form-control.is-valid {
 
 .flatpickr-day:hover {
     background: rgba(255, 165, 0, 0.2) !important; /* Cor hover para os dias */
-    color: var(--orange) !important; /* Consistência do texto */
+    color: var(--orange) !important; /* ConsistÃªncia do texto */
 }
 
-/* Estilo para o cabeçalho (mês e ano) */
+/* Estilo para o cabeÃ§alho (mÃªs e ano) */
 .flatpickr-months {
     background: var(--orange) !important; /* Fundo laranja */
 }
@@ -653,7 +678,7 @@ input[type="text"].form-control.is-valid {
 }
 
 .flatpickr-current-month {
-    background: var(--orange) !important; /* Fundo laranja sólido */
+    background: var(--orange) !important; /* Fundo laranja sÃ³lido */
     color: white !important; /* Cor do texto */
 }
 
@@ -671,7 +696,7 @@ input[type="text"].form-control.is-valid {
 
 /* Estilo para os dias da semana */
 .flatpickr-weekdays {
-    background: var(--orange) !important; /* Fundo laranja sólido */
+    background: var(--orange) !important; /* Fundo laranja sÃ³lido */
     border: none !important; /* Remove quaisquer bordas */
 }
 
@@ -687,19 +712,19 @@ input[type="text"].form-control.is-valid {
     color: white !important;
 }
 
-/* Remove os estilos padrão do dropdown */
+/* Remove os estilos padrÃ£o do dropdown */
 .flatpickr-monthDropdown-months {
     -webkit-appearance: none; /* Remove estilo nativo no Chrome/Safari */
     -moz-appearance: none; /* Remove estilo no Firefox */
-    appearance: none; /* Remove estilo genérico */
+    appearance: none; /* Remove estilo genÃ©rico */
     background: var(--orange) !important; /* Fundo laranja */
     color: white !important; /* Texto branco */
     border: none !important; /* Sem borda */
-    padding: 8px 12px; /* Ajusta o espaçamento */
+    padding: 8px 12px; /* Ajusta o espaÃ§amento */
     border-radius: 4px; /* Bordas arredondadas */
     font-size: 14px; /* Tamanho do texto */
     font-weight: 500; /* Texto em negrito */
-    cursor: pointer; /* Cursor de mão para dropdown */
+    cursor: pointer; /* Cursor de mÃ£o para dropdown */
     outline: none; /* Remove o contorno azul */
 }
 
@@ -707,7 +732,7 @@ input[type="text"].form-control.is-valid {
 .flatpickr-monthDropdown-months option {
     background: var(--orange) !important; /* Fundo laranja */
     color: white !important; /* Texto branco */
-    padding: 8px; /* Espaçamento interno */
+    padding: 8px; /* EspaÃ§amento interno */
     border: none !important; /* Sem borda */
     font-size: 14px; /* Tamanho do texto */
     font-weight: 500; /* Texto em negrito */
@@ -742,8 +767,8 @@ select::-moz-focus-inner {
     background: var(--orange) !important; /* Fundo laranja */
     color: white !important; /* Texto branco */
     border-radius: 4px; /* Bordas arredondadas */
-    padding: 5px 10px; /* Espaçamento */
-    cursor: pointer; /* Cursor de mão */
+    padding: 5px 10px; /* EspaÃ§amento */
+    cursor: pointer; /* Cursor de mÃ£o */
 }
 
 .flatpickr-months .flatpickr-prev-month:hover,
@@ -751,27 +776,27 @@ select::-moz-focus-inner {
     background: rgba(255, 165, 0, 0.8) !important; /* Fundo mais claro no hover */
 }
 
-/* Estilo para o cabeçalho (mês e ano) */
+/* Estilo para o cabeÃ§alho (mÃªs e ano) */
 .flatpickr-current-month {
     font-size: 18px; /* Tamanho consistente */
     font-weight: 700; /* Negrito para destaque */
     display: flex;
-    justify-content: center; /* Centraliza o mês e o ano */
+    justify-content: center; /* Centraliza o mÃªs e o ano */
     align-items: center;
 }
 
-/* Estilo específico para o mês */
+/* Estilo especÃ­fico para o mÃªs */
 .flatpickr-current-month .flatpickr-monthDropdown-months {
     font-size: 18px; /* Tamanho igual ao ano */
-    font-weight: 700; /* Negrito para consistência */
+    font-weight: 700; /* Negrito para consistÃªncia */
     color: white !important; /* Cor branca */
-    background: var(--orange) !important; /* Fundo laranja (se necessário) */
+    background: var(--orange) !important; /* Fundo laranja (se necessÃ¡rio) */
     border: none; /* Remove bordas */
 }
 
-/* Estilo específico para o ano */
+/* Estilo especÃ­fico para o ano */
 .flatpickr-current-month input.cur-year {
-    font-size: 18px; /* Tamanho igual ao mês */
+    font-size: 18px; /* Tamanho igual ao mÃªs */
     font-weight: 700; /* Negrito */
     color: white !important; /* Cor branca */
     border: none; /* Remove bordas */
@@ -779,39 +804,39 @@ select::-moz-focus-inner {
     text-align: center; /* Centraliza o texto */
 }
 
-/* Estilo para o container do mês e ano */
+/* Estilo para o container do mÃªs e ano */
 .flatpickr-current-month {
     display: flex;
-    justify-content: center; /* Centraliza o conteúdo */
+    justify-content: center; /* Centraliza o conteÃºdo */
     align-items: center;
-    gap: 10px; /* Espaçamento entre o mês e o ano */
+    gap: 10px; /* EspaÃ§amento entre o mÃªs e o ano */
 }
 
 /* Estilo para o select do ano */
 .flatpickr-current-month input.cur-year {
     position: relative;
     font-size: 18px; /* Ajusta o tamanho da fonte */
-    font-weight: 700; /* Negrito para consistência */
+    font-weight: 700; /* Negrito para consistÃªncia */
     background: var(--orange); /* Fundo laranja */
     color: white; /* Texto branco */
     border: none; /* Remove bordas */
     text-align: center; /* Centraliza o texto */
-    padding: 5px 10px; /* Ajusta o espaçamento interno */
+    padding: 5px 10px; /* Ajusta o espaÃ§amento interno */
     border-radius: 4px; /* Bordas arredondadas */
-    appearance: none; /* Remove o estilo padrão do navegador */
+    appearance: none; /* Remove o estilo padrÃ£o do navegador */
 }
 
-/* Dropdown sempre visível */
+/* Dropdown sempre visÃ­vel */
 .flatpickr-current-month .flatpickr-monthDropdown-months,
 .flatpickr-current-month input.cur-year {
-    display: block !important; /* Garante que o dropdown esteja visível */
-    cursor: pointer; /* Cursor em forma de mão */
+    display: block !important; /* Garante que o dropdown esteja visÃ­vel */
+    cursor: pointer; /* Cursor em forma de mÃ£o */
 }
 
 /* Reposiciona os selects */
 .flatpickr-current-month .flatpickr-monthDropdown-months {
     position: relative;
-    margin-left: 20px; /* Espaçamento entre o mês e o dropdown do ano */
+    margin-left: 20px; /* EspaÃ§amento entre o mÃªs e o dropdown do ano */
 }
 
 
@@ -885,7 +910,7 @@ select::-moz-focus-inner {
 }
 
 
-/* Ajuste na navbar para ecrãs pequenos */
+/* Ajuste na navbar para ecrÃ£s pequenos */
 @media (max-width: 992px) {
     .navbar-nav {
         align-items: flex-start;
@@ -918,7 +943,7 @@ select::-moz-focus-inner {
     background-position: center;
     z-index: -1;
 }
-/* Conteúdo fixo */
+/* ConteÃºdo fixo */
 .fixed-header {
     position: fixed;
     top: 0;
@@ -939,10 +964,10 @@ select::-moz-focus-inner {
     font-size: 2.5rem;
     margin-bottom: 1rem;
     background-color: rgba(255, 255, 255, 0.5);
-    width: 100vw; /* Ocupa a largura do ecrã */
+    width: 100vw; /* Ocupa a largura do ecrÃ£ */
     position: relative; /* Assegura que ocupa toda a largura */
     left: 50%; /* centraliza o texto */
-    transform: translateX(-50%); /* reforço para centralizar o texto */
+    transform: translateX(-50%); /* reforÃ§o para centralizar o texto */
 }
 
 .search-bar input.form-control {
@@ -985,7 +1010,7 @@ select::-moz-focus-inner {
 
 /********************************************** Book-Component **********************************************/
 
-/* Filtro de Ordenação */
+/* Filtro de OrdenaÃ§Ã£o */
 .filter {
     font-family: var(--nunito);
     font-weight: bold;
@@ -1040,7 +1065,7 @@ select::-moz-focus-inner {
     background-color: var(--orange);
     border-radius: 1rem;
     margin-top: 1rem;
-    width: 100%; /* Torna o botão responsivo */
+    width: 100%; /* Torna o botÃ£o responsivo */
 }
 
 #books-list .book-card .btn:hover {
@@ -1050,31 +1075,38 @@ select::-moz-focus-inner {
 
 /********************************************** Filter-Component **********************************************/
 
-/* Botão de ativação */
+/* BotÃ£o de ativaÃ§Ã£o */
+/* BotÃ£o de ativaÃ§Ã£o */
 #toggle-filter-btn {
     position: fixed;
     top: 25rem;
-    left: -1rem;
-    width: 3rem; /* Define a largura do botão */
+    left: -0.5rem; /* Slight peek */
+    width: 3rem;
     height: auto;
-    padding: 0.5rem;
-    background-color: var(--orange);
+    padding: 1rem 0.5rem;
+    background: var(--btn-gradient);
     color: var(--white);
     border: none;
-    border-radius: 0 0.5rem 0.5rem 0;
+    border-radius: 0 1rem 1rem 0;
     cursor: pointer;
     font-weight: bold;
-    z-index: 2;
+    font-size: 1.1rem;
+    z-index: 90; /* Just below the sidebar when open */
     writing-mode: vertical-lr;
     text-orientation: mixed;
     display: flex;
     align-items: center;
-    justify-content: end;
-    transition: left 0.3s ease;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 2px 4px 10px rgba(0,0,0,0.2);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
 }
 
 #toggle-filter-btn:hover {
     left: 0;
+    padding-left: 0.8rem;
+    width: 3.5rem;
+    box-shadow: 4px 4px 15px rgba(249, 119, 0, 0.4);
 }
 
 /* Barra lateral recolhida inicialmente */
@@ -1085,58 +1117,65 @@ select::-moz-focus-inner {
     width: 0; /* Inicialmente recolhida */
     height: calc(100vh - 23rem);
     overflow: hidden;
-    background-color: var(--white);
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-    z-index: 1;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
+    z-index: 100;
     transition: width 0.5s ease;
+    border-top-right-radius: 1.5rem;
+    border-bottom-right-radius: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-left: none;
 }
 
 /* Barra expandida */
 .filter-container.expanded {
-    width: 15rem;
+    width: 20rem; /* Increased width as requested */
 }
 
-/* Ocultar o botão quando o painel está expandido */
+/* Ocultar o botÃ£o quando o painel estÃ¡ expandido */
 .filter-container.expanded + #toggle-filter-btn {
     opacity: 0;
     pointer-events: none;
 }
 
-/* Cabeçalho fixo dos filtros */
+/* CabeÃ§alho fixo dos filtros */
 .filter-header {
-    background-color: var(--orange);
-    padding: 0.5rem 0;
+    background: var(--btn-gradient);
+    padding: 1rem 0;
     text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Título do filtro */
+/* TÃ­tulo do filtro */
 .filter-title {
     color: var(--white);
-    font-family: var(--nunito), sans-serif;
-    font-weight: bold;
-    font-size: 1.1rem;
+    font-family: var(--love), cursive;
+    letter-spacing: 1px;
+    font-size: 1.5rem;
     margin: 0;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
 }
 
-/* Conteúdo dos filtros com scroll interna */
+/* ConteÃºdo dos filtros com scroll interna */
 .filter-list {
     list-style: none;
-    padding: 0 1rem;
+    padding: 1rem 1.5rem;
     margin: 0;
-    background-color: var(--white);
+    background: transparent;
     overflow-y: auto;
-    flex: 1; /* Expande para ocupar o restante do espaço disponível */
+    flex: 1; /* Expande para ocupar o restante do espaÃ§o disponÃ­vel */
     scroll-behavior: smooth;
     max-height: calc(100vh - 34rem); /* Limita a altura do filtro para o viewport */
 }
 
-/* Personalização da barra de scroll */
+/* PersonalizaÃ§Ã£o da barra de scroll */
 .filter-list::-webkit-scrollbar {
     width: 0.4rem; /* Define uma largura mais fina */
 }
 
 .filter-list::-webkit-scrollbar-track {
-    background: var(--light-grey); /* Cor do track da barra de scroll */
+    background: rgba(0,0,0,0.05); /* Cor do track da barra de scroll */
 }
 
 .filter-list::-webkit-scrollbar-thumb {
@@ -1150,68 +1189,87 @@ select::-moz-focus-inner {
 
 /* Cada item de filtro */
 .filter-item {
-    border-bottom: 1px solid var(--light-grey);
-    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    padding: 1rem 0;
 }
 
-/* Botão de alternância de filtro */
+.filter-item:last-child {
+    border-bottom: none;
+}
+
+/* BotÃ£o de alternÃ¢ncia de filtro */
 .filter-toggle {
     background: none;
     border: none;
     color: var(--dark-grey);
     font-family: var(--nunito), sans-serif;
-    font-weight: bold;
-    font-size: 0.9rem;
+    font-weight: 700;
+    font-size: 1rem;
     cursor: pointer;
     display: flex;
     justify-content: space-between;
     width: 100%;
     text-align: left;
     padding: 0.3rem 0;
+    transition: color 0.3s ease;
+}
+
+.filter-toggle:hover {
+    color: var(--orange);
 }
 
 /* Icone do filtro */
 .filter-toggle .bi-chevron-down {
-    transition: transform 0.2s ease-in-out;
-    color: var(--dark-orange);
-    text-shadow: 0 0 1px var(--dark-orange), 0 0 1px var(--dark-orange);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    color: var(--orange);
+    font-weight: bold;
 }
 
-/* Ícone de seta para cima (ativo) */
+/* Ãcone de seta para cima (ativo) */
 .filter-toggle.active .bi-chevron-down {
-    transform: rotate(180deg); /* Rotaciona o ícone para cima */
+    transform: rotate(180deg); /* Rotaciona o Ã­cone para cima */
 }
 
-/* Opções do filtro (inicialmente ocultas) */
+/* OpÃ§Ãµes do filtro (inicialmente ocultas) */
 .filter-options {
-    padding-left: 1rem;
-    margin-top: 0.3rem;
+    padding-left: 0.5rem;
+    margin-top: 0.5rem;
     display: none;
     font-family: var(--nunito), sans-serif;
-    font-size: 0.9rem;
-    color: var(--dark-grey);
+    font-size: 0.95rem;
+    color: var(--grey);
 }
 
-/* Exibir opções quando o filtro está ativo */
+/* Exibir opÃ§Ãµes quando o filtro estÃ¡ ativo */
 .filter-options.active {
     display: block;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* Estilo para checkboxes */
-.filter-options input[type="checkbox"] {
-    accent-color: var(--orange);
+.filter-options label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    transition: color 0.2s;
 }
 
-/* Resto dos estilos do filtro (barra de scroll, etc.) */
-.filter-list {
-    list-style: none;
-    padding: 0 1rem;
-    margin: 0;
-    background-color: var(--white);
-    overflow-y: auto;
-    flex: 1;
-    scroll-behavior: smooth;
-    max-height: calc(100vh - 34rem);
+.filter-options label:hover {
+    color: var(--orange);
+}
+
+.filter-options input[type="checkbox"] {
+    accent-color: var(--orange);
+    margin-right: 0.5rem;
+    width: 1rem;
+    height: 1rem;
+    cursor: pointer;
 }
 
 .filter-list::-webkit-scrollbar {
@@ -1231,7 +1289,7 @@ select::-moz-focus-inner {
     background-color: var(--light-orange);
 }
 
-/* Exibe o filtro acima do conteúdo em dispositivos menores */
+/* Exibe o filtro acima do conteÃºdo em dispositivos menores */
 @media (max-width: 992px) {
     #toggle-filter-btn {
         display: none;
@@ -1239,12 +1297,12 @@ select::-moz-focus-inner {
     }
 
     .filter-container {
-        width: 100%; /* Largura total em dispositivos móveis */
-        position: relative; /* Ajusta para que fique no fluxo acima do conteúdo */
+        width: 100%; /* Largura total em dispositivos mÃ³veis */
+        position: relative; /* Ajusta para que fique no fluxo acima do conteÃºdo */
         top: auto;
         border-radius: 0;
         margin-bottom: 1rem;
-        height: auto; /* Permite que expanda conforme o conteúdo */
+        height: auto; /* Permite que expanda conforme o conteÃºdo */
         z-index: 0;
     }
 }
@@ -1255,11 +1313,12 @@ select::-moz-focus-inner {
 /********************************************** Profile **********************************************/
 
 .user-profile-container {
-    background-color: var(--white);
-    padding: 1rem 2rem;
-    border-radius: 1rem;
-    border: 1px solid var(--light-grey);
-    box-shadow: 0 4px 9px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.75);
+    padding: 2.5rem;
+    border-radius: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+    backdrop-filter: blur(15px);
     max-width: 55rem;
     margin: auto;
 }
@@ -1271,16 +1330,19 @@ select::-moz-focus-inner {
 }
 
 .profile-avatar {
-    width: 6rem;
-    height: 6rem;
+    width: 8rem;
+    height: 8rem;
+    object-fit: cover; /* Fix distortion */
     border-radius: 50%;
     border: 4px solid var(--light-orange);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     transition: transform 0.3s ease, border-color 0.3s ease;
 }
 
 .profile-avatar-section:hover .profile-avatar {
-    transform: scale(1.1);
+    transform: scale(1.05);
     border-color: var(--orange);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
 }
 
 .user-ranking {
@@ -1310,6 +1372,14 @@ select::-moz-focus-inner {
     border-radius: 0.5rem;
     padding-right: 2rem;
     height: calc(2.5rem + 2px);
+    background: rgba(255, 255, 255, 0.8);
+    transition: all 0.3s ease;
+}
+
+.upload-photo-input-wrapper:hover {
+    background: #fff;
+    border-color: var(--orange);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .upload-photo-input {
@@ -1380,7 +1450,7 @@ select::-moz-focus-inner {
 }
 
 .profile-form .btn {
-    margin: 0 1rem; /* Adiciona margem horizontal entre os botões */
+    margin: 0 1rem; /* Adiciona margem horizontal entre os botÃµes */
 }
 
 /*########################################################## Manage-my-books ##########################################################*/
@@ -1415,7 +1485,7 @@ select::-moz-focus-inner {
 
 /********************************************** Favourites **********************************************/
 
-/* Cabeçalho */
+/* CabeÃ§alho */
 .table-header {
     margin-top: 14.5rem !important;
     background-color: var(--white);
@@ -1444,11 +1514,11 @@ select::-moz-focus-inner {
 
 /* Estilo dos itens favoritos */
 .favourite-item {
-    padding: 1rem 0; /* Espaçamento entre as linhas */
+    padding: 1rem 0; /* EspaÃ§amento entre as linhas */
     position: relative;
 }
 
-/* Divisória laranja entre os itens */
+/* DivisÃ³ria laranja entre os itens */
 .favourite-divider {
     border: none;
     border-top: 2px solid var(--orange);
@@ -1474,16 +1544,16 @@ select::-moz-focus-inner {
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 5; /* Garante que está sobre a capa */
-    color: var(--white); /* Cor do ícone */
+    z-index: 5; /* Garante que estÃ¡ sobre a capa */
+    color: var(--white); /* Cor do Ã­cone */
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Leve sombra */
 }
 
 .status-icon-fav i {
-    font-size: 1.2rem; /* Tamanho do ícone */
+    font-size: 1.2rem; /* Tamanho do Ã­cone */
 }
 
-/* Texto do título */
+/* Texto do tÃ­tulo */
 .favourite-title {
     font-weight: bold;
     font-size: 1rem;
@@ -1497,14 +1567,14 @@ select::-moz-focus-inner {
     font-size: 0.9rem;
 }
 
-/* Ajusta os botões lado a lado */
+/* Ajusta os botÃµes lado a lado */
 .d-flex {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-/* Botões */
+/* BotÃµes */
 .btn-read {
     background-color: var(--orange);
     font-weight: bold;
@@ -1523,7 +1593,7 @@ select::-moz-focus-inner {
     box-shadow: 0 0.5rem 0.7rem rgba(0, 0, 0, 0.3);
 }
 
-/* Estilo do ícone de lixo */
+/* Estilo do Ã­cone de lixo */
 .delete-icon-btn {
     background: none;
     border: none;
@@ -1597,7 +1667,7 @@ select::-moz-focus-inner {
 }
 
 
-/* Ajuste do botão READ */
+/* Ajuste do botÃ£o READ */
 .btn-read {
     background-color: var(--orange);
     font-weight: bold;
@@ -1641,7 +1711,7 @@ select::-moz-focus-inner {
     }
 }
 
-/* Responsividade para telemóveis */
+/* Responsividade para telemÃ³veis */
 @media (max-width: 480px) {
     .table-header {
         margin-top: 14rem !important;
@@ -1662,7 +1732,7 @@ select::-moz-focus-inner {
     }
 }
 
-/* Responsividade específica para telemóveis na horizontal */
+/* Responsividade especÃ­fica para telemÃ³veis na horizontal */
 @media screen and (max-height: 480px) and (orientation: landscape) {
     .st-home-banner {
         height: 19rem;
@@ -1673,7 +1743,7 @@ select::-moz-focus-inner {
     }
 
     .filter {
-        margin-top: 280px !important; /* Reduz o espaçamento superior */
+        margin-top: 280px !important; /* Reduz o espaÃ§amento superior */
         padding: 0.3rem 0;
     }
 
@@ -1682,14 +1752,14 @@ select::-moz-focus-inner {
     #toggle-filter-btn {
         display: block !important;
         visibility: visible !important;
-        top: 18rem; /* Ajustado para nova posição */
+        top: 18rem; /* Ajustado para nova posiÃ§Ã£o */
         width: 2.4rem; /* Toggle mais largo */
         height: 5rem; /* Toggle mais alto */
         writing-mode: vertical-lr;
         text-orientation: mixed;
         font-size: 0.8rem; /* Texto maior */
         font-weight: bold;
-        left: -0.8rem; /* Ajustado para não ficar muito para fora */
+        left: -0.8rem; /* Ajustado para nÃ£o ficar muito para fora */
     }
 
     #toggle-filter-btn:hover {
@@ -1708,7 +1778,7 @@ select::-moz-focus-inner {
         margin-bottom: 1rem;
     }
 
-    /* Redução do tamanho das letras */
+    /* ReduÃ§Ã£o do tamanho das letras */
     .filter-title {
         font-size: 0.85rem;
     }
@@ -1733,7 +1803,7 @@ select::-moz-focus-inner {
         scrollbar-color: var(--orange) var(--light-grey);
     }
 
-    /* Estilização da scrollbar para Chrome/Safari */
+    /* EstilizaÃ§Ã£o da scrollbar para Chrome/Safari */
     .filter-list::-webkit-scrollbar {
         width: 6px;
     }
@@ -1748,7 +1818,7 @@ select::-moz-focus-inner {
         border-radius: 3px;
     }
 
-    /* Ajuste do conteúdo principal */
+    /* Ajuste do conteÃºdo principal */
     #books-list {
         padding: 0.5rem;
         margin-left: 0;
@@ -1765,7 +1835,7 @@ select::-moz-focus-inner {
         padding: 0.3rem 0.6rem;
     }
 
-    /* Ajuste quando os filtros estão expandidos */
+    /* Ajuste quando os filtros estÃ£o expandidos */
     .filter-container.expanded ~ #books-list {
         margin-left: 13rem;
     }
@@ -1797,13 +1867,13 @@ select::-moz-focus-inner {
     margin-top: 9rem;
 }
 
-/* Menu de Navegação */
+/* Menu de NavegaÃ§Ã£o */
 .menu {
     background-color: rgba(255, 255, 255, 0.5);
-    width: 100vw; /* Ocupa a largura do ecrã */
+    width: 100vw; /* Ocupa a largura do ecrÃ£ */
     position: relative; /* Assegura que ocupa toda a largura */
     left: 50%; /* centraliza o texto */
-    transform: translateX(-50%); /* reforço para centralizar o texto */
+    transform: translateX(-50%); /* reforÃ§o para centralizar o texto */
 }
 
 .menu .nav-tabs .nav-item .nav-link {
@@ -1879,9 +1949,9 @@ select::-moz-focus-inner {
 
 /************** Book-banner **************/
 
-/* Estilizar o título dentro do banner */
+/* Estilizar o tÃ­tulo dentro do banner */
 .st-book-banner {
-    position: relative; /* Define o contexto para posicionamento absoluto do título */
+    position: relative; /* Define o contexto para posicionamento absoluto do tÃ­tulo */
     width: 100%;
     top: -5rem;
     height: 10rem;
@@ -1959,20 +2029,20 @@ select::-moz-focus-inner {
     background: none;
     border: none;
     cursor: pointer;
-    padding: 10px;    /* Adiciona padding para aumentar área clicável */
-    display: flex;     /* Usa flexbox para centralizar o ícone */
+    padding: 10px;    /* Adiciona padding para aumentar Ã¡rea clicÃ¡vel */
+    display: flex;     /* Usa flexbox para centralizar o Ã­cone */
     align-items: center;
     justify-content: center;
-    z-index: 10;      /* Garante que está acima de outros elementos */
-    transition: transform 0.2s ease; /* Adiciona transição suave */
+    z-index: 10;      /* Garante que estÃ¡ acima de outros elementos */
+    transition: transform 0.2s ease; /* Adiciona transiÃ§Ã£o suave */
 }
 
-/* Aumenta a área de hover */
+/* Aumenta a Ã¡rea de hover */
 .favorite-btn:hover {
     transform: scale(1.1); /* Efeito de zoom suave ao hover */
 }
 
-/* Icon dentro do botão */
+/* Icon dentro do botÃ£o */
 .favorite-btn i {
     font-size: 1.5rem;
     transition: color 0.3s ease;
@@ -2032,7 +2102,7 @@ select::-moz-focus-inner {
     color: var(--dark-orange);
 }
 
-/* Caracteristicas do livro e avaliação */
+/* Caracteristicas do livro e avaliaÃ§Ã£o */
 .book-details {
     display: flex;
     flex-wrap: wrap;
@@ -2043,7 +2113,7 @@ select::-moz-focus-inner {
     margin-bottom: 0.5rem;
 }
 
-/* Ícone e texto estilizados */
+/* Ãcone e texto estilizados */
 .book-details .icon-wrapper i {
     display: inline-flex;
     font-size: 1.2rem;
@@ -2052,7 +2122,7 @@ select::-moz-focus-inner {
     color: var(--orange);
 }
 
-/* Descrição */
+/* DescriÃ§Ã£o */
 .description {
     color: var(--dark-grey);
     font-size: 0.9rem;
@@ -2180,8 +2250,27 @@ select::-moz-focus-inner {
 }
 
 
+.progress-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 1rem;
+    border-radius: 1rem;
+    backdrop-filter: blur(5px);
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
 .progress-bar {
     transition: width 0.4s ease-in-out;
+    background: linear-gradient(90deg, var(--light-orange), var(--orange));
+    box-shadow: 0 2px 4px rgba(249, 119, 0, 0.2);
 }
 
 /* Container do livro */
@@ -2195,7 +2284,7 @@ select::-moz-focus-inner {
     border-radius: 1rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background-color: var(--white);
-    height: calc(100vh - 21rem); /* Altura dinâmica ajustada para o layout fixo */
+    height: calc(100vh - 21rem); /* Altura dinÃ¢mica ajustada para o layout fixo */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2227,7 +2316,7 @@ select::-moz-focus-inner {
     max-width: 100%;
 }
 
-/* Configuração dos slides */
+/* ConfiguraÃ§Ã£o dos slides */
 .slide {
     display: flex;
     align-items: center;
@@ -2242,21 +2331,26 @@ select::-moz-focus-inner {
     object-fit: cover;
 }
 
-/* Formulário de comentário */
+/* FormulÃ¡rio de comentÃ¡rio */
 .add-comment {
-    width: 50%;
+    width: 60%;
     max-width: 54rem;
-    padding: 2rem;
-    background-color: var(--white);
+    padding: 3rem;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 2rem;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
     text-align: center;
     display: flex;
     flex-direction: column;
-    margin-left: auto;
-    margin-right: 5.5rem;
+    margin: auto;
 }
 
 .add-comment .st-title{
-    font-size: 1.8rem;
+    font-size: 2rem;
+    color: var(--orange);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
 }
 
 .add-comment label {
@@ -2265,7 +2359,7 @@ select::-moz-focus-inner {
     color: var(--dark-grey);
 }
 
-/* Ajuste das estrelas relativamente à label */
+/* Ajuste das estrelas relativamente Ã  label */
 .star-rating {
     display: flex;
     align-items: center;
@@ -2281,38 +2375,51 @@ select::-moz-focus-inner {
 
 .add-comment .comment-area {
     resize: none;
-    border-radius: 0.5rem !important;
-    border: 1px solid var(--light-grey);
-    padding: 0.5rem;
+    border-radius: 1rem !important;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: rgba(255, 255, 255, 0.9);
+    padding: 1rem;
     font-size: 1rem;
     width: 100%;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
 }
 
 .add-comment textarea:focus {
-    border-color: var(--orange); /* Muda a cor da borda ao focar */
+    background: #fff;
+    border-color: var(--orange);
+    box-shadow: 0 0 0 0.2rem rgba(249, 119, 0, 0.1);
     outline: none;
 }
 
-/* Botões de navegação */
+/* BotÃµes de navegaÃ§Ã£o */
 .slider-nav {
     position: absolute;
     bottom: 1rem;
-    background-color: var(--orange);
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
     padding: 0.5rem 1rem;
     cursor: pointer;
     font-size: 1.5rem;
-    color: var(--white);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.9);
-    border-radius: 1rem;
+    color: var(--orange);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
     z-index: 10;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 0.1rem solid var(--white);
-    width: 3rem;
-    height: 3rem;
-    border-radius: 50%; /* Make them circular */
+    width: 3.5rem;
+    height: 3.5rem;
+    transition: all 0.3s ease;
+}
+
+.slider-nav:hover {
+    background: var(--orange);
+    color: white;
+    transform: scale(1.1) translateY(-50%);
+    box-shadow: 0 6px 20px rgba(249, 119, 0, 0.3);
+    border-color: var(--orange);
 }
 
 .slider-nav.prev {
@@ -2327,9 +2434,8 @@ select::-moz-focus-inner {
     transform: translateY(-50%);
 }
 
-.slider-nav:hover {
-    background-color: var(--dark-orange);
-    color: white;
+.slider-nav.prev:hover, .slider-nav.next:hover {
+     transform: scale(1.1) translateY(-50%);
 }
 
 /* Responsividade para ecrans maiores */
@@ -2418,7 +2524,7 @@ select::-moz-focus-inner {
     }
 }
 
-/* Responsividade para telemóveis */
+/* Responsividade para telemÃ³veis */
 @media (max-width: 480px) {
     .progress-container {
         padding: 1rem;
@@ -2492,7 +2598,7 @@ select::-moz-focus-inner {
     border-radius: 1rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background-color: var(--white);
-    height: calc(100vh - 20rem); /* Altura dinâmica ajustada para o layout fixo */
+    height: calc(100vh - 20rem); /* Altura dinÃ¢mica ajustada para o layout fixo */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2511,30 +2617,64 @@ select::-moz-focus-inner {
     width: 100%;
 }
 
-/* Garantir que o row ocupa todo o espaço */
+/* Garantir que o row ocupa todo o espaÃ§o */
 .container-activity .row {
     width: 100%;
     margin: 0;
 }
 
-/* Garantir que as colunas têm a mesma largura */
+/* Garantir que as colunas tÃªm a mesma largura */
 .container-activity .col-md-6.col-lg-4 {
     display: flex;
     flex-direction: column;
 }
 
 .activity-card {
-    border-radius: 1rem !important;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 1.5rem !important;
     overflow: hidden;
-    height: 100%;  /* Para ocupar toda a altura */
+    height: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.activity-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+    border-color: var(--orange);
 }
 
 .activity-card img {
-    border-radius: 1rem !important;
+    border-radius: 1.5rem 1.5rem 0 0 !important;
     width: 100%;
-    height: 20rem;
-    object-fit: contain;
-    display:block;
+    height: 18rem;
+    object-fit: cover; /* Changed to cover to fill space */
+    object-position: top center; /* Ensure top of activity is visible */
+    background-color: #fff;
+    padding: 0; /* Removed padding */
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.activity-card:hover img {
+    transform: scale(1.02);
+}
+
+.activity-card .card-body {
+    padding: 1.5rem;
+}
+
+/* Override global progress container styles for activity cards */
+.activity-card .progress-container {
+    margin: 1rem auto;
+    background: transparent;
+    padding: 0;
+    box-shadow: none;
+    border-radius: 0;
+    backdrop-filter: none;
+    width: 100%;
 }
 
 /****************** Responsividade ******************/
@@ -2545,7 +2685,7 @@ select::-moz-focus-inner {
     }
 }
 
-/* Responsividade para telemóveis */
+/* Responsividade para telemÃ³veis */
 @media (max-width: 480px) {
     .container-activitie img {
         height: 150px; /* Altura reduzida para celulares */
@@ -2557,9 +2697,9 @@ select::-moz-focus-inner {
 
 /*Container da lista de livros*/
 .card-title {
-    white-space: nowrap; /* Não permite que o texto quebre em várias linhas */
-    overflow: hidden; /* Esconde o excesso de texto que não cabe */
-    text-overflow: ellipsis; /* Adiciona '...' ao final do texto que não cabe */
+    white-space: nowrap; /* NÃ£o permite que o texto quebre em vÃ¡rias linhas */
+    overflow: hidden; /* Esconde o excesso de texto que nÃ£o cabe */
+    text-overflow: ellipsis; /* Adiciona '...' ao final do texto que nÃ£o cabe */
 }
 
 
@@ -2569,25 +2709,298 @@ select::-moz-focus-inner {
 /* Cards de Livros */
 .book-card {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: none; /* Remove bordas extras se necessário */
+    border: none; /* Remove bordas extras se necessÃ¡rio */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    overflow: hidden; /* Garante que a imagem não saia do card */
+    overflow: hidden; /* Garante que a imagem nÃ£o saia do card */
 }
 
 .book-card:hover {
-    transform: translateY(-5px); /* Efeito de elevação */
+    transform: translateY(-5px); /* Efeito de elevaÃ§Ã£o */
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Sombra mais forte no hover */
 }
 
 .book-card .card-img-top {
     height: 350px; /* Altura fixa para todas as imagens */
-    object-fit: cover; /* Garante que a imagem cubra a área sem distorcer */
+    object-fit: cover; /* Garante que a imagem cubra a Ã¡rea sem distorcer */
     width: 100%;
 }
 
-/* Ajuste específico para Related Books para serem mais pequenos */
+/* Ajuste especÃ­fico para Related Books para serem mais pequenos */
 #related-books-list .book-card .card-img-top {
     height: 200px; /* Altura menor para related books */
 }
 
+
+
+/* ########################## Improvements ########################## */
+
+/* Book Card Interactive Styles */
+.book-card {
+    border: none;
+    border-radius: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden; /* Ensures image respects radius */
+}
+
+.book-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.book-card .card-img-top {
+    border-top-left-radius: 1.5rem;
+    border-top-right-radius: 1.5rem;
+}
+
+/* Enhancing Toast with Soft Shadow */
+.toast {
+    box-shadow: var(--soft-shadow);
+    border: none;
+}
+
+
+/****************** Static Pages (About, Contact, Terms) ******************/
+
+.about-us-container,
+.contact-us-container,
+.terms-container {
+    background: rgba(255, 255, 255, 0.95); /* More opaque */
+    padding: 3.5rem;
+    border-radius: 2.5rem;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(20px);
+    margin: 12rem auto;
+    margin-bottom: 4rem;
+    max-width: 65rem;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Decorative top border line */
+.about-us-container::before,
+.contact-us-container::before,
+.terms-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    background: var(--btn-gradient);
+}
+
+.about-image,
+.contact-image {
+    width: 100%;
+    max-width: 18rem; /* Slightly larger for better visibility */
+    height: auto;
+    object-fit: contain;
+    border-radius: 1.5rem; /* Soft rounded corners instead of circle */
+    background-color: transparent; /* Remove background box if not needed, or keep white */
+    padding: 0;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.1)); /* Use drop-shadow for transparent images */
+    margin-bottom: 2rem;
+    transition: transform 0.3s ease;
+    border: none;
+}
+
+.about-image:hover,
+.contact-image:hover {
+    transform: scale(1.05); /* Slight zoom */
+}
+
+.st-title,
+.contact-title,
+.terms-title {
+    font-family: var(--love), cursive;
+    color: var(--orange);
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    text-shadow: 2px 2px 0px rgba(255,255,255,1), 4px 4px 5px rgba(0,0,0,0.1);
+}
+
+.about-text p,
+.terms-text p {
+    font-size: 1.15rem;
+    line-height: 1.9;
+    color: var(--dark-grey);
+    margin-bottom: 1.5rem;
+    text-align: justify;
+}
+
+.form-contact label {
+    font-weight: 800;
+    color: var(--dark-grey);
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.form-contact input,
+.form-contact textarea {
+    border-radius: 1rem;
+    border: 2px solid transparent;
+    background: #f8f9fa;
+    padding: 1rem 1.5rem;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.form-contact input:focus,
+.form-contact textarea:focus {
+    background: #fff;
+    box-shadow: 0 4px 15px rgba(249, 119, 0, 0.15);
+    border-color: var(--orange);
+    outline: none;
+    transform: translateY(-2px);
+}
+
+.contact-buttons {
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 3rem;
+}
+
+.terms-container h3 {
+    font-family: var(--nunito);
+    color: var(--orange);
+    font-weight: 800;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    border-bottom: 2px solid rgba(249, 119, 0, 0.2);
+    padding-bottom: 0.5rem;
+    display: inline-block;
+}
+
+.terms-container ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.terms-container li {
+    position: relative;
+    padding-left: 2rem;
+    margin-bottom: 0.8rem;
+    color: var(--grey);
+}
+
+.terms-container li::before {
+    content: '';
+    color: var(--orange);
+    font-weight: bold;
+    position: absolute;
+    left: 0.5rem;
+    font-size: 1.5rem;
+    line-height: 1rem;
+    top: 0.2rem;
+}
+
+/* Favorites Grid Styles */
+.btn-delete-fav {
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 50%;
+    width: 2.2rem;
+    height: 2.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: all 0.2s ease;
+    z-index: 10;
+    cursor: pointer;
+}
+.btn-delete-fav:hover {
+    background: white;
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    color: red !important;
+}
+.glass-overlay {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border-radius: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+
+/* Badge Interaction */
+.badge-scene {
+    cursor: pointer;
+}
+.badge-scene:hover .badge-card {
+    transform: rotateY(180deg);
+}
+.badge-front {
+    overflow: hidden; /* Keep shine inside */
+}
+.shine {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+    transform: rotate(30deg);
+    animation: shine-effect 3s infinite linear;
+    pointer-events: none;
+}
+@keyframes shine-effect {
+    0% { transform: translateX(-50%) translateY(-50%) rotate(30deg); }
+    100% { transform: translateX(50%) translateY(50%) rotate(30deg); }
+}
+
+
+/* Favorites Redesign: Glass List Cards */
+.fav-img-wrapper {
+    position: relative;
+    flex-shrink: 0;
+}
+.fav-glass-card {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.fav-glass-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.9);
+}
+.status-badge-fav {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    background: #28a745;
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 10;
+}
+.fav-actions .btn-primary {
+    background: var(--orange); /* Use your orange var */
+    border: none;
+    transition: all 0.2s ease;
+}
+.fav-actions .btn-primary:hover {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+}
+.hover-opacity-100:hover {
+    opacity: 1 !important;
+}
+
+
+/* Fix favorites overlap with fixed banner */
+/* Fix favorites overlap with fixed banner */
+.main-content-favourite {
+    margin-top: 20rem !important; /* Push content down below fixed header - expanded spacing */
+}
 

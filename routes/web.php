@@ -117,6 +117,11 @@ Route::get('/about', function () {
     return view('utility-pages.about');
 })->name('about');
 
+// Rota para terms
+Route::get('/terms', function () {
+    return view('utility-pages.terms');
+})->name('terms');
+
 
 // Rotas admin protegidas
 require __DIR__ . '/admin.php';

@@ -40,40 +40,61 @@
             <!-- Campos de Informação -->
             <div class="col-md-6 mb-3">
                 <label for="firstName">First Name</label>
-                <input type="text" id="firstName" name="first_name" class="form-control" value="{{ old('first_name', $user->first_name) }}" required>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                    <input type="text" id="firstName" name="first_name" class="form-control" value="{{ old('first_name', $user->first_name) }}" required>
+                </div>
             </div>
             <div class="col-md-6 mb-3">
                 <label for="lastName">Last Name</label>
-                <input type="text" id="lastName" name="last_name" class="form-control" value="{{ old('last_name', $user->last_name) }}" required>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                    <input type="text" id="lastName" name="last_name" class="form-control" value="{{ old('last_name', $user->last_name) }}" required>
+                </div>
             </div>
             <div class="col-md-6 mb-3">
                 <label for="birth_date">Birth Date</label>
-                <input type="text" id="birth_date" name="birth_date" class="form-control" value="{{ old('birth_date', $user->birth_date) }}" required>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-calendar"></i></span>
+                    <input type="text" id="birth_date" name="birth_date" class="form-control" value="{{ old('birth_date', $user->birth_date) }}" required>
+                </div>
             </div>
             <div class="col-md-6 mb-3">
                 <label for="email">Email</label>
-                <input type="email" id="email" name="email" class="form-control" value="{{ old('email', $user->email) }}" required>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                    <input type="email" id="email" name="email" class="form-control" value="{{ old('email', $user->email) }}" required>
+                </div>
             </div>
 
             <!-- Campos de Senha -->
             <div class="col-md-4 mb-3">
                 <label for="oldPassword">Old Password</label>
                 <div class="position-relative">
-                    <input type="password" id="oldPassword" name="old_password" class="form-control" placeholder="Insert the old password">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                        <input type="password" id="oldPassword" name="old_password" class="form-control" placeholder="Insert the old password">
+                    </div>
                     <span id="toggleOldPasswordIcon" onclick="togglePasswordVisibility('oldPassword', 'toggleOldPasswordIcon')" class="bi bi-eye password-toggle"></span>
                 </div>
             </div>
             <div class="col-md-4 mb-3">
                 <label for="newPassword">New Password</label>
                 <div class="position-relative">
-                    <input type="password" id="newPassword" name="new_password" class="form-control" placeholder="Insert the new password">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                        <input type="password" id="newPassword" name="new_password" class="form-control" placeholder="Insert the new password">
+                    </div>
                     <span id="toggleNewPasswordIcon" onclick="togglePasswordVisibility('newPassword', 'toggleNewPasswordIcon')" class="bi bi-eye password-toggle"></span>
                 </div>
             </div>
             <div class="col-md-4 mb-3">
                 <label for="newPasswordConfirmation">Confirm New Password</label>
                 <div class="position-relative">
-                    <input type="password" id="newPasswordConfirmation" name="new_password_confirmation" class="form-control" placeholder="Confirm new password">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                        <input type="password" id="newPasswordConfirmation" name="new_password_confirmation" class="form-control" placeholder="Confirm new password">
+                    </div>
                     <span id="toggleConfirmPasswordIcon" onclick="togglePasswordVisibility('newPasswordConfirmation', 'toggleConfirmPasswordIcon')" class="bi bi-eye password-toggle"></span>
                 </div>
             </div>
@@ -126,7 +147,7 @@
 
 
         <div class="text-center mt-4">
-            <button type="submit" class="btn btn">Save</button>
+            <button type="submit" class="btn">Save</button>
             <button type="button" class="btn btnSecundary" onclick="window.location.href='{{ url('/') }}'">Back to Home</button>
         </div>
     </form>

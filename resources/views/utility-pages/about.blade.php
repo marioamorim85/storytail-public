@@ -6,7 +6,7 @@
 {{-- Container Principal --}}
 <div class="container mt-5">
     <div class="about-us-container">
-        <div class="row">
+        <div class="row align-items-center">
             {{-- Imagem --}}
             <div class="col-md-3 text-center">
                 <img src="../images/storytail-logo-02.png" alt="StoryTail Logo" class="about-image">

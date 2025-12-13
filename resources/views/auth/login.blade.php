@@ -13,28 +13,34 @@
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
                     <div class="form-group mb-3">
-                        <input type="email"
-                               id="email"
-                               class="form-control @error('email') is-invalid @enderror"
-                               name="email"
-                               value="{{ old('email') }}"
-                               placeholder="E-mail"
-                               required
-                               autofocus>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                            <input type="email"
+                                   id="email"
+                                   class="form-control @error('email') is-invalid @enderror"
+                                   name="email"
+                                   value="{{ old('email') }}"
+                                   placeholder="E-mail"
+                                   required
+                                   autofocus>
+                        </div>
                         @error('email')
-                        <div class="invalid-feedback">
+                        <div class="invalid-feedback d-block">
                             {{ $message }}
                         </div>
                         @enderror
                     </div>
 
                     <div class="form-group mb-3 position-relative">
-                        <input type="password"
-                               id="password"
-                               class="form-control @error('password') is-invalid @enderror"
-                               name="password"
-                               placeholder="Password"
-                               required>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                            <input type="password"
+                                   id="password"
+                                   class="form-control @error('password') is-invalid @enderror"
+                                   name="password"
+                                   placeholder="Password"
+                                   required>
+                        </div>
                         <span id="togglePasswordIcon"
                               onclick="togglePasswordVisibility('password', 'togglePasswordIcon')"
                               class="bi bi-eye password-toggle">

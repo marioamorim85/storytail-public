@@ -146,7 +146,7 @@
             <div class="footer-links">
                 <a href="{{ route('contacts') }}" class="footer-link">Contacts</a>
                 <a href="{{ route('about') }}" class="footer-link">About</a>
-                <a href="#" class="footer-link">Terms</a>
+                <a href="{{ route('terms') }}" class="footer-link">Terms</a>
             </div>
         </div>
     </div>

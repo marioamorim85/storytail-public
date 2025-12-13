@@ -108,9 +108,14 @@ function togglePasswordVisibility(passwordFieldId, toggleIconId) {
 // ########################### Home Page ###########################
 
 // Evento para inicializar a navegação entre abas e categorias
+// Evento para inicializar a navegação entre abas e categorias
 document.addEventListener('DOMContentLoaded', function () {
-    const allTabs = document.querySelectorAll('.nav-link');
-    const allSections = document.querySelectorAll('.content-section');
+    // Scope logic to Home Page only
+    const homeMainContent = document.querySelector('.home-main-content');
+    if (!homeMainContent) return;
+
+    const allTabs = homeMainContent.querySelectorAll('.nav-link');
+    const allSections = document.querySelectorAll('.content-section'); // This is fine if we are only running on home page
     const sortSelect = document.querySelector('.form-select');
     const searchForm = document.querySelector('.search-bar form');
 
@@ -704,6 +709,8 @@ document.addEventListener('click', function (event) {
 });
 
 
+
+
 // ########################### Book-details ###########################
 
 /************** Book-about **************/
@@ -772,8 +779,12 @@ function toggleFavorite(bookId, context = 'book-details') {
 
                         if (remainingItems === 0) {
                             favouritesContainer.innerHTML = `
-                                <div class="row">
-                                    <div class="col-12 text-center">No favourite books found.</div>
+                                <div class="favourite-overlay text-center p-5 glass-overlay">
+                                    <h4 class="st-title mb-3">No Favourite Books Found</h4>
+                                    <p class="text-muted mb-4">
+                                        You haven't added any favourite books yet. Explore our collection and start adding your favourites!
+                                    </p>
+                                    <a href="/" class="btn btn-orange text-white">Go to Home</a>
                                 </div>
                             `;
                         }

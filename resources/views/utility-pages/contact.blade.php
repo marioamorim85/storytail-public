@@ -6,7 +6,7 @@
 {{-- container principal --}}
 <div class="container mt-5">
     <div class="contact-us-container">
-        <div class="row">
+        <div class="row align-items-center">
             {{-- Imagem --}}
             <div class="col-md-5 text-center">
                 <img src="{{ asset('images/mailbox.png') }}" alt="Mail Box" class="contact-image">
