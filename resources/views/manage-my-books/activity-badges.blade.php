@@ -3,13 +3,16 @@
 @section('badges-content')
     <div class="container my-5">
         @if($badges->isEmpty())
-            {{-- Overlay com a mensagem e botão --}}
-            <div class="favourites-container favourite-overlay">
-                <h4 class="st-title">No Badges Found</h4>
-                <p class="text-muted text-center">
-                    You haven't completed any activities yet to earn badges.
+            {{-- Empty State com ilustração --}}
+            <div class="empty-state">
+                <i class="bi bi-puzzle empty-state-icon"></i>
+                <h4 class="empty-state-title">No Activity Badges Found</h4>
+                <p class="empty-state-description">
+                    You haven't completed any activities yet. Complete activities in books to earn badges!
                 </p>
-                <a href="{{ route('home') }}" class="btn btn-warning text-white">Choose a Book</a>
+                <a href="{{ route('home') }}" class="btn btn-orange text-white">
+                    <i class="bi bi-book me-2"></i>Find Activities
+                </a>
             </div>
         @else
             <div class="badges-container d-flex flex-wrap p-3">

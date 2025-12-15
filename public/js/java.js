@@ -127,10 +127,29 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     showFilterComponent('all');
 
+    // Initialize all books grids with loading state
+    const allBooksGrids = document.querySelectorAll('.books-grid');
+    allBooksGrids.forEach(grid => {
+        // Only animate the initially visible grid
+        const parentSection = grid.closest('.content-section');
+        if (parentSection && !parentSection.classList.contains('hidden')) {
+            grid.classList.add('loading');
+
+            // Wait for page to be ready, then trigger staggered animation
+            setTimeout(() => {
+                grid.classList.remove('loading');
+                grid.classList.add('ready');
+            }, 300);
+        }
+    });
+
     // Configura o seletor de ordenação para "A-Z" e aplica a ordenação automaticamente na aba inicial
     if (sortSelect) {
         sortSelect.value = 'asc'; // Define o valor inicial como "A-Z"
-        sortBooks('asc'); // Aplica a ordenação automaticamente
+        // Delay sorting to avoid flicker
+        setTimeout(() => {
+            sortBooks('asc'); // Aplica a ordenação automaticamente
+        }, 50);
     }
 
     // Event listener para as abas
@@ -154,6 +173,19 @@ document.addEventListener('DOMContentLoaded', function () {
             const targetSection = document.getElementById(`${category}-section`);
             if (targetSection) {
                 targetSection.classList.remove('hidden');
+
+                // Reset and trigger animations for the new section's book grid
+                const sectionBooksGrid = targetSection.querySelector('.books-grid');
+                if (sectionBooksGrid) {
+                    sectionBooksGrid.classList.remove('ready');
+                    sectionBooksGrid.classList.add('loading');
+
+                    // Trigger animation after a brief delay
+                    setTimeout(() => {
+                        sectionBooksGrid.classList.remove('loading');
+                        sectionBooksGrid.classList.add('ready');
+                    }, 200);
+                }
             }
 
 
@@ -764,6 +796,14 @@ function toggleFavorite(bookId, context = 'book-details') {
                     if (data.status === 'added') {
                         icon.classList.replace('bi-heart', 'bi-heart-fill');
                         icon.style.color = 'red';
+                        // Add heart burst animation
+                        icon.classList.add('favorite-animation');
+                        // Create floating hearts at icon position
+                        const rect = icon.getBoundingClientRect();
+                        if (typeof createFloatingHearts === 'function') {
+                            createFloatingHearts(rect.left + rect.width / 2, rect.top);
+                        }
+                        setTimeout(() => icon.classList.remove('favorite-animation'), 400);
                     } else {
                         icon.classList.replace('bi-heart-fill', 'bi-heart');
                         icon.style.color = 'grey';
@@ -771,22 +811,31 @@ function toggleFavorite(bookId, context = 'book-details') {
                 } else if (context === 'favourites') {
                     if (data.status === 'removed') {
                         const bookRow = document.getElementById(`favourite-book-${bookId}`);
-                        if (bookRow) bookRow.remove();
+                        if (bookRow) {
+                            // Animate removal
+                            bookRow.classList.add('removing');
+                            setTimeout(() => {
+                                bookRow.remove();
 
-                        // Verificar se ainda há livros favoritos
-                        const favouritesContainer = document.querySelector('.favourites-container');
-                        const remainingItems = favouritesContainer.querySelectorAll('.favourite-item').length;
+                                // Verificar se ainda há livros favoritos
+                                const favouritesContainer = document.querySelector('.favourites-container');
+                                const remainingItems = favouritesContainer.querySelectorAll('.favourite-item, .fav-glass-card').length;
 
-                        if (remainingItems === 0) {
-                            favouritesContainer.innerHTML = `
-                                <div class="favourite-overlay text-center p-5 glass-overlay">
-                                    <h4 class="st-title mb-3">No Favourite Books Found</h4>
-                                    <p class="text-muted mb-4">
-                                        You haven't added any favourite books yet. Explore our collection and start adding your favourites!
-                                    </p>
-                                    <a href="/" class="btn btn-orange text-white">Go to Home</a>
-                                </div>
-                            `;
+                                if (remainingItems === 0) {
+                                    favouritesContainer.innerHTML = `
+                                        <div class="empty-state empty-favorites">
+                                            <div class="empty-book-illustration"></div>
+                                            <h4 class="empty-state-title">No Favourite Books Found</h4>
+                                            <p class="empty-state-description">
+                                                You haven't added any favourite books yet. Explore our collection and start adding your favourites!
+                                            </p>
+                                            <a href="/" class="btn btn-orange text-white">
+                                                <i class="bi bi-house-door me-2"></i>Explore Books
+                                            </a>
+                                        </div>
+                                    `;
+                                }
+                            }, 300);
                         }
                     }
                 }
@@ -1702,5 +1751,212 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
+});
+
+
+// ########################### VISUAL ENHANCEMENTS ###########################
+
+/************** Ripple Effect **************/
+document.addEventListener('DOMContentLoaded', function() {
+    // Add ripple effect to all buttons
+    const buttons = document.querySelectorAll('.btn, .btnSecundary, .btn-primary, .btn-secondary, .btn-orange, .btn-read, .btn-premium');
+
+    buttons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            // Create ripple element
+            const ripple = document.createElement('span');
+            ripple.classList.add('ripple');
+
+            // Calculate position
+            const rect = this.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+
+            // Set styles
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+
+            // Add to button
+            this.appendChild(ripple);
+
+            // Remove after animation
+            setTimeout(() => ripple.remove(), 600);
+        });
+    });
+});
+
+
+/************** Success Animations **************/
+
+// Floating hearts animation for favorites
+function createFloatingHearts(x, y, count = 5) {
+    const container = document.createElement('div');
+    container.className = 'floating-hearts';
+    container.style.left = x + 'px';
+    container.style.top = y + 'px';
+    document.body.appendChild(container);
+
+    for (let i = 0; i < count; i++) {
+        const heart = document.createElement('span');
+        heart.className = 'floating-heart';
+        heart.innerHTML = '&#10084;'; // Heart symbol
+        heart.style.left = (Math.random() * 40 - 20) + 'px';
+        heart.style.animationDelay = (Math.random() * 0.3) + 's';
+        container.appendChild(heart);
+    }
+
+    // Remove container after animation
+    setTimeout(() => container.remove(), 1500);
+}
+
+// Confetti burst for achievements
+function createConfetti(count = 50) {
+    const colors = ['#FF9900', '#E95A0C', '#F97700', '#22c55e', '#ff0040', '#FFD700'];
+
+    for (let i = 0; i < count; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.animationDelay = Math.random() * 2 + 's';
+        confetti.style.animationDuration = (2 + Math.random() * 2) + 's';
+        document.body.appendChild(confetti);
+
+        // Remove after animation
+        setTimeout(() => confetti.remove(), 5000);
+    }
+}
+
+// Enhanced notification with animations
+function showNotification(type, message, options = {}) {
+    const box = document.querySelector('.notification-box') || createNotificationBox();
+
+    const icons = {
+        success: 'bi-check-circle-fill',
+        error: 'bi-x-circle-fill',
+        warning: 'bi-exclamation-triangle-fill',
+        info: 'bi-info-circle-fill'
+    };
+
+    const notification = document.createElement('div');
+    notification.className = `notification-item ${type} toast-animated`;
+    notification.innerHTML = `
+        <i class="notification-icon bi ${icons[type] || icons.info}"></i>
+        <span class="notification-message">${message}</span>
+        <button class="btn-close btn-sm ms-auto" onclick="this.parentElement.remove()"></button>
+    `;
+
+    box.appendChild(notification);
+
+    // Play heart animation for favorites
+    if (options.hearts && type === 'success') {
+        const rect = notification.getBoundingClientRect();
+        createFloatingHearts(rect.left, rect.top);
+    }
+
+    // Play confetti for achievements
+    if (options.confetti && type === 'success') {
+        createConfetti(30);
+    }
+
+    // Auto-remove
+    const duration = options.duration || 5000;
+    setTimeout(() => {
+        notification.classList.add('hiding');
+        setTimeout(() => notification.remove(), 300);
+    }, duration);
+
+    return notification;
+}
+
+function createNotificationBox() {
+    const box = document.createElement('div');
+    box.className = 'notification-box';
+    document.body.appendChild(box);
+    return box;
+}
+
+
+/************** Item Removal Animation **************/
+function animateRemoval(element, callback) {
+    element.classList.add('removing');
+    setTimeout(() => {
+        if (callback) callback();
+        element.remove();
+    }, 300);
+}
+
+
+/************** Skeleton Loaders **************/
+
+// Create skeleton book card
+function createSkeletonBookCard() {
+    return `
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+            <div class="skeleton-book-card">
+                <div class="skeleton skeleton-image"></div>
+                <div class="skeleton-body">
+                    <div class="skeleton skeleton-title"></div>
+                    <div class="skeleton skeleton-button"></div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// Create skeleton favorite item
+function createSkeletonFavoriteItem() {
+    return `
+        <div class="skeleton-favorite-item">
+            <div class="skeleton skeleton-cover"></div>
+            <div class="skeleton-details">
+                <div class="skeleton skeleton-title"></div>
+                <div class="skeleton skeleton-meta"></div>
+                <div class="skeleton skeleton-progress"></div>
+            </div>
+        </div>
+    `;
+}
+
+// Show skeleton loaders
+function showSkeletonLoaders(container, count = 8, type = 'book') {
+    container.innerHTML = '';
+    const skeletonFn = type === 'book' ? createSkeletonBookCard : createSkeletonFavoriteItem;
+
+    for (let i = 0; i < count; i++) {
+        container.innerHTML += skeletonFn();
+    }
+}
+
+// Hide skeleton loaders and show content
+function hideSkeletonLoaders(container, content) {
+    container.innerHTML = content;
+}
+
+
+/************** Lazy Load Observer **************/
+document.addEventListener('DOMContentLoaded', function() {
+    // Intersection Observer for lazy animations
+    const observerOptions = {
+        root: null,
+        rootMargin: '50px',
+        threshold: 0.1
+    };
+
+    const animationObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-in');
+                animationObserver.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // Observe elements that should animate on scroll
+    document.querySelectorAll('.animate-on-scroll').forEach(el => {
+        animationObserver.observe(el);
+    });
 });
 

@@ -38,7 +38,7 @@
         {{-- Exibe o componente de filtros --}}
         @include('components.filter-component')
 
-        <div class="row" id="books-list">
+        <div class="row books-grid loading" id="books-list">
             {{-- Exibe os card dos livros --}}
             @foreach($books as $book)
                 @include('components.book-component', ['book' => $book])
@@ -49,7 +49,7 @@
 
     {{-- Exibe 'Picks for you' --}}
     <div id="picks-section" class="content-section hidden">
-        <div class="row" id="books-list">
+        <div class="row books-grid" id="picks-books-list">
             @foreach($recommendedBooks as $book)
                 @include('components.book-component', ['book' => $book])
             @endforeach
@@ -58,7 +58,7 @@
 
     {{-- Exibe 'Most Popular' --}}
     <div id="popular-section" class="content-section hidden">
-        <div class="row" id="books-list">
+        <div class="row books-grid" id="popular-books-list">
             @foreach($popularBooks as $book)
                 @include('components.book-component', ['book' => $book])
             @endforeach

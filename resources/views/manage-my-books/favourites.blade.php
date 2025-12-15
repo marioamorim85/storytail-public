@@ -54,13 +54,16 @@
 
             </div>
         @empty
-            {{-- Overlay com a mensagem e botão --}}
-            <div class="favourite-overlay text-center p-5 glass-overlay">
-                <h4 class="st-title mb-3">No Favourite Books Found</h4>
-                <p class="text-muted mb-4">
+            {{-- Empty State com ilustração --}}
+            <div class="empty-state empty-favorites">
+                <div class="empty-book-illustration"></div>
+                <h4 class="empty-state-title">No Favourite Books Found</h4>
+                <p class="empty-state-description">
                     You haven't added any favourite books yet. Explore our collection and start adding your favourites!
                 </p>
-                <a href="{{ url('/') }}" class="btn btn-orange text-white">Go to Home</a>
+                <a href="{{ url('/') }}" class="btn btn-orange text-white">
+                    <i class="bi bi-house-door me-2"></i>Explore Books
+                </a>
             </div>
         @endforelse
     </div>

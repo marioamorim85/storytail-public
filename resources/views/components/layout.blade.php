@@ -46,7 +46,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_orange.css">
     {{-- CSS --}}
-    <link rel="stylesheet" href="{{ asset('css/styles.css?v=1.2') }}">
+    <link rel="stylesheet" href="{{ asset('css/styles.css?v=2.2') }}">
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
     <script>
         const SORT_URL = '{{ route("books.sort") }}';
@@ -56,6 +56,9 @@
 </head>
 
 <body>
+{{-- Skip to main content link for accessibility --}}
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
 {{-- Header --}}
 <header class="navbar navbar-expand-lg navbar">
     <div class="container">
@@ -128,7 +131,7 @@
 <div class="notification-box"></div>
 
 {{--Main Content--}}
-<main class="py-4 main-content">
+<main id="main-content" class="py-4 main-content" role="main">
     <div class="container">
         @yield('content')
     </div>
@@ -191,7 +194,7 @@
 
 {{-- Scripts personalizados --}}
 <script src="{{ asset('js/turn.js') }}"></script>
-<script src="{{ asset('js/java.js?v=1.1') }}"></script>
+<script src="{{ asset('js/java.js?v=2.1') }}"></script>
 
 {{-- Scripts adicionais --}}
 @stack('scripts')

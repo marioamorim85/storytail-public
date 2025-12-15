@@ -61,13 +61,16 @@
                 </div>
             @endif
         @empty
-            {{-- Overlay com a mensagem e botão --}}
-            <div class="favourite-overlay">
-                <h4 class="st-title">No Books Found</h4>
-                <p class="text-muted text-center">
-                    You haven't read any books yet. Explore our collection and start reding your favourite books!
+            {{-- Empty State com ilustração --}}
+            <div class="empty-state">
+                <i class="bi bi-book empty-state-icon"></i>
+                <h4 class="empty-state-title">No Books Found</h4>
+                <p class="empty-state-description">
+                    You haven't read any books yet. Explore our collection and start reading your favourite books!
                 </p>
-                <a href="{{ url('/') }}" class="btn btn-orange text-white">Go to Home</a>
+                <a href="{{ url('/') }}" class="btn btn-orange text-white">
+                    <i class="bi bi-house-door me-2"></i>Explore Books
+                </a>
             </div>
         @endforelse
     </div>
