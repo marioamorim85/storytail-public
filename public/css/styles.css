@@ -2303,6 +2303,7 @@ select::-moz-focus-inner {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background-color: var(--white);
     height: calc(100vh - 21rem); /* Altura dinâmica ajustada para o layout fixo */
+    min-height: 500px; /* Garante que o container não fique demasiado pequeno */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2388,7 +2389,33 @@ select::-moz-focus-inner {
 /* Imagens do livro */
 .book-page {
     max-height: 100%;
-    object-fit: cover;
+    width: auto;
+    object-fit: contain;
+    max-width: 100%;
+}
+
+/* Configuração da página para permitir scroll se necessário */
+.page {
+    width: 100%;
+    height: 100%;
+    flex: 0 0 100%;
+    overflow-y: auto; /* Permite scroll vertical se o conteúdo exceder a altura */
+    /* Garante que o conteúdo flexivel centralizado não corta no topo quando há scroll */
+    /* Nota: As classes bootstrap d-flex align-items-center podem causar clipping, mas overflow-y ajuda */
+    scrollbar-width: thin;
+    scrollbar-color: var(--orange) var(--light-grey);
+}
+
+.page::-webkit-scrollbar {
+    width: 6px;
+}
+.page::-webkit-scrollbar-track {
+    background: var(--light-grey);
+    border-radius: 3px;
+}
+.page::-webkit-scrollbar-thumb {
+    background-color: var(--orange);
+    border-radius: 3px;
 }
 
 /* FormulÃ¡rio de comentÃ¡rio */
@@ -2566,6 +2593,7 @@ select::-moz-focus-inner {
 
     .add-comment {
         max-width: 100%;
+        width: 95%; /* Aumenta a largura em tablets */
         padding: 1.5rem;
     }
 
@@ -2623,6 +2651,7 @@ select::-moz-focus-inner {
 
     .add-comment {
         max-width: 100%;
+        width: 100%; /* Largura total em telemóveis */
         padding: 1rem;
     }
 

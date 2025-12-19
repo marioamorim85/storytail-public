@@ -54,7 +54,7 @@
                                    class="form-control @error('birth_date') is-invalid @enderror"
                                    name="birth_date"
                                    value="{{ old('birth_date') }}"
-                                   placeholder="Select date"
+                                   placeholder="Select your birth date"
                                    required>
                         </div>
                         @error('birth_date')
