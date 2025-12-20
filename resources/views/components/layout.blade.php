@@ -132,7 +132,7 @@
 
 {{--Main Content--}}
 <main id="main-content" class="py-4 main-content" role="main">
-    <div class="container">
+    <div class="{{ isset($fullWidth) && $fullWidth ? 'container-fluid px-0' : 'container' }}">
         @yield('content')
     </div>
 </main>
@@ -155,7 +155,7 @@
     </div>
     <div class="footer-bottom py-2">
         <div class="container d-flex justify-content-center text-white position-relative align-items-center">
-            <p class="mb-0">&copy; 2026 storytail.org</p>
+            <p class="mb-0">&copy; {{ date('Y') }} StoryTail. All rights reserved.</p>
             <div class="social-links position-absolute end-0">
                 <a href="#" class="text-white me-3"><i class="bi bi-facebook"></i></a>
                 <a href="#" class="text-white me-3"><i class="bi bi-instagram"></i></a>

@@ -1,4 +1,4 @@
-@extends('components.layout')
+@extends('components.layout', ['fullWidth' => true])
 
 @section('content')
     <div class="dashboard-layout">

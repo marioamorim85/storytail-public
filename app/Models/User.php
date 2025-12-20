@@ -208,6 +208,14 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->ranking?->current_rank ?? 0;
     }
+
+    /**
+     * Send the email verification notification.
+     *
+     * @return void
+     */
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new \App\Notifications\CustomVerifyEmail);
+    }
 }
-
-
