@@ -17,6 +17,8 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
+        $middleware->append(\App\Http\Middleware\RequestIdMiddleware::class);
+
         $middleware->alias([
             'csrf' => VerifyCsrfToken::class,
             'admin' => AdminMiddleware::class,

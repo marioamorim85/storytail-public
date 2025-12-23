@@ -123,6 +123,26 @@ Route::get('/terms', function () {
 })->name('terms');
 
 
+
+// Observability Verification Routes
+Route::get('/obs/500', function () {
+    abort(500);
+});
+
+Route::get('/obs/http-fail', function () {
+    $url = url('/obs/500');
+    // Using Http facade to call our own 500 route
+    $response = \Illuminate\Support\Facades\Http::get($url);
+    return "Called $url. Status: " . $response->status() . ". Check logs for 'External HTTP Request Failed'.";
+});
+
+Route::get('/obs/slow-query', function () {
+    // To test this effectively, you might need to lower SLOW_QUERY_INFO_MS in .env TEMPORARILY to 0 or 1.
+    // Or run a heavy query if the DB supports SLEEP. SQLite does not support SLEEP easily without extensions.
+    \Illuminate\Support\Facades\DB::select('SELECT 1');
+    return 'Query executed. Check logs if SLOW_QUERY_INFO_MS is low enough.';
+});
+
 // Rotas admin protegidas
 require __DIR__ . '/admin.php';
 
